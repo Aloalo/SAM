@@ -12,10 +12,10 @@ int main()
 
 	GameEngine *game = new GameEngine(width, height);
 	
-	input.addInputObserver(std::shared_ptr<InputObserver>(game));
-	e.addToUpdateList(std::shared_ptr<Updateable>(game));
-	e.addToDisplayList(std::shared_ptr<Drawable>(game));
+	std::shared_ptr<GameEngine> ptr(game);
+	input.addInputObserver(std::shared_ptr<InputObserver>(ptr));
+	e.addToUpdateList(std::shared_ptr<Updateable>(ptr));
+	e.addToDisplayList(std::shared_ptr<Drawable>(ptr));
 	e.start();
-
 	return 0;
 }

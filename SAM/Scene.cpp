@@ -33,6 +33,13 @@ unsigned int Scene::getHeight() const
 	return height;
 }
 
+void Scene::setBufferSize(int w, int h)
+{
+	width = max(1, w);
+	height = max(1, h);
+	ctx["output_buffer"]->getBuffer()->setSize(width, height);
+}
+
 void Scene::initialize()
 {
 	ctx = Context::create();
@@ -40,7 +47,6 @@ void Scene::initialize()
 	ctx->setRayTypeCount(2);
 	ctx->setEntryPointCount(1);
 	ctx->setStackSize(4640);
-
 
 	ctx["radiance_ray_type"]->setUint(0);
 	ctx["scene_epsilon"]->setFloat( 1.e-3f );
@@ -57,10 +63,10 @@ void Scene::initialize()
 	ctx->setMissProgram(0, ctx->createProgramFromPTXFile(path, "miss"));
 	ctx["miss_color"]->setFloat(0.0f, 1.0f, 1.0f);
 
-	ctx["eye"]->setFloat(make_float3(7.0f, 9.2f, -6.0f));
+	/*ctx["eye"]->setFloat(make_float3(7.0f, 9.2f, -6.0f));
 	ctx["U"]->setFloat(make_float3(-6.0f, 0.0f, -7.0f));
 	ctx["V"]->setFloat(make_float3(-2.3f, 5.3f, 2.0f));
-	ctx["W"]->setFloat(make_float3(-7.0f, -5.2f, 6.0f));
+	ctx["W"]->setFloat(make_float3(-7.0f, -5.2f, 6.0f));*/
 
 	createSceneGraph();
 	

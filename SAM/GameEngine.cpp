@@ -18,7 +18,7 @@ void GameEngine::keyPress(int key, int scancode, int action, int mods)
 {
 	if(action == GLFW_REPEAT)
 		return;
-	float mod = action == GLFW_PRESS? 1 : -1;
+	float mod = action == GLFW_PRESS? 1.0f : -1.0f;
 	switch(key)
 	{
 	case 'W':
@@ -48,7 +48,7 @@ void GameEngine::mouseMove(double x, double y)
 
 void GameEngine::windowResize(int width, int height)
 {
-	scene.getBuffer()->setSize(width, height);
+	scene.setBufferSize(width, height);
 	player.setAspectRatio((float) width / (float) height);
 }
 
