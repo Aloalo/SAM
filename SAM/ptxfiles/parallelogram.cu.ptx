@@ -1,10 +1,10 @@
 	.version 1.4
 	.target sm_10, map_f64_to_f32
-	// compiled with D:\Program Files\NVIDIA GPU Computing\bin/../open64/lib//be.exe
+	// compiled with C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin/../open64/lib//be.exe
 	// nvopencc 4.1 built on 2013-07-10
 
 	//-----------------------------------------------------------
-	// Compiling C:/Users/Jure/AppData/Local/Temp/tmpxft_000009cc_00000000-12_parallelogram.cpp3.i (C:/Users/Jure/AppData/Local/Temp/ccBI#.a02832)
+	// Compiling C:/Users/Jure/AppData/Local/Temp/tmpxft_00001a58_00000000-12_parallelogram.cpp3.i (C:/Users/Jure/AppData/Local/Temp/ccBI#.a03456)
 	//-----------------------------------------------------------
 
 	//-----------------------------------------------------------
@@ -16,46 +16,46 @@
 	//  -m2	(Report advisories)
 	//-----------------------------------------------------------
 
-	.file	1	"C:/Users/Jure/AppData/Local/Temp/tmpxft_000009cc_00000000-11_parallelogram.cudafe2.gpu"
-	.file	2	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_datatypes.h"
-	.file	3	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optixu/optixu_aabb_namespace.h"
-	.file	4	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal\optix_defines.h"
-	.file	5	"C:/Users/Jure/AppData/Local/Temp/tmpxft_000009cc_00000000-2_parallelogram.cudafe1.gpu"
-	.file	6	"D:\Program Files\Microsoft Visual Studio 11.0\VC\include\crtdefs.h"
-	.file	7	"D:/Program Files/NVIDIA GPU Computing/include\crt/device_runtime.h"
-	.file	8	"D:/Program Files/NVIDIA GPU Computing/include\host_defines.h"
-	.file	9	"D:/Program Files/NVIDIA GPU Computing/include\builtin_types.h"
-	.file	10	"d:\program files\nvidia gpu computing\include\device_types.h"
-	.file	11	"d:\program files\nvidia gpu computing\include\host_defines.h"
-	.file	12	"d:\program files\nvidia gpu computing\include\driver_types.h"
-	.file	13	"d:\program files\nvidia gpu computing\include\surface_types.h"
-	.file	14	"d:\program files\nvidia gpu computing\include\texture_types.h"
-	.file	15	"d:\program files\nvidia gpu computing\include\vector_types.h"
-	.file	16	"d:\program files\nvidia gpu computing\include\builtin_types.h"
-	.file	17	"D:/Program Files/NVIDIA GPU Computing/include\device_launch_parameters.h"
-	.file	18	"d:\program files\nvidia gpu computing\include\crt\storage_class.h"
-	.file	19	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optix_device.h"
-	.file	20	"D:/STUFF/projects/SAM/SAM/parallelogram.cu"
-	.file	21	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_internal.h"
-	.file	22	"D:/Program Files/NVIDIA GPU Computing/include\common_functions.h"
-	.file	23	"d:\program files\nvidia gpu computing\include\math_functions.h"
-	.file	24	"d:\program files\nvidia gpu computing\include\math_constants.h"
-	.file	25	"d:\program files\nvidia gpu computing\include\device_functions.h"
-	.file	26	"d:\program files\nvidia gpu computing\include\sm_11_atomic_functions.h"
-	.file	27	"d:\program files\nvidia gpu computing\include\sm_12_atomic_functions.h"
-	.file	28	"d:\program files\nvidia gpu computing\include\sm_13_double_functions.h"
-	.file	29	"d:\program files\nvidia gpu computing\include\sm_20_atomic_functions.h"
-	.file	30	"d:\program files\nvidia gpu computing\include\sm_32_atomic_functions.h"
-	.file	31	"d:\program files\nvidia gpu computing\include\sm_35_atomic_functions.h"
-	.file	32	"d:\program files\nvidia gpu computing\include\sm_20_intrinsics.h"
-	.file	33	"d:\program files\nvidia gpu computing\include\sm_30_intrinsics.h"
-	.file	34	"d:\program files\nvidia gpu computing\include\sm_32_intrinsics.h"
-	.file	35	"d:\program files\nvidia gpu computing\include\sm_35_intrinsics.h"
-	.file	36	"d:\program files\nvidia gpu computing\include\surface_functions.h"
-	.file	37	"d:\program files\nvidia gpu computing\include\texture_fetch_functions.h"
-	.file	38	"d:\program files\nvidia gpu computing\include\texture_indirect_functions.h"
-	.file	39	"d:\program files\nvidia gpu computing\include\surface_indirect_functions.h"
-	.file	40	"d:\program files\nvidia gpu computing\include\math_functions_dbl_ptx1.h"
+	.file	1	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00001a58_00000000-11_parallelogram.cudafe2.gpu"
+	.file	2	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\internal/optix_datatypes.h"
+	.file	3	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\optixu/optixu_aabb_namespace.h"
+	.file	4	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\internal\optix_defines.h"
+	.file	5	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00001a58_00000000-2_parallelogram.cudafe1.gpu"
+	.file	6	"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\crtdefs.h"
+	.file	7	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\crt/device_runtime.h"
+	.file	8	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\host_defines.h"
+	.file	9	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\builtin_types.h"
+	.file	10	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\device_types.h"
+	.file	11	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\host_defines.h"
+	.file	12	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\driver_types.h"
+	.file	13	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_types.h"
+	.file	14	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_types.h"
+	.file	15	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\vector_types.h"
+	.file	16	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\builtin_types.h"
+	.file	17	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\device_launch_parameters.h"
+	.file	18	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\crt\storage_class.h"
+	.file	19	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\optix_device.h"
+	.file	20	"C:/Users/Jure/Documents/GitHub/SAM/SAM/parallelogram.cu"
+	.file	21	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\internal/optix_internal.h"
+	.file	22	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\common_functions.h"
+	.file	23	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_functions.h"
+	.file	24	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_constants.h"
+	.file	25	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\device_functions.h"
+	.file	26	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_11_atomic_functions.h"
+	.file	27	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_12_atomic_functions.h"
+	.file	28	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_13_double_functions.h"
+	.file	29	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_20_atomic_functions.h"
+	.file	30	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_32_atomic_functions.h"
+	.file	31	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_35_atomic_functions.h"
+	.file	32	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_20_intrinsics.h"
+	.file	33	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_30_intrinsics.h"
+	.file	34	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_32_intrinsics.h"
+	.file	35	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_35_intrinsics.h"
+	.file	36	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_functions.h"
+	.file	37	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_fetch_functions.h"
+	.file	38	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_indirect_functions.h"
+	.file	39	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_indirect_functions.h"
+	.file	40	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_functions_dbl_ptx1.h"
 
 	.global .align 16 .b8 plane[16];
 	.global .align 16 .b8 v1[12];

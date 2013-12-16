@@ -10,12 +10,3 @@ struct BasicLight
 	int casts_shadow; 
 	int padding;
 };
-
-struct TriangleLight
-{
-	typedef optix::float3 float3;
-	float3 v1, v2, v3;
-	float3 normal;
-	float3 emission;
-};
-

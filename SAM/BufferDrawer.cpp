@@ -50,7 +50,6 @@ void BufferDrawer::draw(optix::Buffer &buffer)
 		GLvoid *data = buffer->map();
 		glDrawPixels(w, h, glFormat, glDataType, data);
 		buffer->unmap();
-		printf("%d %d\n", w, h);
 	}
 	catch(optix::Exception ex)
 	{

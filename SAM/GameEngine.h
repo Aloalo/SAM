@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "BufferDrawer.h"
 #include "Player.h"
+#include "Mouse.h"
 
 class GameEngine :
 	public UnLitObject, public Updateable, public InputObserver
@@ -23,6 +24,8 @@ public:
 
 	void initDrawing();
 	void draw(const glm::mat4 &View, const glm::mat4 &Projection);
+
+	Mouse mouse;
 
 private:
 	Scene scene;

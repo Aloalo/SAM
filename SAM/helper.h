@@ -51,32 +51,3 @@ struct PerRayData_shadow
 	float3 attenuation;
 };
 
-static __device__ __inline__ void rotateX(float3 &v, float angle)
-{
-	float c = cos(angle);
-	float s = sin(angle);
-
-	float t = v.y;
-	v.y = v.y * c - v.z * s;
-	v.z = t * s + v.z * c;
-}
-
-static __device__ __inline__ void rotateY(float3 &v, float angle)
-{
-	float c = cos(angle);
-	float s = sin(angle);
-
-	float t = v.x;
-	v.x = v.x * c + v.z * s;
-	v.z = -t * s + v.z * c;
-}
-
-static __device__ __inline__ void rotateZ(float3 &v, float angle)
-{
-	float c = cos(angle);
-	float s = sin(angle);
-
-	float t = v.x;
-	v.x = v.x * c - v.y * s;
-	v.y = t * s + v.y * c;
-}

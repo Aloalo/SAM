@@ -55,6 +55,7 @@ void Scene::initialize()
 	ctx["output_buffer"]->setBuffer(buff);
 
 	std::string path = pathToPTX("shaders.cu");
+
 	ctx->setRayGenerationProgram(0, ctx->createProgramFromPTXFile(path, "pinhole_camera"));
 
 	ctx->setExceptionProgram(0, ctx->createProgramFromPTXFile(path, "exception"));
@@ -62,11 +63,6 @@ void Scene::initialize()
 
 	ctx->setMissProgram(0, ctx->createProgramFromPTXFile(path, "miss"));
 	ctx["miss_color"]->setFloat(0.0f, 1.0f, 1.0f);
-
-	/*ctx["eye"]->setFloat(make_float3(7.0f, 9.2f, -6.0f));
-	ctx["U"]->setFloat(make_float3(-6.0f, 0.0f, -7.0f));
-	ctx["V"]->setFloat(make_float3(-2.3f, 5.3f, 2.0f));
-	ctx["W"]->setFloat(make_float3(-7.0f, -5.2f, 6.0f));*/
 
 	createSceneGraph();
 	
@@ -112,13 +108,13 @@ void Scene::createSceneGraph()
 	Program box_ch = ctx->createProgramFromPTXFile(mainPath, "closest_hit_radiance");
 	box_matl->setClosestHitProgram(0, box_ch);
 
-	Material floor_matl = ctx->createMaterial();
-	Program floor_ch = ctx->createProgramFromPTXFile(mainPath, "closest_hit_radiance");
-	floor_matl->setClosestHitProgram(0, floor_ch);
+	//Material floor_matl = ctx->createMaterial();
+	//Program floor_ch = ctx->createProgramFromPTXFile(mainPath, "closest_hit_radiance");
+	//floor_matl->setClosestHitProgram(0, floor_ch);
 
 	std::vector<GeometryInstance> gis;
 	gis.push_back(ctx->createGeometryInstance(box, &box_matl, &box_matl+1));
-	gis.push_back(ctx->createGeometryInstance( parallelogram, &floor_matl, &floor_matl+1 ));
+	gis.push_back(ctx->createGeometryInstance( parallelogram, &box_matl, &box_matl+1 ));
 
 	// Place all in group
 	GeometryGroup geometrygroup = ctx->createGeometryGroup();
@@ -141,4 +137,13 @@ void Scene::setCamera(const vec3 &eye, const vec3 &dir, const vec3 &up, const ve
 	ctx["U"]->setFloat(make_float3(right.x, right.y, right.z));
 	ctx["V"]->setFloat(make_float3(up.x, up.y, up.z));
 	ctx["W"]->setFloat(make_float3(dir.x, dir.y, dir.z));
+}
+
+void Scene::setFOV(float FOV)
+{
+	ctx["magicAngle"]->setFloat(tan(FOV * 3.14f / 360.0f));
+}
+void Scene::setAspectRatio(float asratio)
+{
+	ctx["aspectRatio"]->setFloat(asratio);
 }

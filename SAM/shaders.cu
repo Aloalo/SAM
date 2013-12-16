@@ -19,6 +19,9 @@ rtDeclareVariable(float3, eye, , );
 rtDeclareVariable(float3, U, , );
 rtDeclareVariable(float3, V, , );
 rtDeclareVariable(float3, W, , );
+rtDeclareVariable(float, magicAngle, , );
+rtDeclareVariable(float, aspectRatio, , );
+
 rtDeclareVariable(float3, bad_color, , );
 rtBuffer<uchar4, 2> output_buffer;
 
@@ -26,7 +29,7 @@ RT_PROGRAM void pinhole_camera()
 {
 	size_t2 screen = output_buffer.size();
 
-	float2 d = make_float2(launch_index) / make_float2(screen) * 2.f - 1.f;
+	float2 d = make_float2(launch_index) / screen.x * 2.f - 1.f;
 	float3 ray_origin = eye;
 	float3 ray_direction = normalize(d.x * U + d.y * V + W);
 

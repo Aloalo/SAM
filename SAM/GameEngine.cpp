@@ -1,4 +1,5 @@
 #include "GameEngine.h"
+#include "Engine.h"
 #include <GLFW/glfw3.h>
 
 using namespace glm;
@@ -18,6 +19,18 @@ void GameEngine::keyPress(int key, int scancode, int action, int mods)
 {
 	if(action == GLFW_REPEAT)
 		return;
+
+	if(mods == GLFW_MOD_SHIFT && action == GLFW_PRESS)
+	{
+		mouse.locked = false;
+		glfwSetInputMode(Engine::getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+	else
+	{
+		mouse.locked = true;
+		glfwSetInputMode(Engine::getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	}
+
 	float mod = action == GLFW_PRESS? 1.0f : -1.0f;
 	switch(key)
 	{
@@ -44,12 +57,27 @@ void GameEngine::keyPress(int key, int scancode, int action, int mods)
 
 void GameEngine::mouseMove(double x, double y)
 {
+	if(!mouse.locked)
+		return;
+
+	int windowWidth, windowHeight;
+	Engine::getWindowSize(windowWidth, windowHeight);
+
+	//static float usex = windowWidth, usey = windowHeight;
+
+	//float d = 1 - exp(log(0.5) * 55.f * dt);
+	//usex += (x - usex) * d;
+	//usey += (y - usey) * d;
+
+	player.rotate(float(windowWidth / 2 - x) * mouse.speed, float(windowHeight / 2 - y) * mouse.speed);
+	glfwSetCursorPos(Engine::getWindow(), windowWidth / 2, windowHeight / 2);
 }
 
 void GameEngine::windowResize(int width, int height)
 {
 	scene.setBufferSize(width, height);
 	player.setAspectRatio((float) width / (float) height);
+	scene.setAspectRatio(player.getCam().aspectRatio);
 }
 
 void GameEngine::initState()
@@ -68,6 +96,8 @@ void GameEngine::initDrawing()
 	try
 	{
 		scene.initialize();
+		scene.setFOV(player.getCam().FoV);
+		scene.setAspectRatio(player.getCam().aspectRatio);
 	}
 	catch(optix::Exception ex)
 	{

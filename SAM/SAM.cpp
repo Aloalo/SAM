@@ -14,6 +14,7 @@ int main()
 	
 	std::shared_ptr<GameEngine> ptr(game);
 	input.addInputObserver(std::shared_ptr<InputObserver>(ptr));
+	input.setMouseMoveCallback();
 	e.addToUpdateList(std::shared_ptr<Updateable>(ptr));
 	e.addToDisplayList(std::shared_ptr<Drawable>(ptr));
 	e.start();
