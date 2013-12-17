@@ -2,8 +2,9 @@
 
 #include "Macros.h"
 #include <optix_world.h>
-#include <glm/glm.hpp>
+#include "Camera.h"
 
+//handles optix traceing
 class Scene
 {
 public:
@@ -16,9 +17,7 @@ public:
 	unsigned int getWidth() const;
 	unsigned int getHeight() const;
 	void setBufferSize(int w, int h);
-	void setCamera(const glm::vec3 &eye, const glm::vec3 &dir, const glm::vec3 &up, const glm::vec3 &right);
-	void setFOV(float FOV);
-	void setAspectRatio(float asratio);
+	void setCamera(const Camera &cam);
 
 private:
 	void createSceneGraph();

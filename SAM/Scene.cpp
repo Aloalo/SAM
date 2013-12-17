@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Utils.h"
+#include "lights.h"
 
 using namespace optix;
 using namespace utils;
@@ -49,7 +50,7 @@ void Scene::initialize()
 	ctx->setStackSize(4640);
 
 	ctx["radiance_ray_type"]->setUint(0);
-	ctx["scene_epsilon"]->setFloat( 1.e-3f );
+	ctx["scene_epsilon"]->setFloat(1.e-3f);
 
 	Buffer buff = ctx->createBuffer(RT_BUFFER_OUTPUT, RT_FORMAT_UNSIGNED_BYTE4, width, height);
 	ctx["output_buffer"]->setBuffer(buff);
@@ -64,8 +65,22 @@ void Scene::initialize()
 	ctx->setMissProgram(0, ctx->createProgramFromPTXFile(path, "miss"));
 	ctx["miss_color"]->setFloat(0.0f, 1.0f, 1.0f);
 
+	BasicLight lights[] = 
+	{ 
+		{make_float3( -5.0f, 60.0f, -16.0f ), make_float3( 1.0f, 1.0f, 1.0f ), 1}
+	};
+
+	Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT);
+	lightBuffer->setFormat(RT_FORMAT_USER);
+	lightBuffer->setElementSize(sizeof(BasicLight));
+	lightBuffer->setSize(sizeof(lights) / sizeof(lights[0]));
+	memcpy(lightBuffer->map(), lights, sizeof(lights));
+	lightBuffer->unmap();
+
+	ctx["lights"]->set(lightBuffer);
+
 	createSceneGraph();
-	
+
 	ctx->validate();
 	ctx->compile();
 }
@@ -82,6 +97,13 @@ void Scene::createSceneGraph()
 	box->setIntersectionProgram(boxIntersect);
 	box["boxmin"]->setFloat(-2.0f, 0.0f, -2.0f);
 	box["boxmax"]->setFloat(2.0f, 7.0f,  2.0f);
+
+	Geometry box2 = ctx->createGeometry();
+	box2->setPrimitiveCount(1);
+	box2->setBoundingBoxProgram(boxAABB);
+	box2->setIntersectionProgram(boxIntersect);
+	box2["boxmin"]->setFloat(6.0f, 0.0f, -2.0f);
+	box2["boxmax"]->setFloat(8.0f, 7.0f,  2.0f);
 
 	std::string pathFloor = pathToPTX("parallelogram.cu");
 	Geometry parallelogram = ctx->createGeometry();
@@ -104,23 +126,27 @@ void Scene::createSceneGraph()
 	parallelogram["anchor"]->setFloat(anchor);
 
 	std::string mainPath(pathToPTX("shaders.cu"));
-	Material box_matl = ctx->createMaterial();
-	Program box_ch = ctx->createProgramFromPTXFile(mainPath, "closest_hit_radiance");
-	box_matl->setClosestHitProgram(0, box_ch);
-
-	//Material floor_matl = ctx->createMaterial();
-	//Program floor_ch = ctx->createProgramFromPTXFile(mainPath, "closest_hit_radiance");
-	//floor_matl->setClosestHitProgram(0, floor_ch);
+	Material floorMaterial = ctx->createMaterial();
+	Program floorClosestHit = ctx->createProgramFromPTXFile(mainPath, "closest_hit_radiance_floor");
+	floorMaterial->setClosestHitProgram(0, floorClosestHit);
+	
+	
+	floorMaterial["ambient_light_color"]->setFloat(0.5f, 0.5f, 0.5f);
+	floorMaterial["Ka"]->setFloat(0.3f, 0.3f, 0.3f);
+	floorMaterial["Kd"]->setFloat(0.6f, 0.7f, 0.8f);
+	floorMaterial["Ks"]->setFloat(0.8f, 0.9f, 0.8f);
+	floorMaterial["phong_exp"]->setFloat(88);
 
 	std::vector<GeometryInstance> gis;
-	gis.push_back(ctx->createGeometryInstance(box, &box_matl, &box_matl+1));
-	gis.push_back(ctx->createGeometryInstance( parallelogram, &box_matl, &box_matl+1 ));
+	gis.push_back(ctx->createGeometryInstance(box, &floorMaterial, &floorMaterial+1));
+	gis.push_back(ctx->createGeometryInstance(box2, &floorMaterial, &floorMaterial+1));
+	gis.push_back(ctx->createGeometryInstance(parallelogram, &floorMaterial, &floorMaterial+1));
 
 	// Place all in group
 	GeometryGroup geometrygroup = ctx->createGeometryGroup();
 	geometrygroup->setChildCount(gis.size());
-	geometrygroup->setChild(0, gis[0]);
-	geometrygroup->setChild(1, gis[1]);
+	for(int i = 0; i < gis.size(); ++i)
+		geometrygroup->setChild(i, gis[i]);
 	geometrygroup->setAcceleration(ctx->createAcceleration("NoAccel","NoAccel"));
 
 	ctx["top_object"]->set(geometrygroup);
@@ -131,19 +157,16 @@ void Scene::trace()
 	ctx->launch(0, width, height);
 }
 
-void Scene::setCamera(const vec3 &eye, const vec3 &dir, const vec3 &up, const vec3 &right)
+void Scene::setCamera(const Camera &cam)
 {
-	ctx["eye"]->setFloat(make_float3(eye.x, eye.y, eye.z));
-	ctx["U"]->setFloat(make_float3(right.x, right.y, right.z));
-	ctx["V"]->setFloat(make_float3(up.x, up.y, up.z));
-	ctx["W"]->setFloat(make_float3(dir.x, dir.y, dir.z));
-}
+	float tanfov = tanf(cam.FoV * 3.14f / 360.0f) * 2.0f;
+	vec3 eye = cam.position;
+	vec3 U = cam.getRight() * tanfov * cam.aspectRatio;
+	vec3 V = cam.getUp() * tanfov;
+	vec3 W = cam.getDirection();
 
-void Scene::setFOV(float FOV)
-{
-	ctx["magicAngle"]->setFloat(tan(FOV * 3.14f / 360.0f));
-}
-void Scene::setAspectRatio(float asratio)
-{
-	ctx["aspectRatio"]->setFloat(asratio);
+	ctx["eye"]->setFloat(make_float3(eye.x, eye.y, eye.z));
+	ctx["U"]->setFloat(make_float3(U.x, U.y, U.z));
+	ctx["V"]->setFloat(make_float3(V.x, V.y, V.z));
+	ctx["W"]->setFloat(make_float3(W.x, W.y, W.z));
 }

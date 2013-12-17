@@ -77,7 +77,6 @@ void GameEngine::windowResize(int width, int height)
 {
 	scene.setBufferSize(width, height);
 	player.setAspectRatio((float) width / (float) height);
-	scene.setAspectRatio(player.getCam().aspectRatio);
 }
 
 void GameEngine::initState()
@@ -87,8 +86,7 @@ void GameEngine::initState()
 void GameEngine::update(float deltaTime)
 {
 	player.move(deltaTime);
-	const Camera& tmp = player.getCam();
-	scene.setCamera(tmp.position, tmp.getDirection(), tmp.getUp(), tmp.getRight());
+	scene.setCamera(player.getCam());
 }
 
 void GameEngine::initDrawing()
@@ -96,8 +94,7 @@ void GameEngine::initDrawing()
 	try
 	{
 		scene.initialize();
-		scene.setFOV(player.getCam().FoV);
-		scene.setAspectRatio(player.getCam().aspectRatio);
+		scene.setCamera(player.getCam());
 	}
 	catch(optix::Exception ex)
 	{
