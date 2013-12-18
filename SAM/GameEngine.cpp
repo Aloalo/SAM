@@ -91,16 +91,12 @@ void GameEngine::update(float deltaTime)
 
 void GameEngine::initDrawing()
 {
-	try
-	{
-		scene.initialize();
-		scene.setCamera(player.getCam());
-	}
-	catch(optix::Exception ex)
-	{
-		printf("%s\n", ex.what());
-		exit(0);
-	}
+	scene.initialize();
+
+	Labyrinth lab;
+	lab.generateLabyrinth(10, 10);
+	scene.createSceneGraph(lab);
+	scene.setCamera(player.getCam());
 	drawer.init(scene.getBuffer());
 }
 

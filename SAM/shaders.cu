@@ -112,7 +112,7 @@ static __device__ inline float3 phong_and_shadows(const float3 &ffnormal, const 
 			if(fmaxf(shadow_prd.attenuation) > 0.0f)
 			{
 				float3 light_color = light.color * shadow_prd.attenuation;
-				color += local_Kd * nDl * light.color;
+				color += local_Kd * nDl * light_color;
 
 				float3 H = normalize(L - ray.direction);
 				float nDh = dot(ffnormal, H);
@@ -128,7 +128,6 @@ static __device__ inline float3 phong_and_shadows(const float3 &ffnormal, const 
 RT_PROGRAM void closest_hit_phong()
 {
 	float3 ffnormal = get_ffnormal();
-	float3 color = make_float3(0.0f);
 	float3 hit_point = ray.origin + t_hit * ray.direction;
 
 	prd_radiance.result = phong_and_shadows(ffnormal, hit_point, Kd);
@@ -204,7 +203,7 @@ RT_PROGRAM void any_hit_shadow_glass()
   float3 world_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
   float nDi = fabs(dot(world_normal, ray.direction));
 
-  prd_shadow.attenuation *= 1.0f - fresnel_schlick(nDi, 5.0f, 1.0f - shadow_attenuation, make_float3(1.0f));
+  prd_shadow.attenuation *= 1 - fresnel_schlick(nDi, 5, 1 - shadow_attenuation, make_float3(1));
 
   rtIgnoreIntersection();
 }

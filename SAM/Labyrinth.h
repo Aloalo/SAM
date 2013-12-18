@@ -1,25 +1,39 @@
-//#pragma once
-//
-//#include <utility>
-//#include <vector>
-//
-//class Labyrinth
-//{
-//public:
-//	Labyrinth(void);
-//	~Labyrinth(void);
-//
-//	void generateLabyrinth(int w, int h);
-//	int getCell(std::pair<int, int> pos);
-//	int getCell(int x, int y);
-//	int getWall(std::pair<std::pair<int, int>, std::pair<int, int> > pos);
-//	int getWall(int x1, int y1, int x2, int y2);
-//	int width, height;
-//
-//private:
-//	void primRandomized();
-//	
-//	int maze[200][200];
-//	std::vector<std::pair<std::pair<int, int>, std::pair<int, int> > > wallList;
-//};
+#pragma once
+
+#include <vector>
+#include "Box.h"
+
+class Labyrinth
+{
+public:
+	Labyrinth(void);
+	~Labyrinth(void);
+
+	void generateLabyrinth(int w, int h);
+
+	//wall width, height and depth
+	void setWallSize(float w, float h, float d);
+	const std::vector<Box>& getWalls() const;
+
+private:
+	//generates a list of walls
+	void primRandomized();
+
+	//generates the maze geometry
+	void generateGeometry();
+
+	//adds a box to the list. merges with others if possible
+	void addBox(const Box &box);
+
+	int getCell(std::pair<int, int> pos) const;
+	int getCell(int x, int y) const;
+	bool outOfBounds(int x, int y) const;
+
+	Box xBox, yBox;
+	float cellDim;
+	int width, height;
+	int maze[200][200];
+	std::vector<std::pair<std::pair<int, int>, std::pair<int, int> > > wallList;
+	std::vector<Box> boxVec;
+};
 

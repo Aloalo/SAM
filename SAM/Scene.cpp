@@ -5,6 +5,7 @@
 using namespace optix;
 using namespace utils;
 using namespace glm;
+using namespace std;
 
 Scene::Scene(int width, int height)
 	: width(width), height(height)
@@ -21,17 +22,6 @@ Scene::~Scene(void)
 Buffer Scene::getBuffer()
 {
 	return ctx["output_buffer"]->getBuffer();
-}
-
-
-unsigned int Scene::getWidth() const
-{
-	return width;
-}
-
-unsigned int Scene::getHeight() const
-{
-	return height;
 }
 
 void Scene::setBufferSize(int w, int h)
@@ -85,10 +75,6 @@ void Scene::initialize()
 	ctx["lights"]->set(lightBuffer);
 
 	createMaterials();
-	createSceneGraph();
-
-	ctx->validate();
-	ctx->compile();
 }
 
 void Scene::createMaterials()
@@ -158,32 +144,25 @@ void Scene::createMaterials()
 	materials[GLASS] = glassMaterial;
 }
 
-void Scene::createSceneGraph()
+void Scene::createSceneGraph(const Labyrinth &lab)
 {
 	std::string pathBox = pathToPTX("box.cu");
 	Program boxIntersect = ctx->createProgramFromPTXFile(pathBox, "box_intersect");
 	Program boxAABB = ctx->createProgramFromPTXFile(pathBox, "box_bounds");
 
-	Geometry box = ctx->createGeometry();
-	box->setPrimitiveCount(1);
-	box->setBoundingBoxProgram(boxAABB);
-	box->setIntersectionProgram(boxIntersect);
-	box["boxmin"]->setFloat(-2.0f, 0.0f, -2.0f);
-	box["boxmax"]->setFloat(2.0f, 7.0f, 2.0f);
-
-	Geometry box2 = ctx->createGeometry();
-	box2->setPrimitiveCount(1);
-	box2->setBoundingBoxProgram(boxAABB);
-	box2->setIntersectionProgram(boxIntersect);
-	box2["boxmin"]->setFloat(6.0f, 0.0f, -2.0f);
-	box2["boxmax"]->setFloat(8.0f, 7.0f, 2.0f);
-
-	Geometry box3 = ctx->createGeometry();
-	box3->setPrimitiveCount(1);
-	box3->setBoundingBoxProgram(boxAABB);
-	box3->setIntersectionProgram(boxIntersect);
-	box3["boxmin"]->setFloat(6.0f, 0.0f, 3.0f);
-	box3["boxmax"]->setFloat(8.0f, 7.0f, 7.0f);
+	vector<GeometryInstance> gis;
+	const vector<Box> &walls = lab.getWalls();
+	int n = walls.size();
+	for(int i = 0; i < n; ++i)
+	{
+		Geometry box = ctx->createGeometry();
+		box->setPrimitiveCount(1);
+		box->setBoundingBoxProgram(boxAABB);
+		box->setIntersectionProgram(boxIntersect);
+		box["boxmin"]->setFloat(walls[i].boxmin);
+		box["boxmax"]->setFloat(walls[i].boxmax);
+		gis.push_back(ctx->createGeometryInstance(box, &materials[walls[i].matIdx], &materials[walls[i].matIdx]+1));
+	}
 
 	std::string pathFloor = pathToPTX("parallelogram.cu");
 	Geometry parallelogram = ctx->createGeometry();
@@ -205,10 +184,6 @@ void Scene::createSceneGraph()
 	parallelogram["v2"]->setFloat(v2);
 	parallelogram["anchor"]->setFloat(anchor);
 
-	std::vector<GeometryInstance> gis;
-	gis.push_back(ctx->createGeometryInstance(box, &materials[WALL], &materials[WALL]+1));
-	gis.push_back(ctx->createGeometryInstance(box2, &materials[MIRROR], &materials[MIRROR]+1));
-	gis.push_back(ctx->createGeometryInstance(box3, &materials[GLASS], &materials[GLASS]+1));
 	gis.push_back(ctx->createGeometryInstance(parallelogram, &materials[FLOOR], &materials[FLOOR]+1));
 
 	// Place all in group
@@ -219,6 +194,9 @@ void Scene::createSceneGraph()
 	geometrygroup->setAcceleration(ctx->createAcceleration("NoAccel","NoAccel"));
 
 	ctx["top_object"]->set(geometrygroup);
+
+	ctx->validate();
+	ctx->compile();
 }
 
 void Scene::trace()

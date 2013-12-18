@@ -1,0 +1,8 @@
+-glatki mis
+-popraviti cudnu kameru
+
+-spajanje istih zidova i vanjski zidovi labirinta
+-akceleracijske strukture
+-game settings
+
+-low level optimizacije
