@@ -3,6 +3,7 @@
 #include "Macros.h"
 #include <optix_world.h>
 #include "Camera.h"
+#include <map>
 
 //handles optix traceing
 class Scene
@@ -21,7 +22,9 @@ public:
 
 private:
 	void createSceneGraph();
+	void createMaterials();
 	optix::Context ctx;
 	unsigned int width, height; 
+	std::map<int, optix::Material> materials;
 };
 
