@@ -206,7 +206,7 @@ void Scene::trace()
 
 void Scene::setCamera(const Camera &cam)
 {
-	float tanfov = tanf(cam.FoV * 3.14f / 360.0f) * 2.0f;
+	float tanfov = tanf(cam.FoV * pi / 360.0f) * 0.5f;
 	vec3 eye = cam.position;
 	vec3 U = cam.getRight() * tanfov * cam.aspectRatio;
 	vec3 V = cam.getUp() * tanfov;

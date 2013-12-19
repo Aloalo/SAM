@@ -1,8 +1,17 @@
+TODO:
+
 -glatki mis
 -popraviti cudnu kameru
+-zidovi labirinta
+-shadeing tweakovi
 
--spajanje istih zidova i vanjski zidovi labirinta
+Optimizacije:
+
+-spajanje istih zidova
 -akceleracijske strukture
--game settings
-
+-OGL interop
 -low level optimizacije
+
+-game settings
+-CC support
+

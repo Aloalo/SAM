@@ -15,4 +15,3 @@ struct Box
 	optix::float3 boxmax;
 	int matIdx;
 };
-

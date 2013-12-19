@@ -40,5 +40,6 @@ _ReSharper*/
 $tf*/
 RenderingEngine*/
 ptxfiles*/
+SAM/ptxfiles*/
 *.cu.ptx
 *.ptx

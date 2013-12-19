@@ -7,7 +7,8 @@
 //host utils
 namespace utils
 {
-	const float eps = 1e-3f; 
+	const float eps = 1e-3f;
+	const float pi = 3.1415926;
 
 	enum Materials
 	{
