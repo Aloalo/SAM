@@ -1,11 +1,12 @@
 #include "GameEngine.h"
 #include "Engine.h"
 #include <GLFW/glfw3.h>
+#include "GraphicsSettings.h"
 
 using namespace glm;
 
-GameEngine::GameEngine(int width, int height)
-	: scene(width, height), player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)width / (float)height, 60.0f), 5.0f)
+GameEngine::GameEngine(void)
+	: player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)GraphicsSettings::bufferWidth / (float)GraphicsSettings::bufferHeight, 60.0f), 5.0f)
 {
 }
 
@@ -75,8 +76,15 @@ void GameEngine::mouseMove(double x, double y)
 
 void GameEngine::windowResize(int width, int height)
 {
-	scene.setBufferSize(width, height);
 	player.setAspectRatio((float) width / (float) height);
+	if(!GraphicsSettings::useVBO)
+	{
+		scene.setBufferSize(width, height);
+		GraphicsSettings::bufferHeight = height;
+		GraphicsSettings::bufferWidth = width;
+	}
+	GraphicsSettings::screenHeight = height;
+	GraphicsSettings::screenWidth = width;
 }
 
 void GameEngine::initState()
@@ -91,10 +99,10 @@ void GameEngine::update(float deltaTime)
 
 void GameEngine::initDrawing()
 {
-	scene.initialize(drawer.createGLBuffer(scene.getWidth(), scene.getHeight()));
+	scene.initialize(drawer.createGLBuffer(GraphicsSettings::bufferWidth, GraphicsSettings::bufferHeight));
 
 	Labyrinth lab;
-	lab.generateLabyrinth(20, 20);
+	lab.generateLabyrinth(3, 20);
 	scene.createSceneGraph(lab);
 	scene.setCamera(player.getCam());
 	drawer.init(scene.getBuffer());

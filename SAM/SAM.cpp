@@ -2,17 +2,16 @@
 #include "Engine.h"
 #include "Input.h"
 #include "GameEngine.h"
+#include "GraphicsSettings.h"
 
 int main()
 {
-	int width = 800, height = 600;
+	GraphicsSettings::readSettingsFromFile("GraphicsSettings.ini");
 	
-	Engine e(1. / 60., width, height);
+	Engine e(1. / 60., GraphicsSettings::screenWidth, GraphicsSettings::screenHeight);
 	Input input;
 
-	GameEngine *game = new GameEngine(width, height);
-	
-	std::shared_ptr<GameEngine> ptr(game);
+	std::shared_ptr<GameEngine> ptr(new GameEngine());
 	input.addInputObserver(std::shared_ptr<InputObserver>(ptr));
 	input.setMouseMoveCallback();
 	e.addToUpdateList(std::shared_ptr<Updateable>(ptr));

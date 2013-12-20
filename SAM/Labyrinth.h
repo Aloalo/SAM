@@ -14,6 +14,8 @@ public:
 	//wall width, height and depth
 	void setWallSize(float w, float h, float d);
 	const std::vector<Box>& getWalls() const;
+	float getRealWidth() const;
+	float getRealHeight() const;
 
 private:
 	//generates a list of walls

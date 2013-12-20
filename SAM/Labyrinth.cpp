@@ -26,6 +26,16 @@ int Labyrinth::getCell(int x, int y) const
 	return maze[x][y];
 }
 
+float Labyrinth::getRealWidth() const
+{
+	return (float)width * cellDim + (float)(width - 1.0f) * crackDim;
+}
+
+float Labyrinth::getRealHeight() const
+{
+	return (float)height * cellDim + (float)(height - 1.0f) * crackDim;
+}
+
 void Labyrinth::generateLabyrinth(int w, int h)
 {
 	wallList.clear();
@@ -33,8 +43,8 @@ void Labyrinth::generateLabyrinth(int w, int h)
 	width = w;
 	height = h;
 
-	float realwidth = (float)w * cellDim + (float)(w - 1.0f) * crackDim;
-	float realheight = (float)h * cellDim + (float)(h - 1.0f) * crackDim;
+	float realwidth = getRealWidth();
+	float realheight = getRealHeight();
 	float3 offset = make_float3(-realwidth / 2.0f, 0.0f, -realheight / 2.0f);
 	xBox = xBox.translated(offset);
 	yBox = yBox.translated(offset);

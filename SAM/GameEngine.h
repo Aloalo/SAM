@@ -12,7 +12,7 @@ class GameEngine :
 	public UnLitObject, public Updateable, public InputObserver
 {
 public:
-	GameEngine(int width, int height);
+	GameEngine(void);
 	~GameEngine(void);
 
 	void keyPress(int key, int scancode, int action, int mods);

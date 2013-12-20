@@ -1,14 +1,14 @@
 #include "Scene.h"
 #include "Utils.h"
 #include "lights.h"
+#include "GraphicsSettings.h"
 
 using namespace optix;
 using namespace utils;
 using namespace glm;
 using namespace std;
 
-Scene::Scene(int width, int height)
-	: width(width), height(height)
+Scene::Scene(void)
 {
 }
 
@@ -18,16 +18,6 @@ Scene::~Scene(void)
 	//ctx->destroy();
 }
 
-unsigned int Scene::getWidth() const
-{
-	return width;
-}
-
-unsigned int Scene::getHeight() const
-{
-	return height;
-}
-
 Buffer Scene::getBuffer()
 {
 	return ctx["output_buffer"]->getBuffer();
@@ -35,9 +25,12 @@ Buffer Scene::getBuffer()
 
 void Scene::setBufferSize(int w, int h)
 {
-	width = max(1, w);
-	height = max(1, h);
-	ctx["output_buffer"]->getBuffer()->setSize(width, height);
+	w = max(1, w);
+	w = min(w, GraphicsSettings::maxBufferWidth);
+	
+	h = max(1, h);
+	h = min(h, GraphicsSettings::maxBufferHeight);
+	ctx["output_buffer"]->getBuffer()->setSize(w, h);
 }
 
 void Scene::initialize(unsigned int GLBO)
@@ -54,11 +47,16 @@ void Scene::initialize(unsigned int GLBO)
 	ctx["max_depth"]->setInt(4);
 	ctx["importance_cutoff"]->setFloat(0.01f);
 	ctx["ambient_light_color"]->setFloat(0.3f, 0.3f, 0.3f);
+	Buffer buff;
+	if(GraphicsSettings::useVBO)
+	{
+		buff = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
+		buff->setSize(GraphicsSettings::bufferWidth, GraphicsSettings::bufferHeight);
+		buff->setFormat((RTformat)GraphicsSettings::bufferFormat);
+	}
+	else
+		buff = ctx->createBuffer(RT_BUFFER_OUTPUT, (RTformat)GraphicsSettings::bufferFormat, GraphicsSettings::bufferWidth, GraphicsSettings::bufferHeight);
 
-	//Buffer buff = ctx->createBuffer(RT_BUFFER_OUTPUT, RT_FORMAT_UNSIGNED_BYTE4, width, height);
-	Buffer buff = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
-	buff->setFormat(RT_FORMAT_UNSIGNED_BYTE4);
-	buff->setSize(width, height);
 	ctx["output_buffer"]->setBuffer(buff);
 
 	std::string path = pathToPTX("shaders.cu");
@@ -182,9 +180,10 @@ void Scene::createSceneGraph(const Labyrinth &lab)
 	parallelogram->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
 	parallelogram->setIntersectionProgram(ctx->createProgramFromPTXFile(pathFloor, "intersect"));
 
-	float3 anchor = make_float3(-64.0f, 0.01f, -64.0f);
-	float3 v1 = make_float3(128.0f, 0.0f, 0.0f);
-	float3 v2 = make_float3(0.0f, 0.0f, 128.0f);
+	float rw = lab.getRealWidth(), rh = lab.getRealHeight();
+	float3 anchor = make_float3(-rw / 2.0f, 0.01f, -rh / 2.0f);
+	float3 v1 = make_float3(rw, 0.0f, 0.0f);
+	float3 v2 = make_float3(0.0f, 0.0f, rh);
 	float3 normal = cross(v2, v1);
 	normal = normalize(normal);
 	float d = dot(normal, anchor);
@@ -221,7 +220,7 @@ void Scene::createSceneGraph(const Labyrinth &lab)
 
 void Scene::trace()
 {
-	ctx->launch(0, width, height);
+	ctx->launch(0, GraphicsSettings::bufferWidth, GraphicsSettings::bufferHeight);
 }
 
 void Scene::setCamera(const Camera &cam)

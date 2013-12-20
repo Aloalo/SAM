@@ -10,7 +10,7 @@
 class Scene
 {
 public:
-	Scene(int width, int height);
+	Scene(void);
 	~Scene(void);
 
 	void initialize(unsigned int GLBO);
@@ -19,13 +19,10 @@ public:
 	optix::Buffer getBuffer();
 	void setBufferSize(int w, int h);
 	void setCamera(const Camera &cam);
-	unsigned int getWidth() const;
-	unsigned int getHeight() const;
 
 private:
 	void createMaterials();
 	optix::Context ctx;
-	unsigned int width, height;
 	std::map<int, optix::Material> materials;
 };
 
