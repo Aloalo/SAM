@@ -30,7 +30,7 @@ private:
 	bool outOfBounds(int x, int y) const;
 
 	Box xBox, yBox;
-	float cellDim;
+	float cellDim, crackDim;
 	int width, height;
 	int maze[200][200];
 	std::vector<std::pair<std::pair<int, int>, std::pair<int, int> > > wallList;

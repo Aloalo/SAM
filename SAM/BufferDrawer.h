@@ -1,6 +1,7 @@
 #pragma once
 
-#include <GL/glew.h>
+#include "Texture2D.h"
+#include "BufferObject.h"
 #include "Macros.h"
 #include <optix_world.h>
 
@@ -14,10 +15,14 @@ public:
 	BufferDrawer(void);
 	~BufferDrawer(void);
 	
+	unsigned int createGLBuffer(int width, int height);
 	void init(const optix::Buffer &buffer);
 	void draw(optix::Buffer &buffer);
 
 private:
 	GLenum glDataType;
 	GLenum glFormat;
+	GLenum glTextureFormat;
+	Texture2D tex;
+	BufferObject vbo;
 };

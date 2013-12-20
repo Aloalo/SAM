@@ -21,4 +21,6 @@ namespace utils
 
 	std::string pathToPTX(const std::string &filename);
 	bool equals(const optix::float3 &x, const optix::float3 &y);
+	bool equals(float x, float y);
+	void print(const optix::float3 &x);
 };

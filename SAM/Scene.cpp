@@ -15,9 +15,18 @@ Scene::Scene(int width, int height)
 
 Scene::~Scene(void)
 {
-	ctx->destroy();
+	//ctx->destroy();
 }
 
+unsigned int Scene::getWidth() const
+{
+	return width;
+}
+
+unsigned int Scene::getHeight() const
+{
+	return height;
+}
 
 Buffer Scene::getBuffer()
 {
@@ -31,7 +40,7 @@ void Scene::setBufferSize(int w, int h)
 	ctx["output_buffer"]->getBuffer()->setSize(width, height);
 }
 
-void Scene::initialize()
+void Scene::initialize(unsigned int GLBO)
 {
 	ctx = Context::create();
 
@@ -46,7 +55,10 @@ void Scene::initialize()
 	ctx["importance_cutoff"]->setFloat(0.01f);
 	ctx["ambient_light_color"]->setFloat(0.3f, 0.3f, 0.3f);
 
-	Buffer buff = ctx->createBuffer(RT_BUFFER_OUTPUT, RT_FORMAT_UNSIGNED_BYTE4, width, height);
+	//Buffer buff = ctx->createBuffer(RT_BUFFER_OUTPUT, RT_FORMAT_UNSIGNED_BYTE4, width, height);
+	Buffer buff = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
+	buff->setFormat(RT_FORMAT_UNSIGNED_BYTE4);
+	buff->setSize(width, height);
 	ctx["output_buffer"]->setBuffer(buff);
 
 	std::string path = pathToPTX("shaders.cu");
@@ -191,12 +203,20 @@ void Scene::createSceneGraph(const Labyrinth &lab)
 	geometrygroup->setChildCount(gis.size());
 	for(int i = 0; i < gis.size(); ++i)
 		geometrygroup->setChild(i, gis[i]);
-	geometrygroup->setAcceleration(ctx->createAcceleration("NoAccel","NoAccel"));
+	geometrygroup->setAcceleration(ctx->createAcceleration("Sbvh","Bvh"));
 
 	ctx["top_object"]->set(geometrygroup);
 
-	ctx->validate();
-	ctx->compile();
+	try
+	{
+		ctx->validate();
+		ctx->compile();
+	}
+	catch(optix::Exception ex)
+	{
+		printf("%s\n", ex.what());
+		exit(0);
+	}
 }
 
 void Scene::trace()

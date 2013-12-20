@@ -6,7 +6,7 @@
 	.func _ZN5optix16rt_undefined_useEi (.reg .u32 %ra1)
 
 	//-----------------------------------------------------------
-	// Compiling C:/Users/Jure/AppData/Local/Temp/tmpxft_00000ba0_00000000-12_shaders.cpp3.i (C:/Users/Jure/AppData/Local/Temp/ccBI#.a05816)
+	// Compiling C:/Users/Jure/AppData/Local/Temp/tmpxft_00000b60_00000000-12_shaders.cpp3.i (C:/Users/Jure/AppData/Local/Temp/ccBI#.a04512)
 	//-----------------------------------------------------------
 
 	//-----------------------------------------------------------
@@ -18,13 +18,13 @@
 	//  -m2	(Report advisories)
 	//-----------------------------------------------------------
 
-	.file	1	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00000ba0_00000000-11_shaders.cudafe2.gpu"
+	.file	1	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00000b60_00000000-11_shaders.cudafe2.gpu"
 	.file	2	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal\optix_defines.h"
 	.file	3	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optix_device.h"
 	.file	4	"d:\stuff\projects\sam\sam\lights.h"
 	.file	5	"d:\stuff\projects\sam\sam\helper.h"
 	.file	6	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_datatypes.h"
-	.file	7	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00000ba0_00000000-2_shaders.cudafe1.gpu"
+	.file	7	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00000b60_00000000-2_shaders.cudafe1.gpu"
 	.file	8	"D:\Program Files\Microsoft Visual Studio 11.0\VC\include\crtdefs.h"
 	.file	9	"D:/Program Files/NVIDIA GPU Computing/include\crt/device_runtime.h"
 	.file	10	"D:/Program Files/NVIDIA GPU Computing/include\host_defines.h"

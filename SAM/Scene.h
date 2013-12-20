@@ -13,12 +13,14 @@ public:
 	Scene(int width, int height);
 	~Scene(void);
 
-	void initialize();
+	void initialize(unsigned int GLBO);
 	void createSceneGraph(const Labyrinth &lab);
 	void trace();
 	optix::Buffer getBuffer();
 	void setBufferSize(int w, int h);
 	void setCamera(const Camera &cam);
+	unsigned int getWidth() const;
+	unsigned int getHeight() const;
 
 private:
 	void createMaterials();

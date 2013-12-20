@@ -91,10 +91,10 @@ void GameEngine::update(float deltaTime)
 
 void GameEngine::initDrawing()
 {
-	scene.initialize();
+	scene.initialize(drawer.createGLBuffer(scene.getWidth(), scene.getHeight()));
 
 	Labyrinth lab;
-	lab.generateLabyrinth(10, 10);
+	lab.generateLabyrinth(20, 20);
 	scene.createSceneGraph(lab);
 	scene.setCamera(player.getCam());
 	drawer.init(scene.getBuffer());

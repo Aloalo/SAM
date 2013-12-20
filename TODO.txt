@@ -1,15 +1,16 @@
 TODO:
 
+-velicina poda jednaka labirintu
 -glatki mis
--popraviti cudnu kameru
 -zidovi labirinta
 -shadeing tweakovi
 
+-popraviti cudnu kameru??
+-zamjeniti paralelogram s pravokutnikom??
+
 Optimizacije:
 
--spajanje istih zidova
--akceleracijske strukture
--OGL interop
+-OGL interop: resize(buffer size), usporediti sa starim, element size
 -low level optimizacije
 
 -game settings
