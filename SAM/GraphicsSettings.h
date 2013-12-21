@@ -6,23 +6,11 @@
 struct GraphicsSettings
 {
 	GraphicsSettings(void);
+	GraphicsSettings(const std::string &path);
 
-	static unsigned int maxBufferWidth;
-	static unsigned int maxBufferHeight;
-	static unsigned int bufferWidth;
-	static unsigned int bufferHeight;
-	static unsigned int screenWidth;
-	static unsigned int screenHeight;
-
-	static bool useVBO;
-	static bool choosePTXversion;
-
-	static unsigned int bufferFormat;
-
-	//static bool castShadows;
-
-	static void readSettingsFromFile(const std::string &path);
+	unsigned int& operator[](const std::string &variableName);
 private:
-	static std::map<std::string, unsigned int> format;
+	std::map<std::string, unsigned int> settings;
+	std::map<std::string, unsigned int> format;
 };
 

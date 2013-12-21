@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "Utils.h"
 #include "lights.h"
-#include "GraphicsSettings.h"
+#include "Settings.h"
 
 using namespace optix;
 using namespace utils;
@@ -26,10 +26,10 @@ Buffer Scene::getBuffer()
 void Scene::setBufferSize(int w, int h)
 {
 	w = max(1, w);
-	w = min(w, GraphicsSettings::maxBufferWidth);
+	w = min(w, Settings::GS["maxBufferWidth"]);
 	
 	h = max(1, h);
-	h = min(h, GraphicsSettings::maxBufferHeight);
+	h = min(h, Settings::GS["maxBufferHeight"]);
 	ctx["output_buffer"]->getBuffer()->setSize(w, h);
 }
 
@@ -48,14 +48,14 @@ void Scene::initialize(unsigned int GLBO)
 	ctx["importance_cutoff"]->setFloat(0.01f);
 	ctx["ambient_light_color"]->setFloat(0.3f, 0.3f, 0.3f);
 	Buffer buff;
-	if(GraphicsSettings::useVBO)
+	if(Settings::GS["useVBO"])
 	{
 		buff = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
-		buff->setSize(GraphicsSettings::bufferWidth, GraphicsSettings::bufferHeight);
-		buff->setFormat((RTformat)GraphicsSettings::bufferFormat);
+		buff->setSize(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
+		buff->setFormat((RTformat)Settings::GS["bufferFormat"]);
 	}
 	else
-		buff = ctx->createBuffer(RT_BUFFER_OUTPUT, (RTformat)GraphicsSettings::bufferFormat, GraphicsSettings::bufferWidth, GraphicsSettings::bufferHeight);
+		buff = ctx->createBuffer(RT_BUFFER_OUTPUT, (RTformat)Settings::GS["bufferFormat"], Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
 
 	ctx["output_buffer"]->setBuffer(buff);
 
@@ -72,7 +72,7 @@ void Scene::initialize(unsigned int GLBO)
 
 	BasicLight lights[] = 
 	{ 
-		{make_float3( -5.0f, 60.0f, -16.0f ), make_float3( 1.0f, 1.0f, 1.0f ), 1}
+		{make_float3(-5.0f, 60.0f, -16.0f), make_float3(1.0f, 1.0f, 1.0f), 1}
 	};
 
 	Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT);
@@ -174,35 +174,26 @@ void Scene::createSceneGraph(const Labyrinth &lab)
 		gis.push_back(ctx->createGeometryInstance(box, &materials[walls[i].matIdx], &materials[walls[i].matIdx]+1));
 	}
 
-	std::string pathFloor = pathToPTX("parallelogram.cu");
-	Geometry parallelogram = ctx->createGeometry();
-	parallelogram->setPrimitiveCount(1);
-	parallelogram->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
-	parallelogram->setIntersectionProgram(ctx->createProgramFromPTXFile(pathFloor, "intersect"));
+	std::string pathFloor = pathToPTX("rectangleAA.cu");
+	Geometry floor = ctx->createGeometry();
+	floor->setPrimitiveCount(1);
+	floor->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
+	floor->setIntersectionProgram(ctx->createProgramFromPTXFile(pathFloor, "intersect"));
 
 	float rw = lab.getRealWidth(), rh = lab.getRealHeight();
-	float3 anchor = make_float3(-rw / 2.0f, 0.01f, -rh / 2.0f);
-	float3 v1 = make_float3(rw, 0.0f, 0.0f);
-	float3 v2 = make_float3(0.0f, 0.0f, rh);
-	float3 normal = cross(v2, v1);
-	normal = normalize(normal);
-	float d = dot(normal, anchor);
-	v1 *= 1.0f / dot(v1, v1);
-	v2 *= 1.0f / dot(v2, v2);
-	float4 plane = make_float4(normal, d);
-	parallelogram["plane"]->setFloat(plane);
-	parallelogram["v1"]->setFloat(v1);
-	parallelogram["v2"]->setFloat(v2);
-	parallelogram["anchor"]->setFloat(anchor);
+	floor["plane_normal"]->setFloat(0.0f, 1.0f, 0.0f);
+	floor["recmin"]->setFloat(-rw / 2.0f, 0.0f, -rh / 2.0f);
+	floor["recmax"]->setFloat(rw / 2.0f, 0.0f, rh / 2.0f);
 
-	gis.push_back(ctx->createGeometryInstance(parallelogram, &materials[FLOOR], &materials[FLOOR]+1));
+	gis.push_back(ctx->createGeometryInstance(floor, &materials[FLOOR], &materials[FLOOR]+1));
 
 	// Place all in group
 	GeometryGroup geometrygroup = ctx->createGeometryGroup();
 	geometrygroup->setChildCount(gis.size());
 	for(int i = 0; i < gis.size(); ++i)
 		geometrygroup->setChild(i, gis[i]);
-	geometrygroup->setAcceleration(ctx->createAcceleration("Sbvh","Bvh"));
+	geometrygroup->setAcceleration(ctx->createAcceleration("Sbvh", "Bvh"));
+	//geometrygroup->setAcceleration(ctx->createAcceleration("NoAccel", "NoAccel"));
 
 	ctx["top_object"]->set(geometrygroup);
 
@@ -220,7 +211,7 @@ void Scene::createSceneGraph(const Labyrinth &lab)
 
 void Scene::trace()
 {
-	ctx->launch(0, GraphicsSettings::bufferWidth, GraphicsSettings::bufferHeight);
+	ctx->launch(0, Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
 }
 
 void Scene::setCamera(const Camera &cam)

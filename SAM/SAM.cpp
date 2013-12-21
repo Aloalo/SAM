@@ -2,13 +2,13 @@
 #include "Engine.h"
 #include "Input.h"
 #include "GameEngine.h"
-#include "GraphicsSettings.h"
+#include "Settings.h"
 
 int main()
 {
-	GraphicsSettings::readSettingsFromFile("GraphicsSettings.ini");
+	Settings::GS = GraphicsSettings("SAM/GraphicsSettings.ini");
 	
-	Engine e(1. / 60., GraphicsSettings::screenWidth, GraphicsSettings::screenHeight);
+	Engine e(1. / 60., Settings::GS["screenWidth"], Settings::GS["screenHeight"]);
 	Input input;
 
 	std::shared_ptr<GameEngine> ptr(new GameEngine());

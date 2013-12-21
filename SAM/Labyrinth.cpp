@@ -146,7 +146,7 @@ void Labyrinth::generateGeometry()
 			addBox(xBox.translated(translateVec, rand() % 3));
 		}
 	}
-	printf("%d %d\n", wallList.size(), boxVec.size());
+	printf("%d %d\n", wallList.size() + 4, boxVec.size());
 }
 
 void Labyrinth::addBox(const Box &box)

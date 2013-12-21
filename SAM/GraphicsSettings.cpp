@@ -4,29 +4,24 @@
 #include <fstream>
 #include <sstream>
 #include <optix_world.h>
+#include <GL/glew.h>
 
 using namespace std;
 
-unsigned int GraphicsSettings::maxBufferWidth;
-unsigned int GraphicsSettings::maxBufferHeight;
-unsigned int GraphicsSettings::bufferWidth;
-unsigned int GraphicsSettings::bufferHeight;
-unsigned int GraphicsSettings::screenWidth;
-unsigned int GraphicsSettings::screenHeight;
 
-bool GraphicsSettings::useVBO;
-bool GraphicsSettings::choosePTXversion;
+GraphicsSettings::GraphicsSettings(void)
+{
+}
 
-unsigned int GraphicsSettings::bufferFormat;
-
-map<string, unsigned int> GraphicsSettings::format;
-
-void GraphicsSettings::readSettingsFromFile(const string &path)
+GraphicsSettings::GraphicsSettings(const string &path)
 {
 	format["RT_FORMAT_UNSIGNED_BYTE4"] = RT_FORMAT_UNSIGNED_BYTE4;
 	format["RT_FORMAT_FLOAT"] = RT_FORMAT_FLOAT;
 	format["RT_FORMAT_FLOAT3"] = RT_FORMAT_FLOAT4;
 	format["RT_FORMAT_FLOAT4"] = RT_FORMAT_FLOAT4;
+	
+	format["GL_NEAREST"] = GL_NEAREST;
+	format["GL_LINEAR"] = GL_LINEAR;
 
 	ifstream f(path);
 	if(f.is_open())
@@ -35,27 +30,21 @@ void GraphicsSettings::readSettingsFromFile(const string &path)
 		{
 			while(!f.eof())
 			{
-				std::string name, value;
+				string name, value;
 				f >> name;
-				f >> value;
-				if(name == "maxBufferWidth")
-					maxBufferWidth = std::stoi(value);
-				else if(name == "maxBufferHeight")
-					maxBufferHeight = std::stoi(value);
-				else if(name == "bufferWidth")
-					bufferWidth = std::stoi(value);
-				else if(name == "bufferHeight")
-					bufferHeight = std::stoi(value);
-				else if(name == "screenWidth")
-					screenWidth = std::stoi(value);
-				else if(name == "screenHeight")
-					screenHeight = std::stoi(value);
-				else if(name == "useVBO")
-					useVBO = std::stoi(value);
-				else if(name == "choosePTXversion")
-					choosePTXversion = std::stoi(value);
-				else if(name == "bufferFormat")
-					bufferFormat = format[value];
+				if(name.substr(0, 1) == "#")
+				{
+					f >> value;
+					name = name.substr(1);
+					try
+					{
+						settings[name] = stoi(value);
+					}
+					catch(exception ex)
+					{
+						settings[name] = format[value];
+					}
+				}
 			}
 		}
 		catch(std::exception *ex)
@@ -71,9 +60,15 @@ void GraphicsSettings::readSettingsFromFile(const string &path)
 	}
 	f.close();
 
-	if(!useVBO)
+	if(!settings["useVBO"])
 	{
-		screenHeight = bufferHeight;
-		screenWidth = bufferWidth;
+		settings["screenHeight"] = settings["bufferHeight"];
+		settings["screenWidth"] = settings["bufferWidth"];
 	}
+}
+
+
+unsigned int& GraphicsSettings::operator[](const string &variableName)
+{
+	return settings[variableName];
 }

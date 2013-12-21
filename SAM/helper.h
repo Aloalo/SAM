@@ -8,10 +8,25 @@ using namespace optix;
 
 #define FLT_MAX 1e30;
 __constant__ float pi = 3.1415926;
+__constant__ float EPS = 1e-4;
+
+static __device__ __inline__ bool equals(float x, float y)
+{
+	return abs(x - y) < EPS;
+}
+
+static __device__ __inline__ bool isBetween(const float3 &a, const float3 &b, const float3 &x)
+{
+	if((equals(a.x, x.x) || x.x > a.x) && (equals(b.x, x.x) || x.x < b.x)
+		&& (equals(a.y, x.y) || x.y > a.y) && (equals(b.y, x.y) || x.y < b.y)
+		 && (equals(a.z, x.z) || x.z > a.z) && (equals(b.z, x.z) || x.z < b.z))
+		 return true;
+	return false;
+}
 
 static __device__ __inline__ float3 exp(const float3 &x)
 {
-	return make_float3(exp(x.x), exp(x.y), exp(x.z));
+	return make_float3(expf(x.x), expf(x.y), expf(x.z));
 }
 
 static __device__ __inline__ float3 schlick(float nDi, const float3 &rgb)

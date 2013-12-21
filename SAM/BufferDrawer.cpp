@@ -1,6 +1,6 @@
 #include "BufferDrawer.h"
 #include "Engine.h"
-#include "GraphicsSettings.h"
+#include "Settings.h"
 
 using namespace optix;
 using namespace glm;
@@ -20,13 +20,13 @@ BufferDrawer::~BufferDrawer(void)
 unsigned int BufferDrawer::createGLBuffer(int width, int height)
 {
 	vbo.bind();
-	vbo.setData(0, GraphicsSettings::maxBufferHeight * GraphicsSettings::maxBufferWidth * sizeof(float4));
+	vbo.setData(0, Settings::GS["maxBufferHeight"] * Settings::GS["maxBufferHeight"] * sizeof(float4));
 	return vbo.getID();
 }
 
 void BufferDrawer::init(const Buffer &buffer)
 {
-	switch (GraphicsSettings::bufferFormat)
+	switch (Settings::GS["bufferFormat"])
 	{
 	case RT_FORMAT_UNSIGNED_BYTE4:
 		glDataType = GL_UNSIGNED_BYTE;
@@ -53,11 +53,11 @@ void BufferDrawer::init(const Buffer &buffer)
 		exit(-1);
 		break;
 	}
-	if(GraphicsSettings::useVBO)
+	if(Settings::GS["useVBO"])
 	{
 		tex.bind();
-		tex.texParami(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		tex.texParami(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		tex.texParami(GL_TEXTURE_MAG_FILTER, Settings::GS["textureFilter"]);
+		tex.texParami(GL_TEXTURE_MIN_FILTER, Settings::GS["textureFilter"]);
 		tex.texParami(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		tex.texParami(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
@@ -84,13 +84,13 @@ void BufferDrawer::draw(optix::Buffer &buffer)
 {
 	try
 	{
-		if(GraphicsSettings::useVBO)
+		if(Settings::GS["useVBO"])
 		{
-			tex.texImage(0, glTextureFormat, vec3(GraphicsSettings::bufferWidth, GraphicsSettings::bufferHeight, 0), glFormat, glDataType, 0);
+			tex.texImage(0, glTextureFormat, vec3(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"], 0), glFormat, glDataType, 0);
 			glEnable(GL_TEXTURE_2D);
 			{
-				float u = 0.5f / (float)GraphicsSettings::screenWidth;
-				float v = 0.5f / (float)GraphicsSettings::screenHeight;
+				float u = 0.5f / (float)Settings::GS["screenWidth"];
+				float v = 0.5f / (float)Settings::GS["screenHeight"];
 
 				glBegin(GL_QUADS);
 				{
@@ -110,7 +110,7 @@ void BufferDrawer::draw(optix::Buffer &buffer)
 		else
 		{
 			GLvoid *data = buffer->map();
-			glDrawPixels(GraphicsSettings::bufferWidth, GraphicsSettings::bufferHeight, glFormat, glDataType, data);
+			glDrawPixels(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"], glFormat, glDataType, data);
 			buffer->unmap();
 		}
 	}

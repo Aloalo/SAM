@@ -6,12 +6,9 @@ rtDeclareVariable(float4, plane, , );
 rtDeclareVariable(float3, v1, , );
 rtDeclareVariable(float3, v2, , );
 rtDeclareVariable(float3, anchor, , );
-rtDeclareVariable(int, lgt_instance, , ) = {0};
-
-rtDeclareVariable(float3, texcoord, attribute texcoord, ); 
+ 
 rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, ); 
-rtDeclareVariable(float3, shading_normal, attribute shading_normal, ); 
-rtDeclareVariable(int, lgt_idx, attribute lgt_idx, ); 
+rtDeclareVariable(float3, shading_normal, attribute shading_normal, );
 rtDeclareVariable(optix::Ray, ray, rtCurrentRay, );
 
 RT_PROGRAM void intersect(int primIdx)
@@ -32,8 +29,6 @@ RT_PROGRAM void intersect(int primIdx)
 				if(rtPotentialIntersection(t))
 				{
 					shading_normal = geometric_normal = n;
-					texcoord = make_float3(a1, a2, 0);
-					lgt_idx = lgt_instance;
 					rtReportIntersection(0);
 				}
 			}
@@ -56,8 +51,8 @@ RT_PROGRAM void bounds(int, float result[6])
 
 	if(area > 0.0f && !isinf(area))
 	{
-		aabb->m_min = fminf(fminf( p00, p01 ), fminf( p10, p11 ));
-		aabb->m_max = fmaxf(fmaxf( p00, p01 ), fmaxf( p10, p11 ));
+		aabb->m_min = fminf(fminf(p00, p01), fminf(p10, p11));
+		aabb->m_max = fmaxf(fmaxf(p00, p01), fmaxf(p10, p11));
 	}
 	else
 		aabb->invalidate();
