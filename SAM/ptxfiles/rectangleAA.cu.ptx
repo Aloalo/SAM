@@ -1,0 +1,317 @@
+	.version 1.4
+	.target sm_10, map_f64_to_f32
+	// compiled with D:\Program Files\NVIDIA GPU Computing\bin/../open64/lib//be.exe
+	// nvopencc 4.1 built on 2013-07-10
+
+	//-----------------------------------------------------------
+	// Compiling C:/Users/Jure/AppData/Local/Temp/tmpxft_000007fc_00000000-12_rectangleAA.cpp3.i (C:/Users/Jure/AppData/Local/Temp/ccBI#.a05484)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:sm_10, Endian:little, Pointer Size:32
+	//  -O3	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"C:/Users/Jure/AppData/Local/Temp/tmpxft_000007fc_00000000-11_rectangleAA.cudafe2.gpu"
+	.file	2	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_datatypes.h"
+	.file	3	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optixu/optixu_aabb_namespace.h"
+	.file	4	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal\optix_defines.h"
+	.file	5	"C:/Users/Jure/AppData/Local/Temp/tmpxft_000007fc_00000000-2_rectangleAA.cudafe1.gpu"
+	.file	6	"D:\Program Files\Microsoft Visual Studio 11.0\VC\include\crtdefs.h"
+	.file	7	"D:/Program Files/NVIDIA GPU Computing/include\crt/device_runtime.h"
+	.file	8	"D:/Program Files/NVIDIA GPU Computing/include\host_defines.h"
+	.file	9	"D:/Program Files/NVIDIA GPU Computing/include\builtin_types.h"
+	.file	10	"d:\program files\nvidia gpu computing\include\device_types.h"
+	.file	11	"d:\program files\nvidia gpu computing\include\host_defines.h"
+	.file	12	"d:\program files\nvidia gpu computing\include\driver_types.h"
+	.file	13	"d:\program files\nvidia gpu computing\include\surface_types.h"
+	.file	14	"d:\program files\nvidia gpu computing\include\texture_types.h"
+	.file	15	"d:\program files\nvidia gpu computing\include\vector_types.h"
+	.file	16	"d:\program files\nvidia gpu computing\include\builtin_types.h"
+	.file	17	"D:/Program Files/NVIDIA GPU Computing/include\device_launch_parameters.h"
+	.file	18	"d:\program files\nvidia gpu computing\include\crt\storage_class.h"
+	.file	19	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optix_device.h"
+	.file	20	"d:\stuff\projects\sam\sam\helper.h"
+	.file	21	"D:/STUFF/projects/SAM/SAM/rectangleAA.cu"
+	.file	22	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_internal.h"
+	.file	23	"D:/Program Files/NVIDIA GPU Computing/include\common_functions.h"
+	.file	24	"d:\program files\nvidia gpu computing\include\math_functions.h"
+	.file	25	"d:\program files\nvidia gpu computing\include\math_constants.h"
+	.file	26	"d:\program files\nvidia gpu computing\include\device_functions.h"
+	.file	27	"d:\program files\nvidia gpu computing\include\sm_11_atomic_functions.h"
+	.file	28	"d:\program files\nvidia gpu computing\include\sm_12_atomic_functions.h"
+	.file	29	"d:\program files\nvidia gpu computing\include\sm_13_double_functions.h"
+	.file	30	"d:\program files\nvidia gpu computing\include\sm_20_atomic_functions.h"
+	.file	31	"d:\program files\nvidia gpu computing\include\sm_32_atomic_functions.h"
+	.file	32	"d:\program files\nvidia gpu computing\include\sm_35_atomic_functions.h"
+	.file	33	"d:\program files\nvidia gpu computing\include\sm_20_intrinsics.h"
+	.file	34	"d:\program files\nvidia gpu computing\include\sm_30_intrinsics.h"
+	.file	35	"d:\program files\nvidia gpu computing\include\sm_32_intrinsics.h"
+	.file	36	"d:\program files\nvidia gpu computing\include\sm_35_intrinsics.h"
+	.file	37	"d:\program files\nvidia gpu computing\include\surface_functions.h"
+	.file	38	"d:\program files\nvidia gpu computing\include\texture_fetch_functions.h"
+	.file	39	"d:\program files\nvidia gpu computing\include\texture_indirect_functions.h"
+	.file	40	"d:\program files\nvidia gpu computing\include\surface_indirect_functions.h"
+	.file	41	"d:\program files\nvidia gpu computing\include\math_functions_dbl_ptx1.h"
+
+	.global .align 16 .b8 plane_normal[12];
+	.global .align 16 .b8 recmin[12];
+	.global .align 4 .b8 recmax[12];
+	.global .align 16 .b8 geometric_normal[12];
+	.global .align 16 .b8 shading_normal[12];
+	.global .align 16 .b8 ray[36];
+	.const .f32 EPS = 0f38d1b717 /* 0.0001 */;
+
+	.entry _Z9intersecti (
+		.param .s32 __cudaparm__Z9intersecti_primIdx)
+	{
+	.reg .u32 %r<28>;
+	.reg .f32 %f<49>;
+	.reg .pred %p<23>;
+	.loc	21	14	0
+$LDWbegin__Z9intersecti:
+	ld.global.v4.f32 	{%f1,%f2,%f3,%f4}, [ray+0];
+	ld.global.v4.f32 	{%f5,%f6,%f7,_}, [recmin+0];
+	.loc	21	16	0
+	sub.f32 	%f8, %f6, %f2;
+	sub.f32 	%f9, %f5, %f1;
+	sub.f32 	%f10, %f7, %f3;
+	ld.global.v2.f32 	{%f11,%f12}, [ray+16];
+	ld.global.v4.f32 	{%f13,%f14,%f15,_}, [plane_normal+0];
+	mul.f32 	%f16, %f11, %f14;
+	mul.f32 	%f17, %f8, %f14;
+	mad.f32 	%f18, %f13, %f4, %f16;
+	mad.f32 	%f19, %f13, %f9, %f17;
+	mad.f32 	%f20, %f15, %f12, %f18;
+	mad.f32 	%f21, %f15, %f10, %f19;
+	div.full.f32 	%f22, %f21, %f20;
+	ld.global.f32 	%f23, [ray+32];
+	set.gt.u32.f32 	%r1, %f23, %f22;
+	neg.s32 	%r2, %r1;
+	ld.global.f32 	%f24, [ray+28];
+	set.lt.u32.f32 	%r3, %f24, %f22;
+	neg.s32 	%r4, %r3;
+	and.b32 	%r5, %r2, %r4;
+	mov.u32 	%r6, 0;
+	setp.eq.s32 	%p1, %r5, %r6;
+	@%p1 bra 	$Lt_0_12290;
+	.loc	20	30	0
+	mul.f32 	%f25, %f22, %f4;
+	add.f32 	%f26, %f25, %f1;
+	ld.const.f32 	%f27, [EPS];
+	sub.f32 	%f28, %f5, %f26;
+	abs.f32 	%f29, %f28;
+	setp.gt.f32 	%p2, %f27, %f29;
+	@%p2 bra 	$L_0_7170;
+	setp.gt.f32 	%p3, %f26, %f5;
+	@!%p3 bra 	$L_0_6914;
+$L_0_7170:
+	mov.s32 	%r7, 1;
+	bra.uni 	$L_0_6658;
+$L_0_6914:
+	mov.s32 	%r7, 0;
+$L_0_6658:
+	mov.u32 	%r8, 0;
+	setp.eq.s32 	%p4, %r7, %r8;
+	@%p4 bra 	$Lt_0_15106;
+	ld.global.f32 	%f30, [recmax+0];
+	sub.f32 	%f31, %f30, %f26;
+	abs.f32 	%f32, %f31;
+	setp.gt.f32 	%p5, %f27, %f32;
+	@%p5 bra 	$L_0_7938;
+	setp.lt.f32 	%p6, %f26, %f30;
+	@!%p6 bra 	$L_0_7682;
+$L_0_7938:
+	mov.s32 	%r9, 1;
+	bra.uni 	$L_0_7426;
+$L_0_7682:
+	mov.s32 	%r9, 0;
+$L_0_7426:
+	mov.u32 	%r10, 0;
+	setp.eq.s32 	%p7, %r9, %r10;
+	@%p7 bra 	$Lt_0_15106;
+	mul.f32 	%f33, %f22, %f11;
+	add.f32 	%f34, %f33, %f2;
+	sub.f32 	%f35, %f6, %f34;
+	abs.f32 	%f36, %f35;
+	setp.gt.f32 	%p8, %f27, %f36;
+	@%p8 bra 	$L_0_8706;
+	setp.gt.f32 	%p9, %f34, %f6;
+	@!%p9 bra 	$L_0_8450;
+$L_0_8706:
+	mov.s32 	%r11, 1;
+	bra.uni 	$L_0_8194;
+$L_0_8450:
+	mov.s32 	%r11, 0;
+$L_0_8194:
+	mov.u32 	%r12, 0;
+	setp.eq.s32 	%p10, %r11, %r12;
+	@%p10 bra 	$Lt_0_15106;
+	ld.global.f32 	%f37, [recmax+4];
+	sub.f32 	%f38, %f37, %f34;
+	abs.f32 	%f39, %f38;
+	setp.gt.f32 	%p11, %f27, %f39;
+	@%p11 bra 	$L_0_9474;
+	setp.lt.f32 	%p12, %f34, %f37;
+	@!%p12 bra 	$L_0_9218;
+$L_0_9474:
+	mov.s32 	%r13, 1;
+	bra.uni 	$L_0_8962;
+$L_0_9218:
+	mov.s32 	%r13, 0;
+$L_0_8962:
+	mov.u32 	%r14, 0;
+	setp.eq.s32 	%p13, %r13, %r14;
+	@%p13 bra 	$Lt_0_15106;
+	mul.f32 	%f40, %f22, %f12;
+	add.f32 	%f41, %f40, %f3;
+	sub.f32 	%f42, %f7, %f41;
+	abs.f32 	%f43, %f42;
+	setp.gt.f32 	%p14, %f27, %f43;
+	@%p14 bra 	$L_0_10242;
+	setp.gt.f32 	%p15, %f41, %f7;
+	@!%p15 bra 	$L_0_9986;
+$L_0_10242:
+	mov.s32 	%r15, 1;
+	bra.uni 	$L_0_9730;
+$L_0_9986:
+	mov.s32 	%r15, 0;
+$L_0_9730:
+	mov.u32 	%r16, 0;
+	setp.eq.s32 	%p16, %r15, %r16;
+	@%p16 bra 	$Lt_0_15106;
+	ld.global.f32 	%f44, [recmax+8];
+	sub.f32 	%f45, %f44, %f41;
+	abs.f32 	%f46, %f45;
+	setp.gt.f32 	%p17, %f27, %f46;
+	@%p17 bra 	$L_0_11010;
+	setp.lt.f32 	%p18, %f41, %f44;
+	@!%p18 bra 	$L_0_10754;
+$L_0_11010:
+	mov.s32 	%r17, 1;
+	bra.uni 	$L_0_10498;
+$L_0_10754:
+	mov.s32 	%r17, 0;
+$L_0_10498:
+	mov.u32 	%r18, 0;
+	setp.eq.s32 	%p19, %r17, %r18;
+	@%p19 bra 	$Lt_0_15106;
+	.loc	20	33	0
+	mov.s32 	%r19, 1;
+	bra.uni 	$LDWendi__ZN68_INTERNAL_46_tmpxft_000007fc_00000000_5_rectangleAA_cpp1_ii_40b6c2ed9isBetweenERK6float3S2_S2__243_1;
+$Lt_0_15106:
+$Lt_0_2050:
+	.loc	20	34	0
+	mov.s32 	%r19, 0;
+$LDWendi__ZN68_INTERNAL_46_tmpxft_000007fc_00000000_5_rectangleAA_cpp1_ii_40b6c2ed9isBetweenERK6float3S2_S2__243_1:
+	.loc	21	21	0
+	mov.u32 	%r20, 0;
+	setp.eq.s32 	%p20, %r19, %r20;
+	@%p20 bra 	$Lt_0_12290;
+	.loc	22	187	0
+	mov.f32 	%f47, %f22;
+	call (%r21), _rt_potential_intersection, (%f47);
+	mov.s32 	%r22, %r21;
+	.loc	21	22	0
+	mov.u32 	%r23, 0;
+	setp.eq.s32 	%p21, %r22, %r23;
+	@%p21 bra 	$Lt_0_12290;
+	st.global.v2.f32 	[geometric_normal+0], {%f13,%f14};
+	.loc	21	24	0
+	st.global.f32 	[geometric_normal+8], %f15;
+	st.global.v2.f32 	[shading_normal+0], {%f13,%f14};
+	st.global.f32 	[shading_normal+8], %f15;
+	.loc	22	197	0
+	mov.u32 	%r24, 0;
+	mov.u32 	%r25, %r24;
+	call (%r26), _rt_report_intersection, (%r25);
+$Lt_0_12290:
+$Lt_0_11778:
+$Lt_0_11266:
+	.loc	21	28	0
+	exit;
+$LDWend__Z9intersecti:
+	} // _Z9intersecti
+
+	.entry _Z6boundsiPf (
+		.param .s32 __cudaparm__Z6boundsiPf___T234,
+		.param .u32 __cudaparm__Z6boundsiPf_result)
+	{
+	.reg .u32 %r<3>;
+	.reg .f32 %f<8>;
+	.loc	21	30	0
+$LDWbegin__Z6boundsiPf:
+	.loc	21	33	0
+	ld.param.u32 	%r1, [__cudaparm__Z6boundsiPf_result];
+	ld.global.v4.f32 	{%f1,%f2,%f3,_}, [recmin+0];
+	st.global.f32 	[%r1+0], %f1;
+	st.global.f32 	[%r1+4], %f2;
+	st.global.f32 	[%r1+8], %f3;
+	ld.global.f32 	%f4, [recmax+0];
+	st.global.f32 	[%r1+12], %f4;
+	ld.global.f32 	%f5, [recmax+4];
+	st.global.f32 	[%r1+16], %f5;
+	ld.global.f32 	%f6, [recmax+8];
+	st.global.f32 	[%r1+20], %f6;
+	.loc	21	34	0
+	exit;
+$LDWend__Z6boundsiPf:
+	} // _Z6boundsiPf
+	.global .u32 _ZN21rti_internal_register20reg_bitness_detectorE;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail0E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail1E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail2E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail3E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail4E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail5E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail6E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail7E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail8E;
+	.global .u64 _ZN21rti_internal_register24reg_exception_64_detail9E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail0E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail1E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail2E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail3E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail4E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail5E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail6E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail7E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail8E;
+	.global .u32 _ZN21rti_internal_register21reg_exception_detail9E;
+	.global .u32 _ZN21rti_internal_register14reg_rayIndex_xE;
+	.global .u32 _ZN21rti_internal_register14reg_rayIndex_yE;
+	.global .u32 _ZN21rti_internal_register14reg_rayIndex_zE;
+	.const .f32 pi = 0f40490fda /* 3.14159 */;
+	.global .align 4 .b8 _ZTVSt14error_category[36] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	.global .align 4 .b8 _ZTVSt23_Generic_error_category[36] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	.global .align 4 .b8 _ZTVSt24_Iostream_error_category[36] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	.global .align 4 .b8 _ZTVSt22_System_error_category[36] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo12plane_normalE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo6recminE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo6recmaxE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo16geometric_normalE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo14shading_normalE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo3rayE[8] = {82,97,121,0,36,0,0,0};
+	.global .align 1 .b8 _ZN21rti_internal_typename12plane_normalE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename6recminE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename6recmaxE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename16geometric_normalE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename14shading_normalE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename3rayE[11] = {0x6f,0x70,0x74,0x69,0x78,0x3a,0x3a,0x52,0x61,0x79,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic12plane_normalE[1] = {0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic6recminE[1] = {0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic6recmaxE[1] = {0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic16geometric_normalE[27] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x67,0x65,0x6f,0x6d,0x65,0x74,0x72,0x69,0x63,0x5f,0x6e,0x6f,0x72,0x6d,0x61,0x6c,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic14shading_normalE[25] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x73,0x68,0x61,0x64,0x69,0x6e,0x67,0x5f,0x6e,0x6f,0x72,0x6d,0x61,0x6c,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic3rayE[13] = {0x72,0x74,0x43,0x75,0x72,0x72,0x65,0x6e,0x74,0x52,0x61,0x79,0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation12plane_normalE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation6recminE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation6recmaxE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation16geometric_normalE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation14shading_normalE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation3rayE[1] = {0x0};
+

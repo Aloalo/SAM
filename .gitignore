@@ -39,6 +39,3 @@ _ReSharper*/
 *.vssscc
 $tf*/
 RenderingEngine*/
-ptxfiles*/
-*.cu.ptx
-*.ptx

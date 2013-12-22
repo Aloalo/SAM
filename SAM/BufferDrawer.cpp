@@ -20,7 +20,7 @@ BufferDrawer::~BufferDrawer(void)
 unsigned int BufferDrawer::createGLBuffer(int width, int height)
 {
 	vbo.bind();
-	vbo.setData(0, Settings::GS["maxBufferHeight"] * Settings::GS["maxBufferHeight"] * sizeof(float4));
+	vbo.setData(0, Settings::GS["maxBufferWidth"] * Settings::GS["maxBufferHeight"] * sizeof(float4));
 	return vbo.getID();
 }
 

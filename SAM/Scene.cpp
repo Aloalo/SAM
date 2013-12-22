@@ -56,8 +56,8 @@ void Scene::initialize(unsigned int GLBO)
 	if(Settings::GS["useVBO"])
 	{
 		buff = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
-		buff->setSize(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
 		buff->setFormat((RTformat)Settings::GS["bufferFormat"]);
+		buff->setSize(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
 	}
 	else
 		buff = ctx->createBuffer(RT_BUFFER_OUTPUT, (RTformat)Settings::GS["bufferFormat"], Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
@@ -204,7 +204,6 @@ void Scene::createSceneGraph(const Labyrinth &lab)
 	ctx["top_object"]->set(geometrygroup);
 
 	ctx->validate();
-	//ctx->compile();
 }
 
 void Scene::trace()
