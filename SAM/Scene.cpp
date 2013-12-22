@@ -59,6 +59,7 @@ void Scene::initialize(unsigned int GLBO)
 
 	ctx["output_buffer"]->setBuffer(buff);
 
+
 	std::string path = pathToPTX("shaders.cu");
 
 	ctx->setRayGenerationProgram(0, ctx->createProgramFromPTXFile(path, "pinhole_camera"));
@@ -197,16 +198,8 @@ void Scene::createSceneGraph(const Labyrinth &lab)
 
 	ctx["top_object"]->set(geometrygroup);
 
-	try
-	{
-		ctx->validate();
-		ctx->compile();
-	}
-	catch(optix::Exception ex)
-	{
-		printf("%s\n", ex.what());
-		exit(0);
-	}
+	ctx->validate();
+	//ctx->compile();
 }
 
 void Scene::trace()

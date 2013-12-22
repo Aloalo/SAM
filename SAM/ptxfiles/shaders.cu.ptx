@@ -1,12 +1,12 @@
 	.version 1.4
 	.target sm_10, map_f64_to_f32
-	// compiled with C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin/../open64/lib//be.exe
+	// compiled with D:\Program Files\NVIDIA GPU Computing\bin/../open64/lib//be.exe
 	// nvopencc 4.1 built on 2013-07-10
 
 	.func _ZN5optix16rt_undefined_useEi (.reg .u32 %ra1)
 
 	//-----------------------------------------------------------
-	// Compiling C:/Users/Jure/AppData/Local/Temp/tmpxft_000016e8_00000000-12_shaders.cpp3.i (C:/Users/Jure/AppData/Local/Temp/ccBI#.a05932)
+	// Compiling C:/Users/Jure/AppData/Local/Temp/tmpxft_00001320_00000000-12_shaders.cpp3.i (C:/Users/Jure/AppData/Local/Temp/ccBI#.a05184)
 	//-----------------------------------------------------------
 
 	//-----------------------------------------------------------
@@ -18,49 +18,49 @@
 	//  -m2	(Report advisories)
 	//-----------------------------------------------------------
 
-	.file	1	"C:/Users/Jure/AppData/Local/Temp/tmpxft_000016e8_00000000-11_shaders.cudafe2.gpu"
-	.file	2	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\internal\optix_defines.h"
-	.file	3	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\optix_device.h"
-	.file	4	"c:\users\jure\documents\github\sam\sam\lights.h"
-	.file	5	"c:\users\jure\documents\github\sam\sam\helper.h"
-	.file	6	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\internal/optix_datatypes.h"
-	.file	7	"C:/Users/Jure/AppData/Local/Temp/tmpxft_000016e8_00000000-2_shaders.cudafe1.gpu"
-	.file	8	"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\crtdefs.h"
-	.file	9	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\crt/device_runtime.h"
-	.file	10	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\host_defines.h"
-	.file	11	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\builtin_types.h"
-	.file	12	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\device_types.h"
-	.file	13	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\host_defines.h"
-	.file	14	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\driver_types.h"
-	.file	15	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_types.h"
-	.file	16	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_types.h"
-	.file	17	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\vector_types.h"
-	.file	18	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\builtin_types.h"
-	.file	19	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\device_launch_parameters.h"
-	.file	20	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\crt\storage_class.h"
-	.file	21	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\internal\../optix_sizet.h"
-	.file	22	"C:/Users/Jure/Documents/GitHub/SAM/SAM/shaders.cu"
-	.file	23	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\internal/optix_internal.h"
-	.file	24	"c:\program files (x86)\nvidia corporation\optix sdk 3.0.1\include\optixu\optixu_math_namespace.h"
-	.file	25	"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\common_functions.h"
-	.file	26	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_functions.h"
-	.file	27	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_constants.h"
-	.file	28	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\device_functions.h"
-	.file	29	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_11_atomic_functions.h"
-	.file	30	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_12_atomic_functions.h"
-	.file	31	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_13_double_functions.h"
-	.file	32	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_20_atomic_functions.h"
-	.file	33	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_32_atomic_functions.h"
-	.file	34	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_35_atomic_functions.h"
-	.file	35	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_20_intrinsics.h"
-	.file	36	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_30_intrinsics.h"
-	.file	37	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_32_intrinsics.h"
-	.file	38	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_35_intrinsics.h"
-	.file	39	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_functions.h"
-	.file	40	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_fetch_functions.h"
-	.file	41	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_indirect_functions.h"
-	.file	42	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_indirect_functions.h"
-	.file	43	"c:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_functions_dbl_ptx1.h"
+	.file	1	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00001320_00000000-11_shaders.cudafe2.gpu"
+	.file	2	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal\optix_defines.h"
+	.file	3	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optix_device.h"
+	.file	4	"d:\stuff\projects\sam\sam\lights.h"
+	.file	5	"d:\stuff\projects\sam\sam\helper.h"
+	.file	6	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_datatypes.h"
+	.file	7	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00001320_00000000-2_shaders.cudafe1.gpu"
+	.file	8	"D:\Program Files\Microsoft Visual Studio 11.0\VC\include\crtdefs.h"
+	.file	9	"D:/Program Files/NVIDIA GPU Computing/include\crt/device_runtime.h"
+	.file	10	"D:/Program Files/NVIDIA GPU Computing/include\host_defines.h"
+	.file	11	"D:/Program Files/NVIDIA GPU Computing/include\builtin_types.h"
+	.file	12	"d:\program files\nvidia gpu computing\include\device_types.h"
+	.file	13	"d:\program files\nvidia gpu computing\include\host_defines.h"
+	.file	14	"d:\program files\nvidia gpu computing\include\driver_types.h"
+	.file	15	"d:\program files\nvidia gpu computing\include\surface_types.h"
+	.file	16	"d:\program files\nvidia gpu computing\include\texture_types.h"
+	.file	17	"d:\program files\nvidia gpu computing\include\vector_types.h"
+	.file	18	"d:\program files\nvidia gpu computing\include\builtin_types.h"
+	.file	19	"D:/Program Files/NVIDIA GPU Computing/include\device_launch_parameters.h"
+	.file	20	"d:\program files\nvidia gpu computing\include\crt\storage_class.h"
+	.file	21	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal\../optix_sizet.h"
+	.file	22	"D:/STUFF/projects/SAM/SAM/shaders.cu"
+	.file	23	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_internal.h"
+	.file	24	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optixu\optixu_math_namespace.h"
+	.file	25	"D:/Program Files/NVIDIA GPU Computing/include\common_functions.h"
+	.file	26	"d:\program files\nvidia gpu computing\include\math_functions.h"
+	.file	27	"d:\program files\nvidia gpu computing\include\math_constants.h"
+	.file	28	"d:\program files\nvidia gpu computing\include\device_functions.h"
+	.file	29	"d:\program files\nvidia gpu computing\include\sm_11_atomic_functions.h"
+	.file	30	"d:\program files\nvidia gpu computing\include\sm_12_atomic_functions.h"
+	.file	31	"d:\program files\nvidia gpu computing\include\sm_13_double_functions.h"
+	.file	32	"d:\program files\nvidia gpu computing\include\sm_20_atomic_functions.h"
+	.file	33	"d:\program files\nvidia gpu computing\include\sm_32_atomic_functions.h"
+	.file	34	"d:\program files\nvidia gpu computing\include\sm_35_atomic_functions.h"
+	.file	35	"d:\program files\nvidia gpu computing\include\sm_20_intrinsics.h"
+	.file	36	"d:\program files\nvidia gpu computing\include\sm_30_intrinsics.h"
+	.file	37	"d:\program files\nvidia gpu computing\include\sm_32_intrinsics.h"
+	.file	38	"d:\program files\nvidia gpu computing\include\sm_35_intrinsics.h"
+	.file	39	"d:\program files\nvidia gpu computing\include\surface_functions.h"
+	.file	40	"d:\program files\nvidia gpu computing\include\texture_fetch_functions.h"
+	.file	41	"d:\program files\nvidia gpu computing\include\texture_indirect_functions.h"
+	.file	42	"d:\program files\nvidia gpu computing\include\surface_indirect_functions.h"
+	.file	43	"d:\program files\nvidia gpu computing\include\math_functions_dbl_ptx1.h"
 
 	.global .align 16 .b8 eye[12];
 	.global .align 16 .b8 U[12];
@@ -75,9 +75,9 @@
 	.entry _Z14pinhole_camerav
 	{
 	.reg .u32 %ra1;
-	.reg .u32 %r<45>;
-	.reg .f32 %f<68>;
-	.local .align 4 .b8 __cuda___cuda_local_var_148250_22_non_const_prd_16344[20];
+	.reg .u32 %r<41>;
+	.reg .f32 %f<60>;
+	.local .align 4 .b8 __cuda___cuda_local_var_148232_22_non_const_prd_16344[20];
 	.loc	22	31	0
 $LDWbegin__Z14pinhole_camerav:
 	.loc	23	138	0
@@ -85,7 +85,7 @@ $LDWbegin__Z14pinhole_camerav:
 	mov.u32 	%r2, %r1;
 	mov.u32 	%r3, 2;
 	mov.u32 	%r4, %r3;
-	mov.u32 	%r5, 4;
+	mov.u32 	%r5, 16;
 	mov.u32 	%r6, %r5;
 	call (%r7, %r8, %r9, %r10), _rt_buffer_get_size, (%r2, %r4, %r6);
 	mov.s32 	%r11, %r7;
@@ -125,10 +125,10 @@ $LDWbegin__Z14pinhole_camerav:
 	rsqrt.approx.f32 	%f37, %f36;
 	.loc	22	42	0
 	mov.f32 	%f38, 0f3f800000;    	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148250_22_non_const_prd_16344+12], %f38;
+	st.local.f32 	[__cuda___cuda_local_var_148232_22_non_const_prd_16344+12], %f38;
 	.loc	22	43	0
 	mov.s32 	%r15, 0;
-	st.local.s32 	[__cuda___cuda_local_var_148250_22_non_const_prd_16344+16], %r15;
+	st.local.s32 	[__cuda___cuda_local_var_148232_22_non_const_prd_16344+16], %r15;
 	.loc	22	45	0
 	ld.global.u32 	%r16, [top_object+0];
 	ld.global.v4.f32 	{%f39,%f40,%f41,_}, [eye+0];
@@ -139,7 +139,7 @@ $LDWbegin__Z14pinhole_camerav:
 	ld.global.u32 	%r17, [radiance_ray_type];
 	ld.global.f32 	%f45, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148250_22_non_const_prd_16344;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148232_22_non_const_prd_16344;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r18, %r16;
@@ -153,50 +153,38 @@ $LDWbegin__Z14pinhole_camerav:
 	mov.f32 	%f52, %f45;
 	mov.f32 	%f53, 0f6c4ecb8f;    	// 1e+027
 	mov.f32 	%f54, %f53;
-	mov.u32 	%r20, __cuda___cuda_local_var_148250_22_non_const_prd_16344;
+	mov.u32 	%r20, __cuda___cuda_local_var_148232_22_non_const_prd_16344;
 	mov.u32 	%r21, %r20;
 	mov.u32 	%r22, 20;
 	mov.u32 	%r23, %r22;
 	call _rt_trace, (%r18, %f46, %f47, %f48, %f49, %f50, %f51, %r19, %f52, %f54, %r21, %r23);
-	.loc	22	47	0
-	ld.local.f32 	%f55, [__cuda___cuda_local_var_148250_22_non_const_prd_16344+8];
-	cvt.sat.f32.f32 	%f56, %f55;
-	mov.f32 	%f57, 0f437ffd71;    	// 255.99
-	mul.f32 	%f58, %f56, %f57;
-	cvt.rzi.u32.f32 	%r24, %f58;
-	ld.local.f32 	%f59, [__cuda___cuda_local_var_148250_22_non_const_prd_16344+4];
-	cvt.sat.f32.f32 	%f60, %f59;
-	mov.f32 	%f61, 0f437ffd71;    	// 255.99
-	mul.f32 	%f62, %f60, %f61;
-	cvt.rzi.u32.f32 	%r25, %f62;
-	ld.local.f32 	%f63, [__cuda___cuda_local_var_148250_22_non_const_prd_16344+0];
-	cvt.sat.f32.f32 	%f64, %f63;
-	mov.f32 	%f65, 0f437ffd71;    	// 255.99
-	mul.f32 	%f66, %f64, %f65;
-	cvt.rzi.u32.f32 	%r26, %f66;
-	.loc	23	120	0
-	mov.u32 	%r27, output_buffer;
-	mov.u32 	%r28, %r27;
-	mov.u32 	%r29, 2;
-	mov.u32 	%r30, %r29;
-	mov.u32 	%r31, 4;
-	mov.u32 	%r32, %r31;
-	ld.global.v2.u32 	{%r33,%r34}, [launch_index+0];
-	mov.u32 	%r35, %r33;
-	mov.u32 	%r36, %r34;
-	mov.u32 	%r37, 0;
-	mov.u32 	%r38, %r37;
-	mov.u32 	%r39, 0;
-	mov.u32 	%r40, %r39;
-	call (%r41), _rt_buffer_get, (%r28, %r30, %r32, %r35, %r36, %r38, %r40);
-	mov.s32 	%r42, %r41;
-	.loc	23	129	0
-	mov.s32 	%ra1, %r42;
-	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	47	0
-	mov.u32 	%r43, 255;
-	st.global.v4.u8 	[%r42+0], {%r24,%r25,%r26,%r43};
 	.loc	22	48	0
+	ld.local.f32 	%f55, [__cuda___cuda_local_var_148232_22_non_const_prd_16344+0];
+	ld.local.f32 	%f56, [__cuda___cuda_local_var_148232_22_non_const_prd_16344+4];
+	ld.local.f32 	%f57, [__cuda___cuda_local_var_148232_22_non_const_prd_16344+8];
+	.loc	23	120	0
+	mov.u32 	%r24, output_buffer;
+	mov.u32 	%r25, %r24;
+	mov.u32 	%r26, 2;
+	mov.u32 	%r27, %r26;
+	mov.u32 	%r28, 16;
+	mov.u32 	%r29, %r28;
+	ld.global.v2.u32 	{%r30,%r31}, [launch_index+0];
+	mov.u32 	%r32, %r30;
+	mov.u32 	%r33, %r31;
+	mov.u32 	%r34, 0;
+	mov.u32 	%r35, %r34;
+	mov.u32 	%r36, 0;
+	mov.u32 	%r37, %r36;
+	call (%r38), _rt_buffer_get, (%r25, %r27, %r29, %r32, %r33, %r35, %r37);
+	mov.s32 	%r39, %r38;
+	.loc	23	129	0
+	mov.s32 	%ra1, %r39;
+	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
+	.loc	22	48	0
+	mov.f32 	%f58, 0f3f800000;    	// 1
+	st.global.v4.f32 	[%r39+0], {%f55,%f56,%f57,%f58};
+	.loc	22	50	0
 	exit;
 $LDWend__Z14pinhole_camerav:
 	} // _Z14pinhole_camerav
@@ -206,13 +194,13 @@ $LDWend__Z14pinhole_camerav:
 	.entry _Z4missv
 	{
 	.reg .f32 %f<5>;
-	.loc	22	54	0
+	.loc	22	56	0
 $LDWbegin__Z4missv:
 	ld.global.v4.f32 	{%f1,%f2,%f3,_}, [miss_color+0];
 	st.global.v2.f32 	[prd_radiance+0], {%f1,%f2};
-	.loc	22	56	0
+	.loc	22	58	0
 	st.global.f32 	[prd_radiance+8], %f3;
-	.loc	22	57	0
+	.loc	22	59	0
 	exit;
 $LDWend__Z4missv:
 	} // _Z4missv
@@ -226,7 +214,7 @@ $LDWend__Z4missv:
 	.reg .u32 %r<6>;
 	.reg .f32 %f<64>;
 	.reg .pred %p<4>;
-	.loc	22	64	0
+	.loc	22	66	0
 $LDWbegin__Z13gradient_missv:
 	.loc	26	8936	0
 	ld.global.f32 	%f1, [ray+16];
@@ -291,7 +279,7 @@ $LDWbegin__Z13gradient_missv:
 	or.b32 	%r4, %r1, %r3;
 	mov.b32 	%f46, %r4;
 $Lt_2_2562:
-	.loc	22	67	0
+	.loc	22	69	0
 	add.f32 	%f48, %f46, %f46;
 	ld.const.f32 	%f49, [pi];
 	div.full.f32 	%f50, %f48, %f49;
@@ -305,7 +293,7 @@ $Lt_2_2562:
 	sub.f32 	%f61, %f56, %f53;
 	mad.f32 	%f62, %f50, %f61, %f53;
 	st.global.f32 	[prd_radiance+8], %f62;
-	.loc	22	68	0
+	.loc	22	70	0
 	exit;
 $LDWend__Z13gradient_missv:
 	} // _Z13gradient_missv
@@ -314,9 +302,9 @@ $LDWend__Z13gradient_missv:
 	.entry _Z13any_hit_solidv
 	{
 	.reg .f32 %f<5>;
-	.loc	22	73	0
-$LDWbegin__Z13any_hit_solidv:
 	.loc	22	75	0
+$LDWbegin__Z13any_hit_solidv:
+	.loc	22	77	0
 	mov.f32 	%f1, 0f00000000;     	// 0
 	mov.f32 	%f2, 0f00000000;     	// 0
 	st.global.v2.f32 	[prd_shadow+0], {%f1,%f2};
@@ -324,7 +312,7 @@ $LDWbegin__Z13any_hit_solidv:
 	st.global.f32 	[prd_shadow+8], %f3;
 	.loc	23	211	0
 	call _rt_terminate_ray, ();
-	.loc	22	77	0
+	.loc	22	79	0
 	exit;
 $LDWend__Z13any_hit_solidv:
 	} // _Z13any_hit_solidv
@@ -345,8 +333,8 @@ $LDWend__Z13any_hit_solidv:
 	.reg .u32 %r<97>;
 	.reg .f32 %f<351>;
 	.reg .pred %p<26>;
-	.local .align 4 .b8 __cuda___cuda_local_var_148315_22_non_const_shadow_prd_16364[12];
-	.loc	22	128	0
+	.local .align 4 .b8 __cuda___cuda_local_var_148299_22_non_const_shadow_prd_16364[12];
+	.loc	22	130	0
 $LDWbegin__Z17closest_hit_phongv:
 	.loc	23	256	0
 	mov.s32 	%r1, 7937;
@@ -374,7 +362,7 @@ $LDWbegin__Z17closest_hit_phongv:
 	.loc	23	263	0
 	cvt.rzi.s32.f32 	%ra1, %f16;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	130	0
+	.loc	22	132	0
 	mul.f32 	%f17, %f14, %f14;
 	mad.f32 	%f18, %f13, %f13, %f17;
 	mad.f32 	%f19, %f15, %f15, %f18;
@@ -409,7 +397,7 @@ $LDWbegin__Z17closest_hit_phongv:
 	.loc	23	263	0
 	cvt.rzi.s32.f32 	%ra1, %f40;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	130	0
+	.loc	22	132	0
 	mul.f32 	%f41, %f38, %f38;
 	ld.global.f32 	%f42, [ray+16];
 	mul.f32 	%f43, %f42, %f23;
@@ -434,7 +422,7 @@ $LDWbegin__Z17closest_hit_phongv:
 	mul.f32 	%f59, %f55, %f58;
 	mul.f32 	%f60, %f54, %f39;
 	mul.f32 	%f61, %f55, %f60;
-	.loc	22	131	0
+	.loc	22	133	0
 	ld.global.f32 	%f62, [t_hit];
 	ld.global.f32 	%f63, [ray+0];
 	mad.f32 	%f64, %f62, %f44, %f63;
@@ -444,11 +432,11 @@ $LDWbegin__Z17closest_hit_phongv:
 	mad.f32 	%f68, %f62, %f46, %f67;
 	ld.global.v4.f32 	{%f69,%f70,%f71,_}, [ambient_light_color+0];
 	ld.global.v4.f32 	{%f72,%f73,%f74,_}, [Ka+0];
-	.loc	22	97	0
+	.loc	22	99	0
 	mul.f32 	%f75, %f69, %f72;
 	mul.f32 	%f76, %f70, %f73;
 	mul.f32 	%f77, %f71, %f74;
-	.loc	22	98	0
+	.loc	22	100	0
 	mov.s32 	%r8, 0;
 	.loc	23	138	0
 	mov.u32 	%r9, lights;
@@ -459,12 +447,12 @@ $LDWbegin__Z17closest_hit_phongv:
 	mov.u32 	%r14, %r13;
 	call (%r15, %r16, %r17, %r18), _rt_buffer_get_size, (%r10, %r12, %r14);
 	mov.s32 	%r19, %r15;
-	.loc	22	98	0
+	.loc	22	100	0
 	mov.u32 	%r20, 0;
 	setp.eq.u32 	%p1, %r19, %r20;
 	@%p1 bra 	$Lt_4_20994;
 $Lt_4_21506:
- //<loop> Loop body line 98, nesting depth: 1, estimated iterations: unknown
+ //<loop> Loop body line 100, nesting depth: 1, estimated iterations: unknown
 	.loc	23	120	0
 	mov.u32 	%r21, lights;
 	mov.u32 	%r22, %r21;
@@ -484,7 +472,7 @@ $Lt_4_21506:
 	.loc	23	129	0
 	mov.s32 	%ra1, %r35;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	100	0
+	.loc	22	102	0
 	ld.global.f32 	%f78, [%r35+0];
 	ld.global.f32 	%f79, [%r35+4];
 	ld.global.f32 	%f80, [%r35+8];
@@ -508,20 +496,20 @@ $Lt_4_21506:
 	mov.f32 	%f98, 0f00000000;    	// 0
 	setp.gt.f32 	%p2, %f97, %f98;
 	@!%p2 bra 	$Lt_4_21762;
-	.loc	22	107	0
+	.loc	22	109	0
 	mov.f32 	%f99, 0f3f800000;    	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16364+0], %f99;
+	st.local.f32 	[__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16364+0], %f99;
 	mov.f32 	%f100, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16364+4], %f100;
+	st.local.f32 	[__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16364+4], %f100;
 	mov.f32 	%f101, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16364+8], %f101;
-	.loc	22	110	0
+	st.local.f32 	[__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16364+8], %f101;
+	.loc	22	112	0
 	ld.global.u32 	%r36, [top_object+0];
 	.loc	3	1071	0
 	ld.global.u32 	%r37, [shadow_ray_type];
 	ld.global.f32 	%f102, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148315_22_non_const_shadow_prd_16364;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148299_22_non_const_shadow_prd_16364;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r38, %r36;
@@ -534,22 +522,22 @@ $Lt_4_21506:
 	mov.u32 	%r39, %r37;
 	mov.f32 	%f109, %f102;
 	mov.f32 	%f110, %f90;
-	mov.u32 	%r40, __cuda___cuda_local_var_148315_22_non_const_shadow_prd_16364;
+	mov.u32 	%r40, __cuda___cuda_local_var_148299_22_non_const_shadow_prd_16364;
 	mov.u32 	%r41, %r40;
 	mov.u32 	%r42, 12;
 	mov.u32 	%r43, %r42;
 	call _rt_trace, (%r38, %f103, %f104, %f105, %f106, %f107, %f108, %r39, %f109, %f110, %r41, %r43);
-	.loc	22	110	0
-	ld.local.f32 	%f111, [__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16364+8];
-	ld.local.f32 	%f112, [__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16364+4];
-	ld.local.f32 	%f113, [__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16364+0];
+	.loc	22	112	0
+	ld.local.f32 	%f111, [__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16364+8];
+	ld.local.f32 	%f112, [__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16364+4];
+	ld.local.f32 	%f113, [__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16364+0];
 	max.f32 	%f114, %f112, %f113;
 	max.f32 	%f115, %f111, %f114;
 	mov.f32 	%f116, 0f00000000;   	// 0
 	setp.gt.f32 	%p3, %f115, %f116;
 	@!%p3 bra 	$Lt_4_22274;
 	ld.global.v4.f32 	{%f117,%f118,%f119,_}, [Kd+0];
-	.loc	22	115	0
+	.loc	22	117	0
 	mul.f32 	%f120, %f117, %f97;
 	mul.f32 	%f121, %f113, %f81;
 	mul.f32 	%f122, %f120, %f121;
@@ -562,7 +550,7 @@ $Lt_4_21506:
 	add.f32 	%f75, %f122, %f75;
 	add.f32 	%f76, %f125, %f76;
 	add.f32 	%f77, %f128, %f77;
-	.loc	22	117	0
+	.loc	22	119	0
 	ld.global.f32 	%f129, [ray+16];
 	sub.f32 	%f130, %f92, %f129;
 	ld.global.f32 	%f131, [ray+12];
@@ -573,7 +561,7 @@ $Lt_4_21506:
 	mad.f32 	%f136, %f132, %f132, %f135;
 	mad.f32 	%f137, %f134, %f134, %f136;
 	rsqrt.approx.f32 	%f138, %f137;
-	.loc	22	118	0
+	.loc	22	120	0
 	mul.f32 	%f139, %f130, %f138;
 	mul.f32 	%f140, %f59, %f139;
 	mul.f32 	%f141, %f132, %f138;
@@ -583,7 +571,7 @@ $Lt_4_21506:
 	mov.f32 	%f145, 0f00000000;   	// 0
 	setp.gt.f32 	%p4, %f144, %f145;
 	@!%p4 bra 	$Lt_4_22786;
-	.loc	22	120	0
+	.loc	22	122	0
 	ld.global.f32 	%f146, [phong_exp];
 	mov.f32 	%f147, 0f00000000;   	// 0
 	set.eq.u32.f32 	%r44, %f146, %f147;
@@ -937,7 +925,7 @@ $Lt_4_23810:
 $Lt_4_11010:
 $Lt_4_23298:
 	ld.global.v4.f32 	{%f344,%f345,%f346,_}, [Ks+0];
-	.loc	22	120	0
+	.loc	22	122	0
 	mul.f32 	%f347, %f344, %f81;
 	mad.f32 	%f75, %f149, %f347, %f75;
 	mul.f32 	%f348, %f345, %f82;
@@ -947,7 +935,7 @@ $Lt_4_23298:
 $Lt_4_22786:
 $Lt_4_22274:
 $Lt_4_21762:
-	.loc	22	98	0
+	.loc	22	100	0
 	add.s32 	%r8, %r8, 1;
 	.loc	23	138	0
 	mov.u32 	%r85, lights;
@@ -958,14 +946,14 @@ $Lt_4_21762:
 	mov.u32 	%r90, %r89;
 	call (%r91, %r92, %r93, %r94), _rt_buffer_get_size, (%r86, %r88, %r90);
 	mov.s32 	%r95, %r91;
-	.loc	22	98	0
+	.loc	22	100	0
 	setp.lt.u32 	%p24, %r8, %r95;
 	@%p24 bra 	$Lt_4_21506;
 $Lt_4_20994:
 	st.global.v2.f32 	[prd_radiance+0], {%f75,%f76};
-	.loc	22	133	0
+	.loc	22	135	0
 	st.global.f32 	[prd_radiance+8], %f77;
-	.loc	22	134	0
+	.loc	22	136	0
 	exit;
 $LDWend__Z17closest_hit_phongv:
 	} // _Z17closest_hit_phongv
@@ -980,8 +968,8 @@ $LDWend__Z17closest_hit_phongv:
 	.reg .u32 %r<103>;
 	.reg .f32 %f<374>;
 	.reg .pred %p<27>;
-	.local .align 4 .b8 __cuda___cuda_local_var_148315_22_non_const_shadow_prd_16376[12];
-	.loc	22	145	0
+	.local .align 4 .b8 __cuda___cuda_local_var_148299_22_non_const_shadow_prd_16376[12];
+	.loc	22	147	0
 $LDWbegin__Z22closest_hit_phong_tilev:
 	.loc	23	256	0
 	mov.s32 	%r1, 7937;
@@ -1009,7 +997,7 @@ $LDWbegin__Z22closest_hit_phong_tilev:
 	.loc	23	263	0
 	cvt.rzi.s32.f32 	%ra1, %f16;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	147	0
+	.loc	22	149	0
 	mul.f32 	%f17, %f14, %f14;
 	mad.f32 	%f18, %f13, %f13, %f17;
 	mad.f32 	%f19, %f15, %f15, %f18;
@@ -1044,7 +1032,7 @@ $LDWbegin__Z22closest_hit_phong_tilev:
 	.loc	23	263	0
 	cvt.rzi.s32.f32 	%ra1, %f40;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	147	0
+	.loc	22	149	0
 	mul.f32 	%f41, %f38, %f38;
 	ld.global.f32 	%f42, [ray+16];
 	mul.f32 	%f43, %f42, %f23;
@@ -1069,7 +1057,7 @@ $LDWbegin__Z22closest_hit_phong_tilev:
 	mul.f32 	%f59, %f55, %f58;
 	mul.f32 	%f60, %f54, %f39;
 	mul.f32 	%f61, %f55, %f60;
-	.loc	22	148	0
+	.loc	22	150	0
 	ld.global.f32 	%f62, [t_hit];
 	mul.f32 	%f63, %f62, %f44;
 	ld.global.f32 	%f64, [ray+0];
@@ -1105,18 +1093,18 @@ $LDWbegin__Z22closest_hit_phong_tilev:
 	setp.eq.s32 	%p1, %r12, %r13;
 	@%p1 bra 	$Lt_5_22274;
 	ld.global.v4.f32 	{%f92,%f93,%f94,_}, [Kd+0];
-	.loc	22	157	0
+	.loc	22	159	0
 	bra.uni 	$Lt_5_22018;
 $Lt_5_22274:
 	ld.global.v4.f32 	{%f92,%f93,%f94,_}, [crack_color+0];
 $Lt_5_22018:
 	ld.global.v4.f32 	{%f95,%f96,%f97,_}, [ambient_light_color+0];
 	ld.global.v4.f32 	{%f98,%f99,%f100,_}, [Ka+0];
-	.loc	22	97	0
+	.loc	22	99	0
 	mul.f32 	%f101, %f95, %f98;
 	mul.f32 	%f102, %f96, %f99;
 	mul.f32 	%f103, %f97, %f100;
-	.loc	22	98	0
+	.loc	22	100	0
 	mov.s32 	%r14, 0;
 	.loc	23	138	0
 	mov.u32 	%r15, lights;
@@ -1127,12 +1115,12 @@ $Lt_5_22018:
 	mov.u32 	%r20, %r19;
 	call (%r21, %r22, %r23, %r24), _rt_buffer_get_size, (%r16, %r18, %r20);
 	mov.s32 	%r25, %r21;
-	.loc	22	98	0
+	.loc	22	100	0
 	mov.u32 	%r26, 0;
 	setp.eq.u32 	%p2, %r25, %r26;
 	@%p2 bra 	$Lt_5_22530;
 $Lt_5_23042:
- //<loop> Loop body line 98, nesting depth: 1, estimated iterations: unknown
+ //<loop> Loop body line 100, nesting depth: 1, estimated iterations: unknown
 	.loc	23	120	0
 	mov.u32 	%r27, lights;
 	mov.u32 	%r28, %r27;
@@ -1152,7 +1140,7 @@ $Lt_5_23042:
 	.loc	23	129	0
 	mov.s32 	%ra1, %r41;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	100	0
+	.loc	22	102	0
 	ld.global.f32 	%f104, [%r41+0];
 	ld.global.f32 	%f105, [%r41+4];
 	ld.global.f32 	%f106, [%r41+8];
@@ -1176,20 +1164,20 @@ $Lt_5_23042:
 	mov.f32 	%f124, 0f00000000;   	// 0
 	setp.gt.f32 	%p3, %f123, %f124;
 	@!%p3 bra 	$Lt_5_23298;
-	.loc	22	107	0
+	.loc	22	109	0
 	mov.f32 	%f125, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16376+0], %f125;
+	st.local.f32 	[__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16376+0], %f125;
 	mov.f32 	%f126, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16376+4], %f126;
+	st.local.f32 	[__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16376+4], %f126;
 	mov.f32 	%f127, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16376+8], %f127;
-	.loc	22	110	0
+	st.local.f32 	[__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16376+8], %f127;
+	.loc	22	112	0
 	ld.global.u32 	%r42, [top_object+0];
 	.loc	3	1071	0
 	ld.global.u32 	%r43, [shadow_ray_type];
 	ld.global.f32 	%f128, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148315_22_non_const_shadow_prd_16376;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148299_22_non_const_shadow_prd_16376;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r44, %r42;
@@ -1202,21 +1190,21 @@ $Lt_5_23042:
 	mov.u32 	%r45, %r43;
 	mov.f32 	%f135, %f128;
 	mov.f32 	%f136, %f116;
-	mov.u32 	%r46, __cuda___cuda_local_var_148315_22_non_const_shadow_prd_16376;
+	mov.u32 	%r46, __cuda___cuda_local_var_148299_22_non_const_shadow_prd_16376;
 	mov.u32 	%r47, %r46;
 	mov.u32 	%r48, 12;
 	mov.u32 	%r49, %r48;
 	call _rt_trace, (%r44, %f129, %f130, %f131, %f132, %f133, %f134, %r45, %f135, %f136, %r47, %r49);
-	.loc	22	110	0
-	ld.local.f32 	%f137, [__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16376+8];
-	ld.local.f32 	%f138, [__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16376+4];
-	ld.local.f32 	%f139, [__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16376+0];
+	.loc	22	112	0
+	ld.local.f32 	%f137, [__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16376+8];
+	ld.local.f32 	%f138, [__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16376+4];
+	ld.local.f32 	%f139, [__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16376+0];
 	max.f32 	%f140, %f138, %f139;
 	max.f32 	%f141, %f137, %f140;
 	mov.f32 	%f142, 0f00000000;   	// 0
 	setp.gt.f32 	%p4, %f141, %f142;
 	@!%p4 bra 	$Lt_5_23810;
-	.loc	22	115	0
+	.loc	22	117	0
 	mul.f32 	%f143, %f123, %f92;
 	mul.f32 	%f144, %f139, %f107;
 	mul.f32 	%f145, %f143, %f144;
@@ -1229,7 +1217,7 @@ $Lt_5_23042:
 	add.f32 	%f101, %f145, %f101;
 	add.f32 	%f102, %f148, %f102;
 	add.f32 	%f103, %f151, %f103;
-	.loc	22	117	0
+	.loc	22	119	0
 	ld.global.f32 	%f152, [ray+16];
 	sub.f32 	%f153, %f118, %f152;
 	ld.global.f32 	%f154, [ray+12];
@@ -1240,7 +1228,7 @@ $Lt_5_23042:
 	mad.f32 	%f159, %f155, %f155, %f158;
 	mad.f32 	%f160, %f157, %f157, %f159;
 	rsqrt.approx.f32 	%f161, %f160;
-	.loc	22	118	0
+	.loc	22	120	0
 	mul.f32 	%f162, %f153, %f161;
 	mul.f32 	%f163, %f59, %f162;
 	mul.f32 	%f164, %f155, %f161;
@@ -1250,7 +1238,7 @@ $Lt_5_23042:
 	mov.f32 	%f168, 0f00000000;   	// 0
 	setp.gt.f32 	%p5, %f167, %f168;
 	@!%p5 bra 	$Lt_5_24322;
-	.loc	22	120	0
+	.loc	22	122	0
 	ld.global.f32 	%f169, [phong_exp];
 	mov.f32 	%f170, 0f00000000;   	// 0
 	set.eq.u32.f32 	%r50, %f169, %f170;
@@ -1604,7 +1592,7 @@ $Lt_5_25346:
 $Lt_5_11778:
 $Lt_5_24834:
 	ld.global.v4.f32 	{%f367,%f368,%f369,_}, [Ks+0];
-	.loc	22	120	0
+	.loc	22	122	0
 	mul.f32 	%f370, %f367, %f107;
 	mad.f32 	%f101, %f172, %f370, %f101;
 	mul.f32 	%f371, %f368, %f108;
@@ -1614,7 +1602,7 @@ $Lt_5_24834:
 $Lt_5_24322:
 $Lt_5_23810:
 $Lt_5_23298:
-	.loc	22	98	0
+	.loc	22	100	0
 	add.s32 	%r14, %r14, 1;
 	.loc	23	138	0
 	mov.u32 	%r91, lights;
@@ -1625,14 +1613,14 @@ $Lt_5_23298:
 	mov.u32 	%r96, %r95;
 	call (%r97, %r98, %r99, %r100), _rt_buffer_get_size, (%r92, %r94, %r96);
 	mov.s32 	%r101, %r97;
-	.loc	22	98	0
+	.loc	22	100	0
 	setp.lt.u32 	%p25, %r14, %r101;
 	@%p25 bra 	$Lt_5_23042;
 $Lt_5_22530:
 	st.global.v2.f32 	[prd_radiance+0], {%f101,%f102};
-	.loc	22	161	0
+	.loc	22	163	0
 	st.global.f32 	[prd_radiance+8], %f103;
-	.loc	22	162	0
+	.loc	22	164	0
 	exit;
 $LDWend__Z22closest_hit_phong_tilev:
 	} // _Z22closest_hit_phong_tilev
@@ -1646,9 +1634,9 @@ $LDWend__Z22closest_hit_phong_tilev:
 	.reg .u32 %r<175>;
 	.reg .f32 %f<888>;
 	.reg .pred %p<66>;
-	.local .align 4 .b8 __cuda___cuda_local_var_148315_22_non_const_shadow_prd_16388[12];
-	.local .align 4 .b8 __cuda___cuda_local_var_148392_23_non_const_refl_prd_28400[20];
-	.loc	22	171	0
+	.local .align 4 .b8 __cuda___cuda_local_var_148299_22_non_const_shadow_prd_16388[12];
+	.local .align 4 .b8 __cuda___cuda_local_var_148376_23_non_const_refl_prd_28400[20];
+	.loc	22	173	0
 $LDWbegin__Z22closest_hit_reflectionv:
 	.loc	23	256	0
 	mov.s32 	%r1, 7937;
@@ -1676,7 +1664,7 @@ $LDWbegin__Z22closest_hit_reflectionv:
 	.loc	23	263	0
 	cvt.rzi.s32.f32 	%ra1, %f16;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	173	0
+	.loc	22	175	0
 	mul.f32 	%f17, %f14, %f14;
 	mad.f32 	%f18, %f13, %f13, %f17;
 	mad.f32 	%f19, %f15, %f15, %f18;
@@ -1711,7 +1699,7 @@ $LDWbegin__Z22closest_hit_reflectionv:
 	.loc	23	263	0
 	cvt.rzi.s32.f32 	%ra1, %f40;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	173	0
+	.loc	22	175	0
 	mul.f32 	%f41, %f38, %f38;
 	ld.global.f32 	%f42, [ray+16];
 	mul.f32 	%f43, %f42, %f23;
@@ -1736,7 +1724,7 @@ $LDWbegin__Z22closest_hit_reflectionv:
 	mul.f32 	%f59, %f55, %f58;
 	mul.f32 	%f60, %f54, %f39;
 	mul.f32 	%f61, %f55, %f60;
-	.loc	22	174	0
+	.loc	22	176	0
 	ld.global.f32 	%f62, [t_hit];
 	ld.global.f32 	%f63, [ray+0];
 	mad.f32 	%f64, %f62, %f44, %f63;
@@ -1746,11 +1734,11 @@ $LDWbegin__Z22closest_hit_reflectionv:
 	mad.f32 	%f68, %f62, %f46, %f67;
 	ld.global.v4.f32 	{%f69,%f70,%f71,_}, [ambient_light_color+0];
 	ld.global.v4.f32 	{%f72,%f73,%f74,_}, [Ka+0];
-	.loc	22	97	0
+	.loc	22	99	0
 	mul.f32 	%f75, %f69, %f72;
 	mul.f32 	%f76, %f70, %f73;
 	mul.f32 	%f77, %f71, %f74;
-	.loc	22	98	0
+	.loc	22	100	0
 	mov.s32 	%r8, 0;
 	.loc	23	138	0
 	mov.u32 	%r9, lights;
@@ -1761,12 +1749,12 @@ $LDWbegin__Z22closest_hit_reflectionv:
 	mov.u32 	%r14, %r13;
 	call (%r15, %r16, %r17, %r18), _rt_buffer_get_size, (%r10, %r12, %r14);
 	mov.s32 	%r19, %r15;
-	.loc	22	98	0
+	.loc	22	100	0
 	mov.u32 	%r20, 0;
 	setp.eq.u32 	%p1, %r19, %r20;
 	@%p1 bra 	$Lt_6_75778;
 $Lt_6_76290:
- //<loop> Loop body line 98, nesting depth: 1, estimated iterations: unknown
+ //<loop> Loop body line 100, nesting depth: 1, estimated iterations: unknown
 	.loc	23	120	0
 	mov.u32 	%r21, lights;
 	mov.u32 	%r22, %r21;
@@ -1786,7 +1774,7 @@ $Lt_6_76290:
 	.loc	23	129	0
 	mov.s32 	%ra1, %r35;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	100	0
+	.loc	22	102	0
 	ld.global.f32 	%f78, [%r35+0];
 	ld.global.f32 	%f79, [%r35+4];
 	ld.global.f32 	%f80, [%r35+8];
@@ -1810,20 +1798,20 @@ $Lt_6_76290:
 	mov.f32 	%f98, 0f00000000;    	// 0
 	setp.gt.f32 	%p2, %f97, %f98;
 	@!%p2 bra 	$Lt_6_77570;
-	.loc	22	107	0
+	.loc	22	109	0
 	mov.f32 	%f99, 0f3f800000;    	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16388+0], %f99;
+	st.local.f32 	[__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16388+0], %f99;
 	mov.f32 	%f100, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16388+4], %f100;
+	st.local.f32 	[__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16388+4], %f100;
 	mov.f32 	%f101, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16388+8], %f101;
-	.loc	22	110	0
+	st.local.f32 	[__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16388+8], %f101;
+	.loc	22	112	0
 	ld.global.u32 	%r36, [top_object+0];
 	.loc	3	1071	0
 	ld.global.u32 	%r37, [shadow_ray_type];
 	ld.global.f32 	%f102, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148315_22_non_const_shadow_prd_16388;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148299_22_non_const_shadow_prd_16388;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r38, %r36;
@@ -1836,22 +1824,22 @@ $Lt_6_76290:
 	mov.u32 	%r39, %r37;
 	mov.f32 	%f109, %f102;
 	mov.f32 	%f110, %f90;
-	mov.u32 	%r40, __cuda___cuda_local_var_148315_22_non_const_shadow_prd_16388;
+	mov.u32 	%r40, __cuda___cuda_local_var_148299_22_non_const_shadow_prd_16388;
 	mov.u32 	%r41, %r40;
 	mov.u32 	%r42, 12;
 	mov.u32 	%r43, %r42;
 	call _rt_trace, (%r38, %f103, %f104, %f105, %f106, %f107, %f108, %r39, %f109, %f110, %r41, %r43);
-	.loc	22	110	0
-	ld.local.f32 	%f111, [__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16388+8];
-	ld.local.f32 	%f112, [__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16388+4];
-	ld.local.f32 	%f113, [__cuda___cuda_local_var_148315_22_non_const_shadow_prd_16388+0];
+	.loc	22	112	0
+	ld.local.f32 	%f111, [__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16388+8];
+	ld.local.f32 	%f112, [__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16388+4];
+	ld.local.f32 	%f113, [__cuda___cuda_local_var_148299_22_non_const_shadow_prd_16388+0];
 	max.f32 	%f114, %f112, %f113;
 	max.f32 	%f115, %f111, %f114;
 	mov.f32 	%f116, 0f00000000;   	// 0
 	setp.gt.f32 	%p3, %f115, %f116;
 	@!%p3 bra 	$Lt_6_77570;
 	ld.global.v4.f32 	{%f117,%f118,%f119,_}, [Kd+0];
-	.loc	22	115	0
+	.loc	22	117	0
 	mul.f32 	%f120, %f117, %f97;
 	mul.f32 	%f121, %f113, %f81;
 	mul.f32 	%f122, %f120, %f121;
@@ -1864,7 +1852,7 @@ $Lt_6_76290:
 	add.f32 	%f75, %f122, %f75;
 	add.f32 	%f76, %f125, %f76;
 	add.f32 	%f77, %f128, %f77;
-	.loc	22	117	0
+	.loc	22	119	0
 	ld.global.f32 	%f129, [ray+16];
 	sub.f32 	%f130, %f92, %f129;
 	ld.global.f32 	%f131, [ray+12];
@@ -1875,7 +1863,7 @@ $Lt_6_76290:
 	mad.f32 	%f136, %f132, %f132, %f135;
 	mad.f32 	%f137, %f134, %f134, %f136;
 	rsqrt.approx.f32 	%f138, %f137;
-	.loc	22	118	0
+	.loc	22	120	0
 	mul.f32 	%f139, %f130, %f138;
 	mul.f32 	%f140, %f59, %f139;
 	mul.f32 	%f141, %f132, %f138;
@@ -1885,7 +1873,7 @@ $Lt_6_76290:
 	mov.f32 	%f145, 0f00000000;   	// 0
 	setp.gt.f32 	%p4, %f144, %f145;
 	@!%p4 bra 	$Lt_6_77570;
-	.loc	22	120	0
+	.loc	22	122	0
 	ld.global.f32 	%f146, [phong_exp];
 	mov.f32 	%f147, 0f00000000;   	// 0
 	set.eq.u32.f32 	%r44, %f146, %f147;
@@ -2239,7 +2227,7 @@ $Lt_6_78594:
 $Lt_6_11010:
 $Lt_6_78082:
 	ld.global.v4.f32 	{%f344,%f345,%f346,_}, [Ks+0];
-	.loc	22	120	0
+	.loc	22	122	0
 	mul.f32 	%f347, %f344, %f81;
 	mad.f32 	%f75, %f149, %f347, %f75;
 	mul.f32 	%f348, %f345, %f82;
@@ -2249,7 +2237,7 @@ $Lt_6_78082:
 $Lt_6_77570:
 $Lt_6_77058:
 $Lt_6_76546:
-	.loc	22	98	0
+	.loc	22	100	0
 	add.s32 	%r8, %r8, 1;
 	.loc	23	138	0
 	mov.u32 	%r85, lights;
@@ -2260,18 +2248,18 @@ $Lt_6_76546:
 	mov.u32 	%r90, %r89;
 	call (%r91, %r92, %r93, %r94), _rt_buffer_get_size, (%r86, %r88, %r90);
 	mov.s32 	%r95, %r91;
-	.loc	22	98	0
+	.loc	22	100	0
 	setp.lt.u32 	%p24, %r8, %r95;
 	@%p24 bra 	$Lt_6_76290;
 	ld.global.f32 	%f46, [ray+20];
 	ld.global.f32 	%f44, [ray+12];
 	ld.global.f32 	%f42, [ray+16];
 $Lt_6_75778:
-	.loc	22	175	0
+	.loc	22	177	0
 	mov.f32 	%f350, %f75;
 	mov.f32 	%f351, %f76;
 	mov.f32 	%f352, %f77;
-	.loc	22	177	0
+	.loc	22	179	0
 	mul.f32 	%f353, %f59, %f42;
 	mad.f32 	%f354, %f57, %f44, %f353;
 	mad.f32 	%f355, %f61, %f46, %f354;
@@ -2621,7 +2609,7 @@ $Lt_6_83970:
 $Lt_6_82946:
 $Lt_6_24834:
 $Lt_6_82434:
-	.loc	22	177	0
+	.loc	22	179	0
 	ld.global.f32 	%f557, [reflectivity+0];
 	mov.f32 	%f558, 0f3f800000;   	// 1
 	sub.f32 	%f559, %f558, %f557;
@@ -2969,7 +2957,7 @@ $Lt_6_88578:
 $Lt_6_87554:
 $Lt_6_36610:
 $Lt_6_87042:
-	.loc	22	177	0
+	.loc	22	179	0
 	ld.global.f32 	%f703, [reflectivity+4];
 	mov.f32 	%f704, 0f3f800000;   	// 1
 	sub.f32 	%f705, %f704, %f703;
@@ -3317,7 +3305,7 @@ $Lt_6_93186:
 $Lt_6_92162:
 $Lt_6_48386:
 $Lt_6_91650:
-	.loc	22	177	0
+	.loc	22	179	0
 	ld.global.f32 	%f849, [reflectivity+8];
 	mov.f32 	%f850, 0f3f800000;   	// 1
 	sub.f32 	%f851, %f850, %f849;
@@ -3325,7 +3313,7 @@ $Lt_6_91650:
 	mov.f32 	%f853, 0f3f800000;   	// 1
 	min.f32 	%f854, %f852, %f853;
 	max.f32 	%f855, %f854, %f849;
-	.loc	22	178	0
+	.loc	22	180	0
 	mov.f32 	%f856, 0f3f170a3d;   	// 0.59
 	mul.f32 	%f857, %f709, %f856;
 	mov.f32 	%f858, 0f3e99999a;   	// 0.3
@@ -3345,12 +3333,12 @@ $Lt_6_91650:
 	mov.u32 	%r164, 0;
 	setp.eq.s32 	%p64, %r163, %r164;
 	@%p64 bra 	$Lt_6_96258;
-	.loc	22	184	0
-	st.local.f32 	[__cuda___cuda_local_var_148392_23_non_const_refl_prd_28400+12], %f863;
-	.loc	22	185	0
+	.loc	22	186	0
+	st.local.f32 	[__cuda___cuda_local_var_148376_23_non_const_refl_prd_28400+12], %f863;
+	.loc	22	187	0
 	add.s32 	%r165, %r157, 1;
-	st.local.s32 	[__cuda___cuda_local_var_148392_23_non_const_refl_prd_28400+16], %r165;
-	.loc	22	188	0
+	st.local.s32 	[__cuda___cuda_local_var_148376_23_non_const_refl_prd_28400+16], %r165;
+	.loc	22	190	0
 	ld.global.u32 	%r166, [top_object+0];
 	.loc	3	1071	0
 	add.f32 	%f865, %f57, %f57;
@@ -3365,7 +3353,7 @@ $Lt_6_91650:
 	ld.global.u32 	%r167, [radiance_ray_type];
 	ld.global.f32 	%f874, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148392_23_non_const_refl_prd_28400;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148376_23_non_const_refl_prd_28400;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r168, %r166;
@@ -3379,23 +3367,23 @@ $Lt_6_91650:
 	mov.f32 	%f881, %f874;
 	mov.f32 	%f882, 0f6c4ecb8f;   	// 1e+027
 	mov.f32 	%f883, %f882;
-	mov.u32 	%r170, __cuda___cuda_local_var_148392_23_non_const_refl_prd_28400;
+	mov.u32 	%r170, __cuda___cuda_local_var_148376_23_non_const_refl_prd_28400;
 	mov.u32 	%r171, %r170;
 	mov.u32 	%r172, 20;
 	mov.u32 	%r173, %r172;
 	call _rt_trace, (%r168, %f875, %f876, %f877, %f878, %f879, %f880, %r169, %f881, %f883, %r171, %r173);
-	.loc	22	189	0
-	ld.local.f32 	%f884, [__cuda___cuda_local_var_148392_23_non_const_refl_prd_28400+0];
+	.loc	22	191	0
+	ld.local.f32 	%f884, [__cuda___cuda_local_var_148376_23_non_const_refl_prd_28400+0];
 	mad.f32 	%f350, %f884, %f563, %f350;
-	ld.local.f32 	%f885, [__cuda___cuda_local_var_148392_23_non_const_refl_prd_28400+4];
+	ld.local.f32 	%f885, [__cuda___cuda_local_var_148376_23_non_const_refl_prd_28400+4];
 	mad.f32 	%f351, %f885, %f709, %f351;
-	ld.local.f32 	%f886, [__cuda___cuda_local_var_148392_23_non_const_refl_prd_28400+8];
+	ld.local.f32 	%f886, [__cuda___cuda_local_var_148376_23_non_const_refl_prd_28400+8];
 	mad.f32 	%f352, %f886, %f855, %f352;
 $Lt_6_96258:
 	st.global.v2.f32 	[prd_radiance+0], {%f350,%f351};
-	.loc	22	192	0
+	.loc	22	194	0
 	st.global.f32 	[prd_radiance+8], %f352;
-	.loc	22	193	0
+	.loc	22	195	0
 	exit;
 $LDWend__Z22closest_hit_reflectionv:
 	} // _Z22closest_hit_reflectionv
@@ -3407,7 +3395,7 @@ $LDWend__Z22closest_hit_reflectionv:
 	.reg .u32 %r<65>;
 	.reg .f32 %f<551>;
 	.reg .pred %p<43>;
-	.loc	22	201	0
+	.loc	22	203	0
 $LDWbegin__Z20any_hit_shadow_glassv:
 	.loc	23	256	0
 	mov.s32 	%r1, 7937;
@@ -3435,7 +3423,7 @@ $LDWbegin__Z20any_hit_shadow_glassv:
 	.loc	23	263	0
 	cvt.rzi.s32.f32 	%ra1, %f16;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	206	0
+	.loc	22	208	0
 	mul.f32 	%f17, %f14, %f14;
 	mad.f32 	%f18, %f13, %f13, %f17;
 	mad.f32 	%f19, %f15, %f15, %f18;
@@ -3797,7 +3785,7 @@ $Lt_7_55554:
 $Lt_7_54530:
 $Lt_7_11010:
 $Lt_7_54018:
-	.loc	22	206	0
+	.loc	22	208	0
 	mov.f32 	%f233, 0f3f800000;   	// 1
 	ld.global.f32 	%f234, [shadow_attenuation+0];
 	sub.f32 	%f235, %f233, %f234;
@@ -4147,7 +4135,7 @@ $Lt_7_60162:
 $Lt_7_59138:
 $Lt_7_22786:
 $Lt_7_58626:
-	.loc	22	206	0
+	.loc	22	208	0
 	mov.f32 	%f381, 0f3f800000;   	// 1
 	ld.global.f32 	%f382, [shadow_attenuation+4];
 	sub.f32 	%f383, %f381, %f382;
@@ -4498,7 +4486,7 @@ $Lt_7_63746:
 $Lt_7_34562:
 $Lt_7_63234:
 	ld.global.v4.f32 	{%f529,%f530,%f531,_}, [prd_shadow+0];
-	.loc	22	206	0
+	.loc	22	208	0
 	mov.f32 	%f532, 0f3f800000;   	// 1
 	sub.f32 	%f533, %f532, %f241;
 	mul.f32 	%f534, %f529, %f533;
@@ -4521,7 +4509,7 @@ $Lt_7_63234:
 	st.global.f32 	[prd_shadow+8], %f549;
 	.loc	23	206	0
 	call _rt_ignore_intersection, ();
-	.loc	22	209	0
+	.loc	22	211	0
 	exit;
 $LDWend__Z20any_hit_shadow_glassv:
 	} // _Z20any_hit_shadow_glassv
@@ -4540,11 +4528,11 @@ $LDWend__Z20any_hit_shadow_glassv:
 	.reg .u32 %r<68>;
 	.reg .f32 %f<493>;
 	.reg .pred %p<41>;
-	.local .align 4 .b8 __cuda___cuda_local_var_148466_25_non_const_refr_prd_16420[20];
-	.local .align 4 .b8 __cuda___cuda_local_var_148487_24_non_const_refl_prd_36440[20];
-	.loc	22	223	0
-$LDWbegin__Z17closest_hit_glassv:
+	.local .align 4 .b8 __cuda___cuda_local_var_148450_25_non_const_refr_prd_16420[20];
+	.local .align 4 .b8 __cuda___cuda_local_var_148471_24_non_const_refl_prd_36440[20];
 	.loc	22	225	0
+$LDWbegin__Z17closest_hit_glassv:
+	.loc	22	227	0
 	ld.global.f32 	%f1, [t_hit];
 	ld.global.f32 	%f2, [ray+0];
 	ld.global.f32 	%f3, [ray+12];
@@ -4581,13 +4569,13 @@ $LDWbegin__Z17closest_hit_glassv:
 	.loc	23	263	0
 	cvt.rzi.s32.f32 	%ra1, %f26;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	227	0
+	.loc	22	229	0
 	ld.global.f32 	%f27, [ray+12];
 	ld.global.f32 	%f28, [ray+16];
 	ld.global.f32 	%f29, [ray+20];
-	.loc	22	229	0
+	.loc	22	231	0
 	mov.f32 	%f30, 0f3f800000;    	// 1
-	.loc	22	230	0
+	.loc	22	232	0
 	mov.f32 	%f31, 0f00000000;    	// 0
 	mov.f32 	%f32, 0f00000000;    	// 0
 	mov.f32 	%f33, 0f00000000;    	// 0
@@ -4630,7 +4618,7 @@ $LDWbegin__Z17closest_hit_glassv:
 	mov.f32 	%f64, %f63;
 	ex2.approx.ftz.f32 %f65,%f64;
 	mov.f32 	%f66, %f65;
-	.loc	22	234	0
+	.loc	22	236	0
 	mov.f32 	%f67, 0f7f800000;    	// 1.#INF
 	mov.f32 	%f68, 0f00000000;    	// 0
 	ex2.approx.f32 	%f69, %f50;
@@ -4665,7 +4653,7 @@ $LDWbegin__Z17closest_hit_glassv:
 	mov.f32 	%f92, %f91;
 	ex2.approx.ftz.f32 %f93,%f92;
 	mov.f32 	%f94, %f93;
-	.loc	22	234	0
+	.loc	22	236	0
 	mov.f32 	%f95, 0f7f800000;    	// 1.#INF
 	mov.f32 	%f96, 0f00000000;    	// 0
 	ex2.approx.f32 	%f97, %f79;
@@ -4700,7 +4688,7 @@ $LDWbegin__Z17closest_hit_glassv:
 	mov.f32 	%f120, %f119;
 	ex2.approx.ftz.f32 %f121,%f120;
 	mov.f32 	%f122, %f121;
-	.loc	22	234	0
+	.loc	22	236	0
 	mov.f32 	%f123, %f74;
 	mov.f32 	%f124, %f102;
 	mov.f32 	%f125, 0f7f800000;   	// 1.#INF
@@ -4715,7 +4703,7 @@ $LDWbegin__Z17closest_hit_glassv:
 	selp.f32 	%f132, %f125, %f130, %p7;
 	bra.uni 	$Lt_8_29186;
 $Lt_8_29442:
-	.loc	22	236	0
+	.loc	22	238	0
 	mov.f32 	%f123, 0f3f800000;   	// 1
 	mov.f32 	%f124, 0f3f800000;   	// 1
 	mov.f32 	%f132, 0f3f800000;   	// 1
@@ -4791,11 +4779,11 @@ $Lt_8_30978:
 	mov.f32 	%f152, %f171;
 	mov.s32 	%r5, 1;
 $Lt_8_30722:
-	.loc	22	242	0
+	.loc	22	244	0
 	mov.u32 	%r6, 0;
 	setp.eq.s32 	%p11, %r5, %r6;
 	@%p11 bra 	$Lt_8_31234;
-	.loc	22	251	0
+	.loc	22	253	0
 	mov.f32 	%f172, 0f3f800000;   	// 1
 	neg.f32 	%f173, %f44;
 	mul.f32 	%f174, %f39, %f151;
@@ -5191,7 +5179,7 @@ $Lt_8_32770:
 $Lt_8_32258:
 $Lt_8_15106:
 $Lt_8_31746:
-	.loc	22	251	0
+	.loc	22	253	0
 	ld.global.f32 	%f391, [fresnel_minimum];
 	ld.global.f32 	%f392, [fresnel_maximum];
 	sub.f32 	%f393, %f392, %f391;
@@ -5200,7 +5188,7 @@ $Lt_8_31746:
 	max.f32 	%f396, %f395, %f391;
 	mov.f32 	%f30, %f396;
 	ld.global.v4.f32 	{%f397,%f398,%f399,_}, [refraction_color+0];
-	.loc	22	253	0
+	.loc	22	255	0
 	mul.f32 	%f400, %f398, %f124;
 	mul.f32 	%f401, %f397, %f123;
 	mul.f32 	%f402, %f399, %f132;
@@ -5218,18 +5206,18 @@ $Lt_8_31746:
 	ld.global.f32 	%f414, [importance_cutoff];
 	setp.lt.f32 	%p38, %f414, %f413;
 	@!%p38 bra 	$Lt_8_37122;
-	.loc	22	258	0
+	.loc	22	260	0
 	add.s32 	%r50, %r3, 1;
-	st.local.s32 	[__cuda___cuda_local_var_148466_25_non_const_refr_prd_16420+16], %r50;
-	.loc	22	259	0
-	st.local.f32 	[__cuda___cuda_local_var_148466_25_non_const_refr_prd_16420+12], %f413;
+	st.local.s32 	[__cuda___cuda_local_var_148450_25_non_const_refr_prd_16420+16], %r50;
 	.loc	22	261	0
+	st.local.f32 	[__cuda___cuda_local_var_148450_25_non_const_refr_prd_16420+12], %f413;
+	.loc	22	263	0
 	ld.global.u32 	%r51, [top_object+0];
 	.loc	3	1071	0
 	ld.global.u32 	%r52, [radiance_ray_type];
 	ld.global.f32 	%f415, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148466_25_non_const_refr_prd_16420;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148450_25_non_const_refr_prd_16420;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r53, %r51;
@@ -5243,26 +5231,26 @@ $Lt_8_31746:
 	mov.f32 	%f422, %f415;
 	mov.f32 	%f423, 0f6c4ecb8f;   	// 1e+027
 	mov.f32 	%f424, %f423;
-	mov.u32 	%r55, __cuda___cuda_local_var_148466_25_non_const_refr_prd_16420;
+	mov.u32 	%r55, __cuda___cuda_local_var_148450_25_non_const_refr_prd_16420;
 	mov.u32 	%r56, %r55;
 	mov.u32 	%r57, 20;
 	mov.u32 	%r58, %r57;
 	call _rt_trace, (%r53, %f416, %f417, %f418, %f419, %f420, %f421, %r54, %f422, %f424, %r56, %r58);
-	.loc	22	262	0
-	ld.local.f32 	%f425, [__cuda___cuda_local_var_148466_25_non_const_refr_prd_16420+0];
+	.loc	22	264	0
+	ld.local.f32 	%f425, [__cuda___cuda_local_var_148450_25_non_const_refr_prd_16420+0];
 	ld.global.v4.f32 	{%f426,%f427,%f428,_}, [refraction_color+0];
 	mul.f32 	%f429, %f426, %f410;
 	mul.f32 	%f31, %f425, %f429;
-	ld.local.f32 	%f430, [__cuda___cuda_local_var_148466_25_non_const_refr_prd_16420+4];
+	ld.local.f32 	%f430, [__cuda___cuda_local_var_148450_25_non_const_refr_prd_16420+4];
 	mul.f32 	%f431, %f427, %f410;
 	mul.f32 	%f32, %f430, %f431;
-	ld.local.f32 	%f432, [__cuda___cuda_local_var_148466_25_non_const_refr_prd_16420+8];
+	ld.local.f32 	%f432, [__cuda___cuda_local_var_148450_25_non_const_refr_prd_16420+8];
 	mul.f32 	%f433, %f428, %f410;
 	mul.f32 	%f33, %f432, %f433;
 	bra.uni 	$Lt_8_36866;
 $Lt_8_37122:
 	ld.global.v4.f32 	{%f434,%f435,%f436,_}, [cutoff_color+0];
-	.loc	22	265	0
+	.loc	22	267	0
 	mul.f32 	%f437, %f410, %f397;
 	mul.f32 	%f31, %f434, %f437;
 	mul.f32 	%f438, %f410, %f398;
@@ -5277,7 +5265,7 @@ $Lt_8_31234:
 $Lt_8_29698:
 	@!%p8 bra 	$Lt_8_37378;
 	ld.global.v4.f32 	{%f440,%f441,%f442,_}, [reflection_color+0];
-	.loc	22	274	0
+	.loc	22	276	0
 	mul.f32 	%f443, %f441, %f124;
 	mul.f32 	%f444, %f440, %f123;
 	mul.f32 	%f445, %f442, %f132;
@@ -5293,18 +5281,18 @@ $Lt_8_29698:
 	ld.global.f32 	%f455, [importance_cutoff];
 	setp.lt.f32 	%p39, %f455, %f454;
 	@!%p39 bra 	$Lt_8_38146;
-	.loc	22	279	0
+	.loc	22	281	0
 	add.s32 	%r59, %r3, 1;
-	st.local.s32 	[__cuda___cuda_local_var_148487_24_non_const_refl_prd_36440+16], %r59;
-	.loc	22	280	0
-	st.local.f32 	[__cuda___cuda_local_var_148487_24_non_const_refl_prd_36440+12], %f454;
+	st.local.s32 	[__cuda___cuda_local_var_148471_24_non_const_refl_prd_36440+16], %r59;
 	.loc	22	282	0
+	st.local.f32 	[__cuda___cuda_local_var_148471_24_non_const_refl_prd_36440+12], %f454;
+	.loc	22	284	0
 	ld.global.u32 	%r60, [top_object+0];
 	.loc	3	1071	0
 	ld.global.u32 	%r52, [radiance_ray_type];
 	ld.global.f32 	%f415, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148487_24_non_const_refl_prd_36440;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148471_24_non_const_refl_prd_36440;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r61, %r60;
@@ -5327,26 +5315,26 @@ $Lt_8_29698:
 	mov.f32 	%f471, %f415;
 	mov.f32 	%f472, 0f6c4ecb8f;   	// 1e+027
 	mov.f32 	%f473, %f472;
-	mov.u32 	%r63, __cuda___cuda_local_var_148487_24_non_const_refl_prd_36440;
+	mov.u32 	%r63, __cuda___cuda_local_var_148471_24_non_const_refl_prd_36440;
 	mov.u32 	%r64, %r63;
 	mov.u32 	%r65, 20;
 	mov.u32 	%r66, %r65;
 	call _rt_trace, (%r61, %f456, %f457, %f458, %f462, %f466, %f470, %r62, %f471, %f473, %r64, %r66);
-	.loc	22	283	0
-	ld.local.f32 	%f474, [__cuda___cuda_local_var_148487_24_non_const_refl_prd_36440+0];
+	.loc	22	285	0
+	ld.local.f32 	%f474, [__cuda___cuda_local_var_148471_24_non_const_refl_prd_36440+0];
 	ld.global.v4.f32 	{%f475,%f476,%f477,_}, [reflection_color+0];
 	mul.f32 	%f478, %f475, %f30;
 	mad.f32 	%f31, %f474, %f478, %f31;
-	ld.local.f32 	%f479, [__cuda___cuda_local_var_148487_24_non_const_refl_prd_36440+4];
+	ld.local.f32 	%f479, [__cuda___cuda_local_var_148471_24_non_const_refl_prd_36440+4];
 	mul.f32 	%f480, %f476, %f30;
 	mad.f32 	%f32, %f479, %f480, %f32;
-	ld.local.f32 	%f481, [__cuda___cuda_local_var_148487_24_non_const_refl_prd_36440+8];
+	ld.local.f32 	%f481, [__cuda___cuda_local_var_148471_24_non_const_refl_prd_36440+8];
 	mul.f32 	%f482, %f477, %f30;
 	mad.f32 	%f33, %f481, %f482, %f33;
 	bra.uni 	$Lt_8_37890;
 $Lt_8_38146:
 	ld.global.v4.f32 	{%f483,%f484,%f485,_}, [cutoff_color+0];
-	.loc	22	286	0
+	.loc	22	288	0
 	mul.f32 	%f486, %f440, %f30;
 	mad.f32 	%f31, %f483, %f486, %f31;
 	mul.f32 	%f487, %f441, %f30;
@@ -5355,13 +5343,13 @@ $Lt_8_38146:
 	mad.f32 	%f33, %f485, %f488, %f33;
 $Lt_8_37890:
 $Lt_8_37378:
-	.loc	22	290	0
+	.loc	22	292	0
 	mul.f32 	%f489, %f123, %f31;
 	mul.f32 	%f490, %f124, %f32;
 	st.global.v2.f32 	[prd_radiance+0], {%f489,%f490};
 	mul.f32 	%f491, %f132, %f33;
 	st.global.f32 	[prd_radiance+8], %f491;
-	.loc	22	291	0
+	.loc	22	293	0
 	exit;
 $LDWend__Z17closest_hit_glassv:
 	} // _Z17closest_hit_glassv
@@ -5370,47 +5358,34 @@ $LDWend__Z17closest_hit_glassv:
 	.entry _Z9exceptionv
 	{
 	.reg .u32 %ra1;
-	.reg .u32 %r<22>;
-	.reg .f32 %f<14>;
-	.loc	22	297	0
+	.reg .u32 %r<18>;
+	.reg .f32 %f<6>;
+	.loc	22	302	0
 $LDWbegin__Z9exceptionv:
 	ld.global.v4.f32 	{%f1,%f2,%f3,_}, [bad_color+0];
-	.loc	22	299	0
-	cvt.sat.f32.f32 	%f4, %f3;
-	mov.f32 	%f5, 0f437ffd71;     	// 255.99
-	mul.f32 	%f6, %f4, %f5;
-	cvt.rzi.u32.f32 	%r1, %f6;
-	cvt.sat.f32.f32 	%f7, %f2;
-	mov.f32 	%f8, 0f437ffd71;     	// 255.99
-	mul.f32 	%f9, %f7, %f8;
-	cvt.rzi.u32.f32 	%r2, %f9;
-	cvt.sat.f32.f32 	%f10, %f1;
-	mov.f32 	%f11, 0f437ffd71;    	// 255.99
-	mul.f32 	%f12, %f10, %f11;
-	cvt.rzi.u32.f32 	%r3, %f12;
 	.loc	23	120	0
-	mov.u32 	%r4, output_buffer;
-	mov.u32 	%r5, %r4;
-	mov.u32 	%r6, 2;
-	mov.u32 	%r7, %r6;
-	mov.u32 	%r8, 4;
-	mov.u32 	%r9, %r8;
-	ld.global.v2.u32 	{%r10,%r11}, [launch_index+0];
-	mov.u32 	%r12, %r10;
-	mov.u32 	%r13, %r11;
-	mov.u32 	%r14, 0;
-	mov.u32 	%r15, %r14;
-	mov.u32 	%r16, 0;
-	mov.u32 	%r17, %r16;
-	call (%r18), _rt_buffer_get, (%r5, %r7, %r9, %r12, %r13, %r15, %r17);
-	mov.s32 	%r19, %r18;
+	mov.u32 	%r1, output_buffer;
+	mov.u32 	%r2, %r1;
+	mov.u32 	%r3, 2;
+	mov.u32 	%r4, %r3;
+	mov.u32 	%r5, 16;
+	mov.u32 	%r6, %r5;
+	ld.global.v2.u32 	{%r7,%r8}, [launch_index+0];
+	mov.u32 	%r9, %r7;
+	mov.u32 	%r10, %r8;
+	mov.u32 	%r11, 0;
+	mov.u32 	%r12, %r11;
+	mov.u32 	%r13, 0;
+	mov.u32 	%r14, %r13;
+	call (%r15), _rt_buffer_get, (%r2, %r4, %r6, %r9, %r10, %r12, %r14);
+	mov.s32 	%r16, %r15;
 	.loc	23	129	0
-	mov.s32 	%ra1, %r19;
+	mov.s32 	%ra1, %r16;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
-	.loc	22	299	0
-	mov.u32 	%r20, 255;
-	st.global.v4.u8 	[%r19+0], {%r1,%r2,%r3,%r20};
-	.loc	22	300	0
+	.loc	22	305	0
+	mov.f32 	%f4, 0f3f800000;     	// 1
+	st.global.v4.f32 	[%r16+0], {%f1,%f2,%f3,%f4};
+	.loc	22	306	0
 	exit;
 $LDWend__Z9exceptionv:
 	} // _Z9exceptionv
@@ -5464,7 +5439,6 @@ $LDWend__ZN5optix16rt_undefined_useEi:
 	.global .align 4 .b8 _ZN21rti_internal_typeinfo1UE[8] = {82,97,121,0,12,0,0,0};
 	.global .align 4 .b8 _ZN21rti_internal_typeinfo1VE[8] = {82,97,121,0,12,0,0,0};
 	.global .align 4 .b8 _ZN21rti_internal_typeinfo1WE[8] = {82,97,121,0,12,0,0,0};
-	.global .align 4 .b8 _ZN21rti_internal_typeinfo9bad_colorE[8] = {82,97,121,0,12,0,0,0};
 	.global .align 4 .b8 _ZN21rti_internal_typeinfo10miss_colorE[8] = {82,97,121,0,12,0,0,0};
 	.global .align 4 .b8 _ZN21rti_internal_typeinfo8miss_minE[8] = {82,97,121,0,12,0,0,0};
 	.global .align 4 .b8 _ZN21rti_internal_typeinfo8miss_maxE[8] = {82,97,121,0,12,0,0,0};
@@ -5488,6 +5462,7 @@ $LDWend__ZN5optix16rt_undefined_useEi:
 	.global .align 4 .b8 _ZN21rti_internal_typeinfo16refraction_colorE[8] = {82,97,121,0,12,0,0,0};
 	.global .align 4 .b8 _ZN21rti_internal_typeinfo16reflection_colorE[8] = {82,97,121,0,12,0,0,0};
 	.global .align 4 .b8 _ZN21rti_internal_typeinfo19extinction_constantE[8] = {82,97,121,0,12,0,0,0};
+	.global .align 4 .b8 _ZN21rti_internal_typeinfo9bad_colorE[8] = {82,97,121,0,12,0,0,0};
 	.global .align 1 .b8 _ZN21rti_internal_typename14shading_normalE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_typename16geometric_normalE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_typename12prd_radianceE[20] = {0x50,0x65,0x72,0x52,0x61,0x79,0x44,0x61,0x74,0x61,0x5f,0x72,0x61,0x64,0x69,0x61,0x6e,0x63,0x65,0x0};
@@ -5504,7 +5479,6 @@ $LDWend__ZN5optix16rt_undefined_useEi:
 	.global .align 1 .b8 _ZN21rti_internal_typename1UE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_typename1VE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_typename1WE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
-	.global .align 1 .b8 _ZN21rti_internal_typename9bad_colorE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_typename10miss_colorE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_typename8miss_minE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_typename8miss_maxE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
@@ -5528,6 +5502,7 @@ $LDWend__ZN5optix16rt_undefined_useEi:
 	.global .align 1 .b8 _ZN21rti_internal_typename16refraction_colorE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_typename16reflection_colorE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_typename19extinction_constantE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
+	.global .align 1 .b8 _ZN21rti_internal_typename9bad_colorE[7] = {0x66,0x6c,0x6f,0x61,0x74,0x33,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_semantic14shading_normalE[25] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x73,0x68,0x61,0x64,0x69,0x6e,0x67,0x5f,0x6e,0x6f,0x72,0x6d,0x61,0x6c,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_semantic16geometric_normalE[27] = {0x61,0x74,0x74,0x72,0x69,0x62,0x75,0x74,0x65,0x20,0x67,0x65,0x6f,0x6d,0x65,0x74,0x72,0x69,0x63,0x5f,0x6e,0x6f,0x72,0x6d,0x61,0x6c,0x0};
 	.global .align 1 .b8 _ZN21rti_internal_semantic12prd_radianceE[10] = {0x72,0x74,0x50,0x61,0x79,0x6c,0x6f,0x61,0x64,0x0};
@@ -5544,7 +5519,6 @@ $LDWend__ZN5optix16rt_undefined_useEi:
 	.global .align 1 .b8 _ZN21rti_internal_semantic1UE[1] = {0x0};
 	.global .align 1 .b8 _ZN21rti_internal_semantic1VE[1] = {0x0};
 	.global .align 1 .b8 _ZN21rti_internal_semantic1WE[1] = {0x0};
-	.global .align 1 .b8 _ZN21rti_internal_semantic9bad_colorE[1] = {0x0};
 	.global .align 1 .b8 _ZN21rti_internal_semantic10miss_colorE[1] = {0x0};
 	.global .align 1 .b8 _ZN21rti_internal_semantic8miss_minE[1] = {0x0};
 	.global .align 1 .b8 _ZN21rti_internal_semantic8miss_maxE[1] = {0x0};
@@ -5568,6 +5542,7 @@ $LDWend__ZN5optix16rt_undefined_useEi:
 	.global .align 1 .b8 _ZN21rti_internal_semantic16refraction_colorE[1] = {0x0};
 	.global .align 1 .b8 _ZN21rti_internal_semantic16reflection_colorE[1] = {0x0};
 	.global .align 1 .b8 _ZN21rti_internal_semantic19extinction_constantE[1] = {0x0};
+	.global .align 1 .b8 _ZN21rti_internal_semantic9bad_colorE[1] = {0x0};
 	.global .align 1 .b8 _ZN23rti_internal_annotation14shading_normalE[1] = {0x0};
 	.global .align 1 .b8 _ZN23rti_internal_annotation16geometric_normalE[1] = {0x0};
 	.global .align 1 .b8 _ZN23rti_internal_annotation12prd_radianceE[1] = {0x0};
@@ -5584,7 +5559,6 @@ $LDWend__ZN5optix16rt_undefined_useEi:
 	.global .align 1 .b8 _ZN23rti_internal_annotation1UE[1] = {0x0};
 	.global .align 1 .b8 _ZN23rti_internal_annotation1VE[1] = {0x0};
 	.global .align 1 .b8 _ZN23rti_internal_annotation1WE[1] = {0x0};
-	.global .align 1 .b8 _ZN23rti_internal_annotation9bad_colorE[1] = {0x0};
 	.global .align 1 .b8 _ZN23rti_internal_annotation10miss_colorE[1] = {0x0};
 	.global .align 1 .b8 _ZN23rti_internal_annotation8miss_minE[1] = {0x0};
 	.global .align 1 .b8 _ZN23rti_internal_annotation8miss_maxE[1] = {0x0};
@@ -5608,4 +5582,5 @@ $LDWend__ZN5optix16rt_undefined_useEi:
 	.global .align 1 .b8 _ZN23rti_internal_annotation16refraction_colorE[1] = {0x0};
 	.global .align 1 .b8 _ZN23rti_internal_annotation16reflection_colorE[1] = {0x0};
 	.global .align 1 .b8 _ZN23rti_internal_annotation19extinction_constantE[1] = {0x0};
+	.global .align 1 .b8 _ZN23rti_internal_annotation9bad_colorE[1] = {0x0};
 

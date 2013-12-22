@@ -3,7 +3,6 @@
 
 using namespace optix;
 
-rtDeclareVariable(float, scene_epsilon, , );
 rtDeclareVariable(float3, plane_normal, , );
 rtDeclareVariable(float3, recmin, , );
 rtDeclareVariable(float3, recmax, , );

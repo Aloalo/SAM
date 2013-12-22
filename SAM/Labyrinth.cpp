@@ -16,6 +16,17 @@ Labyrinth::~Labyrinth(void)
 {
 }
 
+
+int Labyrinth::getWidth() const
+{
+	return width;
+}
+
+int Labyrinth::getHeight() const
+{
+	return height;
+}
+
 int Labyrinth::getCell(pair<int, int> pos) const
 {
 	return maze[pos.first][pos.second];
@@ -43,22 +54,25 @@ void Labyrinth::generateLabyrinth(int w, int h)
 	width = w;
 	height = h;
 
-	float realwidth = getRealWidth();
-	float realheight = getRealHeight();
-	float3 offset = make_float3(-realwidth / 2.0f, 0.0f, -realheight / 2.0f);
+	float rw = getRealWidth();
+	float rh = getRealHeight();
+	float3 offset = make_float3(-rw / 2.0f, 0.0f, -rh / 2.0f);
 	xBox = xBox.translated(offset);
 	yBox = yBox.translated(offset);
 	float wallHeight = xBox.getHeight();
 
 	//outer walls
-	boxVec.push_back(Box(make_float3(0.0f, 0.0f, -crackDim), make_float3(realwidth, wallHeight, 0.0f), WALL).translated(offset));
-	boxVec.push_back(Box(make_float3(-crackDim, 0.0f, 0.0f), make_float3(0.0f, wallHeight, realheight), WALL).translated(offset));
-	boxVec.push_back(Box(make_float3(0.0f, 0.0f, realheight), make_float3(realwidth, wallHeight, realheight + crackDim), WALL).translated(offset));
-	boxVec.push_back(Box(make_float3(realwidth, 0.0f, 0.0f), make_float3(realwidth + crackDim, wallHeight, realheight), WALL).translated(offset));
+	boxVec.push_back(Box(make_float3(0.0f, 0.0f, -crackDim), make_float3(rw, wallHeight, 0.0f), WALL).translated(offset));
+	boxVec.push_back(Box(make_float3(-crackDim, 0.0f, 0.0f), make_float3(0.0f, wallHeight, rh), WALL).translated(offset));
+	boxVec.push_back(Box(make_float3(0.0f, 0.0f, rh), make_float3(rw, wallHeight, rh + crackDim), WALL).translated(offset));
+	boxVec.push_back(Box(make_float3(rw, 0.0f, 0.0f), make_float3(rw + crackDim, wallHeight, rh), WALL).translated(offset));
 
 	memset(maze, WALL, sizeof(int) * 200 * 200);
 	primRandomized();
 	generateGeometry();
+
+	xBox = xBox.translated(-offset);
+	yBox = yBox.translated(-offset);
 }
 
 bool Labyrinth::outOfBounds(int x, int y) const

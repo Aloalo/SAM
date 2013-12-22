@@ -16,6 +16,8 @@ public:
 	const std::vector<Box>& getWalls() const;
 	float getRealWidth() const;
 	float getRealHeight() const;
+	int getWidth() const;
+	int getHeight() const;
 
 private:
 	//generates a list of walls

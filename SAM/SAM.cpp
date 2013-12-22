@@ -6,7 +6,7 @@
 
 int main()
 {
-	Settings::GS = GraphicsSettings("SAM/GraphicsSettings.ini");
+	Settings::GS = GraphicsSettings("../SAM/GraphicsSettings.ini");
 	
 	Engine e(1. / 60., Settings::GS["screenWidth"], Settings::GS["screenHeight"]);
 	Input input;

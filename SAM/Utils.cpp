@@ -4,7 +4,7 @@ namespace utils
 {
 	std::string pathToPTX(const std::string &filename)
 	{
-		return "SAM/ptxfiles/" + filename + ".ptx";
+		return "../SAM/ptxfiles/" + filename + ".ptx";
 	}
 
 	bool equals(const float3 &x, const float3 &y)

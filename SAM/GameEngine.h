@@ -25,11 +25,14 @@ public:
 	void initDrawing();
 	void draw(const glm::mat4 &View, const glm::mat4 &Projection);
 
+	void generateLabyrinth(int width, int height);
+
 	Mouse mouse;
 
 private:
 	Scene scene;
 	BufferDrawer drawer;
 	Player player;
+	Labyrinth lab;
 };
 

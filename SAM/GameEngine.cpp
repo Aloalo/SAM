@@ -4,6 +4,8 @@
 #include "Settings.h"
 
 using namespace glm;
+using namespace std;
+using namespace optix;
 
 GameEngine::GameEngine(void)
 	: player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Settings::GS["bufferWidth"] / (float)Settings::GS["bufferHeight"], 60.0f), 5.0f)
@@ -15,6 +17,11 @@ GameEngine::~GameEngine(void)
 {
 }
 
+
+void GameEngine::generateLabyrinth(int width, int height)
+{
+	lab.generateLabyrinth(width, height);
+}
 
 void GameEngine::keyPress(int key, int scancode, int action, int mods)
 {
@@ -52,6 +59,10 @@ void GameEngine::keyPress(int key, int scancode, int action, int mods)
 		break;
 	case 'E':
 		player.translate(glm::vec3(0, 1., 0) * mod);
+		break;
+	case 'L':
+		lab.generateLabyrinth(lab.getWidth(), lab.getHeight());
+		scene.createSceneGraph(lab);
 		break;
 	}
 }
@@ -99,13 +110,26 @@ void GameEngine::update(float deltaTime)
 
 void GameEngine::initDrawing()
 {
-	scene.initialize(drawer.createGLBuffer(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]));
+	try
+	{
+		scene.initialize(drawer.createGLBuffer(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]));
 
-	Labyrinth lab;
-	lab.generateLabyrinth(5, 5);
-	scene.createSceneGraph(lab);
-	scene.setCamera(player.getCam());
-	drawer.init(scene.getBuffer());
+		lab.generateLabyrinth(20, 20);
+
+		scene.createSceneGraph(lab);
+		scene.setCamera(player.getCam());
+		drawer.init(scene.getBuffer());
+	}
+	catch(exception ex)
+	{
+		printf("%s", ex.what());
+		exit(0);
+	}
+	catch(Exception ex)
+	{
+		printf("%s", ex.what());
+		exit(0);
+	}
 }
 
 void GameEngine::draw(const glm::mat4 &View, const glm::mat4 &Projection)

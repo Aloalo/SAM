@@ -3,7 +3,6 @@ Opcenito:
 -glatki mis
 -zidovi labirinta
 -game settings
--labirint resize
 
 -popraviti cudnu kameru??
 
@@ -13,6 +12,5 @@ Optimizacije:
 
 Grafika:
 
--buffer format support
 -shadeing tweakovi
 -graphics settings
