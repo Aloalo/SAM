@@ -78,7 +78,7 @@ void Scene::initialize(unsigned int GLBO)
 
 	BasicLight lights[] = 
 	{ 
-		{make_float3(-5.0f, 60.0f, -16.0f), make_float3(1.0f, 1.0f, 1.0f), 1}
+		{make_float3(-5.0f, 60.0f, -16.0f), make_float3(1.0f, 1.0f, 1.0f)}
 	};
 
 	Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT);

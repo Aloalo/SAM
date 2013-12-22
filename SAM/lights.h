@@ -7,5 +7,4 @@ struct BasicLight
 {
 	optix::float3 pos;
 	optix::float3 color;
-	int padding;
 };

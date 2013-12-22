@@ -6,7 +6,7 @@
 	.func _ZN5optix16rt_undefined_useEi (.reg .u32 %ra1)
 
 	//-----------------------------------------------------------
-	// Compiling C:/Users/Jure/AppData/Local/Temp/tmpxft_00001680_00000000-12_shaders.cpp3.i (C:/Users/Jure/AppData/Local/Temp/ccBI#.a02108)
+	// Compiling C:/Users/Jure/AppData/Local/Temp/tmpxft_00000624_00000000-12_shaders.cpp3.i (C:/Users/Jure/AppData/Local/Temp/ccBI#.a05152)
 	//-----------------------------------------------------------
 
 	//-----------------------------------------------------------
@@ -18,13 +18,13 @@
 	//  -m2	(Report advisories)
 	//-----------------------------------------------------------
 
-	.file	1	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00001680_00000000-11_shaders.cudafe2.gpu"
+	.file	1	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00000624_00000000-11_shaders.cudafe2.gpu"
 	.file	2	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal\optix_defines.h"
 	.file	3	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optix_device.h"
 	.file	4	"d:\stuff\projects\sam\sam\lights.h"
 	.file	5	"d:\stuff\projects\sam\sam\helper.h"
 	.file	6	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_datatypes.h"
-	.file	7	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00001680_00000000-2_shaders.cudafe1.gpu"
+	.file	7	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00000624_00000000-2_shaders.cudafe1.gpu"
 	.file	8	"D:\Program Files\Microsoft Visual Studio 11.0\VC\include\crtdefs.h"
 	.file	9	"D:/Program Files/NVIDIA GPU Computing/include\crt/device_runtime.h"
 	.file	10	"D:/Program Files/NVIDIA GPU Computing/include\host_defines.h"
@@ -77,7 +77,7 @@
 	.reg .u32 %ra1;
 	.reg .u32 %r<41>;
 	.reg .f32 %f<60>;
-	.local .align 4 .b8 __cuda___cuda_local_var_148241_22_non_const_prd_16344[20];
+	.local .align 4 .b8 __cuda___cuda_local_var_148240_22_non_const_prd_16344[20];
 	.loc	22	31	0
 $LDWbegin__Z14pinhole_camerav:
 	.loc	23	138	0
@@ -125,10 +125,10 @@ $LDWbegin__Z14pinhole_camerav:
 	rsqrt.approx.f32 	%f37, %f36;
 	.loc	22	42	0
 	mov.f32 	%f38, 0f3f800000;    	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148241_22_non_const_prd_16344+12], %f38;
+	st.local.f32 	[__cuda___cuda_local_var_148240_22_non_const_prd_16344+12], %f38;
 	.loc	22	43	0
 	mov.s32 	%r15, 0;
-	st.local.s32 	[__cuda___cuda_local_var_148241_22_non_const_prd_16344+16], %r15;
+	st.local.s32 	[__cuda___cuda_local_var_148240_22_non_const_prd_16344+16], %r15;
 	.loc	22	45	0
 	ld.global.u32 	%r16, [top_object+0];
 	ld.global.v4.f32 	{%f39,%f40,%f41,_}, [eye+0];
@@ -139,7 +139,7 @@ $LDWbegin__Z14pinhole_camerav:
 	ld.global.u32 	%r17, [radiance_ray_type];
 	ld.global.f32 	%f45, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148241_22_non_const_prd_16344;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148240_22_non_const_prd_16344;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r18, %r16;
@@ -153,15 +153,15 @@ $LDWbegin__Z14pinhole_camerav:
 	mov.f32 	%f52, %f45;
 	mov.f32 	%f53, 0f6c4ecb8f;    	// 1e+027
 	mov.f32 	%f54, %f53;
-	mov.u32 	%r20, __cuda___cuda_local_var_148241_22_non_const_prd_16344;
+	mov.u32 	%r20, __cuda___cuda_local_var_148240_22_non_const_prd_16344;
 	mov.u32 	%r21, %r20;
 	mov.u32 	%r22, 20;
 	mov.u32 	%r23, %r22;
 	call _rt_trace, (%r18, %f46, %f47, %f48, %f49, %f50, %f51, %r19, %f52, %f54, %r21, %r23);
 	.loc	22	48	0
-	ld.local.f32 	%f55, [__cuda___cuda_local_var_148241_22_non_const_prd_16344+0];
-	ld.local.f32 	%f56, [__cuda___cuda_local_var_148241_22_non_const_prd_16344+4];
-	ld.local.f32 	%f57, [__cuda___cuda_local_var_148241_22_non_const_prd_16344+8];
+	ld.local.f32 	%f55, [__cuda___cuda_local_var_148240_22_non_const_prd_16344+0];
+	ld.local.f32 	%f56, [__cuda___cuda_local_var_148240_22_non_const_prd_16344+4];
+	ld.local.f32 	%f57, [__cuda___cuda_local_var_148240_22_non_const_prd_16344+8];
 	.loc	23	120	0
 	mov.u32 	%r24, output_buffer;
 	mov.u32 	%r25, %r24;
@@ -334,7 +334,7 @@ $LDWend__Z13any_hit_solidv:
 	.reg .u32 %r<99>;
 	.reg .f32 %f<348>;
 	.reg .pred %p<27>;
-	.local .align 4 .b8 __cuda___cuda_local_var_148308_22_non_const_shadow_prd_16364[12];
+	.local .align 4 .b8 __cuda___cuda_local_var_148307_22_non_const_shadow_prd_16364[12];
 	.loc	22	133	0
 $LDWbegin__Z17closest_hit_phongv:
 	.loc	23	256	0
@@ -444,7 +444,7 @@ $LDWbegin__Z17closest_hit_phongv:
 	mov.u32 	%r10, %r9;
 	mov.u32 	%r11, 1;
 	mov.u32 	%r12, %r11;
-	mov.u32 	%r13, 28;
+	mov.u32 	%r13, 24;
 	mov.u32 	%r14, %r13;
 	call (%r15, %r16, %r17, %r18), _rt_buffer_get_size, (%r10, %r12, %r14);
 	mov.s32 	%r19, %r15;
@@ -459,7 +459,7 @@ $Lt_4_22274:
 	mov.u32 	%r22, %r21;
 	mov.u32 	%r23, 1;
 	mov.u32 	%r24, %r23;
-	mov.u32 	%r25, 28;
+	mov.u32 	%r25, 24;
 	mov.u32 	%r26, %r25;
 	mov.u32 	%r27, %r8;
 	mov.u32 	%r28, 0;
@@ -499,11 +499,11 @@ $Lt_4_22274:
 	@!%p2 bra 	$Lt_4_22530;
 	.loc	22	109	0
 	mov.f32 	%f99, 0f3f800000;    	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16364+0], %f99;
+	st.local.f32 	[__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16364+0], %f99;
 	mov.f32 	%f100, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16364+4], %f100;
+	st.local.f32 	[__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16364+4], %f100;
 	mov.f32 	%f101, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16364+8], %f101;
+	st.local.f32 	[__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16364+8], %f101;
 	ld.global.s32 	%r36, [casts_shadows];
 	mov.u32 	%r37, 0;
 	setp.eq.s32 	%p3, %r36, %r37;
@@ -514,7 +514,7 @@ $Lt_4_22274:
 	ld.global.u32 	%r39, [shadow_ray_type];
 	ld.global.f32 	%f102, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148308_22_non_const_shadow_prd_16364;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148307_22_non_const_shadow_prd_16364;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r40, %r38;
@@ -527,15 +527,15 @@ $Lt_4_22274:
 	mov.u32 	%r41, %r39;
 	mov.f32 	%f109, %f102;
 	mov.f32 	%f110, %f90;
-	mov.u32 	%r42, __cuda___cuda_local_var_148308_22_non_const_shadow_prd_16364;
+	mov.u32 	%r42, __cuda___cuda_local_var_148307_22_non_const_shadow_prd_16364;
 	mov.u32 	%r43, %r42;
 	mov.u32 	%r44, 12;
 	mov.u32 	%r45, %r44;
 	call _rt_trace, (%r40, %f103, %f104, %f105, %f106, %f107, %f108, %r41, %f109, %f110, %r43, %r45);
 	.loc	22	114	0
-	ld.local.f32 	%f101, [__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16364+8];
-	ld.local.f32 	%f100, [__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16364+4];
-	ld.local.f32 	%f99, [__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16364+0];
+	ld.local.f32 	%f101, [__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16364+8];
+	ld.local.f32 	%f100, [__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16364+4];
+	ld.local.f32 	%f99, [__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16364+0];
 $Lt_4_23042:
 	max.f32 	%f111, %f100, %f99;
 	max.f32 	%f112, %f101, %f111;
@@ -948,7 +948,7 @@ $Lt_4_22530:
 	mov.u32 	%r88, %r87;
 	mov.u32 	%r89, 1;
 	mov.u32 	%r90, %r89;
-	mov.u32 	%r91, 28;
+	mov.u32 	%r91, 24;
 	mov.u32 	%r92, %r91;
 	call (%r93, %r94, %r95, %r96), _rt_buffer_get_size, (%r88, %r90, %r92);
 	mov.s32 	%r97, %r93;
@@ -974,7 +974,7 @@ $LDWend__Z17closest_hit_phongv:
 	.reg .u32 %r<105>;
 	.reg .f32 %f<371>;
 	.reg .pred %p<28>;
-	.local .align 4 .b8 __cuda___cuda_local_var_148308_22_non_const_shadow_prd_16376[12];
+	.local .align 4 .b8 __cuda___cuda_local_var_148307_22_non_const_shadow_prd_16376[12];
 	.loc	22	150	0
 $LDWbegin__Z22closest_hit_phong_tilev:
 	.loc	23	256	0
@@ -1117,7 +1117,7 @@ $Lt_5_22786:
 	mov.u32 	%r16, %r15;
 	mov.u32 	%r17, 1;
 	mov.u32 	%r18, %r17;
-	mov.u32 	%r19, 28;
+	mov.u32 	%r19, 24;
 	mov.u32 	%r20, %r19;
 	call (%r21, %r22, %r23, %r24), _rt_buffer_get_size, (%r16, %r18, %r20);
 	mov.s32 	%r25, %r21;
@@ -1132,7 +1132,7 @@ $Lt_5_23810:
 	mov.u32 	%r28, %r27;
 	mov.u32 	%r29, 1;
 	mov.u32 	%r30, %r29;
-	mov.u32 	%r31, 28;
+	mov.u32 	%r31, 24;
 	mov.u32 	%r32, %r31;
 	mov.u32 	%r33, %r14;
 	mov.u32 	%r34, 0;
@@ -1172,11 +1172,11 @@ $Lt_5_23810:
 	@!%p3 bra 	$Lt_5_24066;
 	.loc	22	109	0
 	mov.f32 	%f125, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16376+0], %f125;
+	st.local.f32 	[__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16376+0], %f125;
 	mov.f32 	%f126, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16376+4], %f126;
+	st.local.f32 	[__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16376+4], %f126;
 	mov.f32 	%f127, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16376+8], %f127;
+	st.local.f32 	[__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16376+8], %f127;
 	ld.global.s32 	%r42, [casts_shadows];
 	mov.u32 	%r43, 0;
 	setp.eq.s32 	%p4, %r42, %r43;
@@ -1187,7 +1187,7 @@ $Lt_5_23810:
 	ld.global.u32 	%r45, [shadow_ray_type];
 	ld.global.f32 	%f128, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148308_22_non_const_shadow_prd_16376;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148307_22_non_const_shadow_prd_16376;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r46, %r44;
@@ -1200,15 +1200,15 @@ $Lt_5_23810:
 	mov.u32 	%r47, %r45;
 	mov.f32 	%f135, %f128;
 	mov.f32 	%f136, %f116;
-	mov.u32 	%r48, __cuda___cuda_local_var_148308_22_non_const_shadow_prd_16376;
+	mov.u32 	%r48, __cuda___cuda_local_var_148307_22_non_const_shadow_prd_16376;
 	mov.u32 	%r49, %r48;
 	mov.u32 	%r50, 12;
 	mov.u32 	%r51, %r50;
 	call _rt_trace, (%r46, %f129, %f130, %f131, %f132, %f133, %f134, %r47, %f135, %f136, %r49, %r51);
 	.loc	22	114	0
-	ld.local.f32 	%f127, [__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16376+8];
-	ld.local.f32 	%f126, [__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16376+4];
-	ld.local.f32 	%f125, [__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16376+0];
+	ld.local.f32 	%f127, [__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16376+8];
+	ld.local.f32 	%f126, [__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16376+4];
+	ld.local.f32 	%f125, [__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16376+0];
 $Lt_5_24578:
 	max.f32 	%f137, %f126, %f125;
 	max.f32 	%f138, %f127, %f137;
@@ -1620,7 +1620,7 @@ $Lt_5_24066:
 	mov.u32 	%r94, %r93;
 	mov.u32 	%r95, 1;
 	mov.u32 	%r96, %r95;
-	mov.u32 	%r97, 28;
+	mov.u32 	%r97, 24;
 	mov.u32 	%r98, %r97;
 	call (%r99, %r100, %r101, %r102), _rt_buffer_get_size, (%r94, %r96, %r98);
 	mov.s32 	%r103, %r99;
@@ -1646,8 +1646,8 @@ $LDWend__Z22closest_hit_phong_tilev:
 	.reg .u32 %r<179>;
 	.reg .f32 %f<896>;
 	.reg .pred %p<68>;
-	.local .align 4 .b8 __cuda___cuda_local_var_148308_22_non_const_shadow_prd_16388[12];
-	.local .align 4 .b8 __cuda___cuda_local_var_148394_23_non_const_refl_prd_28400[20];
+	.local .align 4 .b8 __cuda___cuda_local_var_148307_22_non_const_shadow_prd_16388[12];
+	.local .align 4 .b8 __cuda___cuda_local_var_148393_23_non_const_refl_prd_28400[20];
 	.loc	22	177	0
 $LDWbegin__Z22closest_hit_reflectionv:
 	.loc	23	256	0
@@ -1757,7 +1757,7 @@ $LDWbegin__Z22closest_hit_reflectionv:
 	mov.u32 	%r10, %r9;
 	mov.u32 	%r11, 1;
 	mov.u32 	%r12, %r11;
-	mov.u32 	%r13, 28;
+	mov.u32 	%r13, 24;
 	mov.u32 	%r14, %r13;
 	call (%r15, %r16, %r17, %r18), _rt_buffer_get_size, (%r10, %r12, %r14);
 	mov.s32 	%r19, %r15;
@@ -1772,7 +1772,7 @@ $Lt_6_77826:
 	mov.u32 	%r22, %r21;
 	mov.u32 	%r23, 1;
 	mov.u32 	%r24, %r23;
-	mov.u32 	%r25, 28;
+	mov.u32 	%r25, 24;
 	mov.u32 	%r26, %r25;
 	mov.u32 	%r27, %r8;
 	mov.u32 	%r28, 0;
@@ -1812,11 +1812,11 @@ $Lt_6_77826:
 	@!%p2 bra 	$Lt_6_79618;
 	.loc	22	109	0
 	mov.f32 	%f99, 0f3f800000;    	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16388+0], %f99;
+	st.local.f32 	[__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16388+0], %f99;
 	mov.f32 	%f100, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16388+4], %f100;
+	st.local.f32 	[__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16388+4], %f100;
 	mov.f32 	%f101, 0f3f800000;   	// 1
-	st.local.f32 	[__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16388+8], %f101;
+	st.local.f32 	[__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16388+8], %f101;
 	ld.global.s32 	%r36, [casts_shadows];
 	mov.u32 	%r37, 0;
 	setp.eq.s32 	%p3, %r36, %r37;
@@ -1827,7 +1827,7 @@ $Lt_6_77826:
 	ld.global.u32 	%r39, [shadow_ray_type];
 	ld.global.f32 	%f102, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148308_22_non_const_shadow_prd_16388;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148307_22_non_const_shadow_prd_16388;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r40, %r38;
@@ -1840,15 +1840,15 @@ $Lt_6_77826:
 	mov.u32 	%r41, %r39;
 	mov.f32 	%f109, %f102;
 	mov.f32 	%f110, %f90;
-	mov.u32 	%r42, __cuda___cuda_local_var_148308_22_non_const_shadow_prd_16388;
+	mov.u32 	%r42, __cuda___cuda_local_var_148307_22_non_const_shadow_prd_16388;
 	mov.u32 	%r43, %r42;
 	mov.u32 	%r44, 12;
 	mov.u32 	%r45, %r44;
 	call _rt_trace, (%r40, %f103, %f104, %f105, %f106, %f107, %f108, %r41, %f109, %f110, %r43, %r45);
 	.loc	22	114	0
-	ld.local.f32 	%f101, [__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16388+8];
-	ld.local.f32 	%f100, [__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16388+4];
-	ld.local.f32 	%f99, [__cuda___cuda_local_var_148308_22_non_const_shadow_prd_16388+0];
+	ld.local.f32 	%f101, [__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16388+8];
+	ld.local.f32 	%f100, [__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16388+4];
+	ld.local.f32 	%f99, [__cuda___cuda_local_var_148307_22_non_const_shadow_prd_16388+0];
 $Lt_6_78594:
 	max.f32 	%f111, %f100, %f99;
 	max.f32 	%f112, %f101, %f111;
@@ -2261,7 +2261,7 @@ $Lt_6_78082:
 	mov.u32 	%r88, %r87;
 	mov.u32 	%r89, 1;
 	mov.u32 	%r90, %r89;
-	mov.u32 	%r91, 28;
+	mov.u32 	%r91, 24;
 	mov.u32 	%r92, %r91;
 	call (%r93, %r94, %r95, %r96), _rt_buffer_get_size, (%r88, %r90, %r92);
 	mov.s32 	%r97, %r93;
@@ -3362,10 +3362,10 @@ $Lt_6_84482:
 	setp.eq.s32 	%p66, %r167, %r168;
 	@%p66 bra 	$Lt_6_98818;
 	.loc	22	195	0
-	st.local.f32 	[__cuda___cuda_local_var_148394_23_non_const_refl_prd_28400+12], %f865;
+	st.local.f32 	[__cuda___cuda_local_var_148393_23_non_const_refl_prd_28400+12], %f865;
 	.loc	22	196	0
 	add.s32 	%r169, %r161, 1;
-	st.local.s32 	[__cuda___cuda_local_var_148394_23_non_const_refl_prd_28400+16], %r169;
+	st.local.s32 	[__cuda___cuda_local_var_148393_23_non_const_refl_prd_28400+16], %r169;
 	.loc	22	199	0
 	ld.global.u32 	%r170, [top_object+0];
 	.loc	3	1071	0
@@ -3387,7 +3387,7 @@ $Lt_6_84482:
 	ld.global.u32 	%r171, [radiance_ray_type];
 	ld.global.f32 	%f882, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148394_23_non_const_refl_prd_28400;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148393_23_non_const_refl_prd_28400;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r172, %r170;
@@ -3401,17 +3401,17 @@ $Lt_6_84482:
 	mov.f32 	%f889, %f882;
 	mov.f32 	%f890, 0f6c4ecb8f;   	// 1e+027
 	mov.f32 	%f891, %f890;
-	mov.u32 	%r174, __cuda___cuda_local_var_148394_23_non_const_refl_prd_28400;
+	mov.u32 	%r174, __cuda___cuda_local_var_148393_23_non_const_refl_prd_28400;
 	mov.u32 	%r175, %r174;
 	mov.u32 	%r176, 20;
 	mov.u32 	%r177, %r176;
 	call _rt_trace, (%r172, %f883, %f884, %f885, %f886, %f887, %f888, %r173, %f889, %f891, %r175, %r177);
 	.loc	22	200	0
-	ld.local.f32 	%f892, [__cuda___cuda_local_var_148394_23_non_const_refl_prd_28400+0];
+	ld.local.f32 	%f892, [__cuda___cuda_local_var_148393_23_non_const_refl_prd_28400+0];
 	mad.f32 	%f347, %f892, %f850, %f347;
-	ld.local.f32 	%f893, [__cuda___cuda_local_var_148394_23_non_const_refl_prd_28400+4];
+	ld.local.f32 	%f893, [__cuda___cuda_local_var_148393_23_non_const_refl_prd_28400+4];
 	mad.f32 	%f348, %f893, %f851, %f348;
-	ld.local.f32 	%f894, [__cuda___cuda_local_var_148394_23_non_const_refl_prd_28400+8];
+	ld.local.f32 	%f894, [__cuda___cuda_local_var_148393_23_non_const_refl_prd_28400+8];
 	mad.f32 	%f349, %f894, %f857, %f349;
 $Lt_6_98818:
 	st.global.v2.f32 	[prd_radiance+0], {%f347,%f348};
@@ -4563,8 +4563,8 @@ $LDWend__Z20any_hit_shadow_glassv:
 	.reg .u32 %r<83>;
 	.reg .f32 %f<491>;
 	.reg .pred %p<42>;
-	.local .align 4 .b8 __cuda___cuda_local_var_148473_25_non_const_refr_prd_16420[20];
-	.local .align 4 .b8 __cuda___cuda_local_var_148492_25_non_const_refl_prd_36440[20];
+	.local .align 4 .b8 __cuda___cuda_local_var_148472_25_non_const_refr_prd_16420[20];
+	.local .align 4 .b8 __cuda___cuda_local_var_148491_25_non_const_refl_prd_36440[20];
 	.loc	22	235	0
 $LDWbegin__Z17closest_hit_glassv:
 	.loc	22	237	0
@@ -5252,16 +5252,16 @@ $Lt_8_32770:
 	@!%p38 bra 	$Lt_8_38146;
 	.loc	22	274	0
 	add.s32 	%r51, %r4, 1;
-	st.local.s32 	[__cuda___cuda_local_var_148473_25_non_const_refr_prd_16420+16], %r51;
+	st.local.s32 	[__cuda___cuda_local_var_148472_25_non_const_refr_prd_16420+16], %r51;
 	.loc	22	275	0
-	st.local.f32 	[__cuda___cuda_local_var_148473_25_non_const_refr_prd_16420+12], %f411;
+	st.local.f32 	[__cuda___cuda_local_var_148472_25_non_const_refr_prd_16420+12], %f411;
 	.loc	22	277	0
 	ld.global.u32 	%r52, [top_object+0];
 	.loc	3	1071	0
 	ld.global.u32 	%r53, [radiance_ray_type];
 	ld.global.f32 	%f413, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148473_25_non_const_refr_prd_16420;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148472_25_non_const_refr_prd_16420;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r54, %r52;
@@ -5275,20 +5275,20 @@ $Lt_8_32770:
 	mov.f32 	%f420, %f413;
 	mov.f32 	%f421, 0f6c4ecb8f;   	// 1e+027
 	mov.f32 	%f422, %f421;
-	mov.u32 	%r56, __cuda___cuda_local_var_148473_25_non_const_refr_prd_16420;
+	mov.u32 	%r56, __cuda___cuda_local_var_148472_25_non_const_refr_prd_16420;
 	mov.u32 	%r57, %r56;
 	mov.u32 	%r58, 20;
 	mov.u32 	%r59, %r58;
 	call _rt_trace, (%r54, %f414, %f415, %f416, %f417, %f418, %f419, %r55, %f420, %f422, %r57, %r59);
 	.loc	22	278	0
-	ld.local.f32 	%f423, [__cuda___cuda_local_var_148473_25_non_const_refr_prd_16420+0];
+	ld.local.f32 	%f423, [__cuda___cuda_local_var_148472_25_non_const_refr_prd_16420+0];
 	ld.global.v4.f32 	{%f424,%f425,%f426,_}, [refraction_color+0];
 	mul.f32 	%f427, %f424, %f408;
 	mul.f32 	%f31, %f423, %f427;
-	ld.local.f32 	%f428, [__cuda___cuda_local_var_148473_25_non_const_refr_prd_16420+4];
+	ld.local.f32 	%f428, [__cuda___cuda_local_var_148472_25_non_const_refr_prd_16420+4];
 	mul.f32 	%f429, %f425, %f408;
 	mul.f32 	%f32, %f428, %f429;
-	ld.local.f32 	%f430, [__cuda___cuda_local_var_148473_25_non_const_refr_prd_16420+8];
+	ld.local.f32 	%f430, [__cuda___cuda_local_var_148472_25_non_const_refr_prd_16420+8];
 	mul.f32 	%f431, %f426, %f408;
 	mul.f32 	%f33, %f430, %f431;
 	bra.uni 	$Lt_8_37890;
@@ -5338,16 +5338,16 @@ $Lt_8_31746:
 	.loc	22	293	0
 	ld.global.s32 	%r73, [prd_radiance+16];
 	add.s32 	%r74, %r73, 1;
-	st.local.s32 	[__cuda___cuda_local_var_148492_25_non_const_refl_prd_36440+16], %r74;
+	st.local.s32 	[__cuda___cuda_local_var_148491_25_non_const_refl_prd_36440+16], %r74;
 	.loc	22	294	0
-	st.local.f32 	[__cuda___cuda_local_var_148492_25_non_const_refl_prd_36440+12], %f452;
+	st.local.f32 	[__cuda___cuda_local_var_148491_25_non_const_refl_prd_36440+12], %f452;
 	.loc	22	296	0
 	ld.global.u32 	%r75, [top_object+0];
 	.loc	3	1071	0
 	ld.global.u32 	%r53, [radiance_ray_type];
 	ld.global.f32 	%f413, [scene_epsilon];
 	.loc	23	155	0
-	mov.u32 	%ra1, __cuda___cuda_local_var_148492_25_non_const_refl_prd_36440;
+	mov.u32 	%ra1, __cuda___cuda_local_var_148491_25_non_const_refl_prd_36440;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
 	mov.u32 	%r76, %r75;
@@ -5370,20 +5370,20 @@ $Lt_8_31746:
 	mov.f32 	%f469, %f413;
 	mov.f32 	%f470, 0f6c4ecb8f;   	// 1e+027
 	mov.f32 	%f471, %f470;
-	mov.u32 	%r78, __cuda___cuda_local_var_148492_25_non_const_refl_prd_36440;
+	mov.u32 	%r78, __cuda___cuda_local_var_148491_25_non_const_refl_prd_36440;
 	mov.u32 	%r79, %r78;
 	mov.u32 	%r80, 20;
 	mov.u32 	%r81, %r80;
 	call _rt_trace, (%r76, %f454, %f455, %f456, %f460, %f464, %f468, %r77, %f469, %f471, %r79, %r81);
 	.loc	22	297	0
-	ld.local.f32 	%f472, [__cuda___cuda_local_var_148492_25_non_const_refl_prd_36440+0];
+	ld.local.f32 	%f472, [__cuda___cuda_local_var_148491_25_non_const_refl_prd_36440+0];
 	ld.global.v4.f32 	{%f473,%f474,%f475,_}, [reflection_color+0];
 	mul.f32 	%f476, %f473, %f30;
 	mad.f32 	%f31, %f472, %f476, %f31;
-	ld.local.f32 	%f477, [__cuda___cuda_local_var_148492_25_non_const_refl_prd_36440+4];
+	ld.local.f32 	%f477, [__cuda___cuda_local_var_148491_25_non_const_refl_prd_36440+4];
 	mul.f32 	%f478, %f474, %f30;
 	mad.f32 	%f32, %f477, %f478, %f32;
-	ld.local.f32 	%f479, [__cuda___cuda_local_var_148492_25_non_const_refl_prd_36440+8];
+	ld.local.f32 	%f479, [__cuda___cuda_local_var_148491_25_non_const_refl_prd_36440+8];
 	mul.f32 	%f480, %f475, %f30;
 	mad.f32 	%f33, %f479, %f480, %f33;
 	bra.uni 	$Lt_8_38914;

@@ -5,3 +5,6 @@ Opcenito:
 -game settings
 
 -popraviti cudnu kameru??
+
+-Shadeing tweakovi
+-light attenuation
