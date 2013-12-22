@@ -5,12 +5,3 @@ Opcenito:
 -game settings
 
 -popraviti cudnu kameru??
-
-Optimizacije:
-
--low level optimizacije
-
-Grafika:
-
--shadeing tweakovi
--graphics settings

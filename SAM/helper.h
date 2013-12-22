@@ -15,6 +15,16 @@ static __device__ __inline__ bool equals(float x, float y)
 	return abs(x - y) < EPS;
 }
 
+static __device__ __inline__ bool isZero(const float3 &x)
+{
+	return abs(x.x) < EPS && abs(x.y) < EPS, abs(x.z) < EPS;
+}
+
+static __device__ __inline__ bool isZero(float x)
+{
+	return abs(x) < EPS;
+}
+
 static __device__ __inline__ bool isBetween(const float3 &a, const float3 &b, const float3 &x)
 {
 	if((equals(a.x, x.x) || x.x > a.x) && (equals(b.x, x.x) || x.x < b.x)

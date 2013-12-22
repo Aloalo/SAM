@@ -39,14 +39,19 @@ void Scene::initialize(unsigned int GLBO)
 
 	ctx->setRayTypeCount(2);
 	ctx->setEntryPointCount(1);
-	ctx->setStackSize(4640);
+	ctx->setStackSize(2048);
 
 	ctx["radiance_ray_type"]->setUint(0);
 	ctx["shadow_ray_type"]->setUint(1);
 	ctx["scene_epsilon"]->setFloat(1.e-3f);
-	ctx["max_depth"]->setInt(4);
 	ctx["importance_cutoff"]->setFloat(0.01f);
 	ctx["ambient_light_color"]->setFloat(0.3f, 0.3f, 0.3f);
+
+	ctx["max_depth"]->setInt(Settings::GS["maxRayDepth"]);
+	ctx["casts_shadows"]->setInt(Settings::GS["castsShadows"]);
+	ctx["use_schlick"]->setInt(Settings::GS["useSchlick"]);
+	ctx["use_internal_reflections"]->setInt(Settings::GS["useInternalReflections"]);
+
 	Buffer buff;
 	if(Settings::GS["useVBO"])
 	{
@@ -103,7 +108,7 @@ void Scene::createMaterials()
 	floorMaterial->setAnyHitProgram(1, shadowAnyHit);
 
 	floorMaterial["Ka"]->setFloat(0.3f, 0.3f, 0.3f);
-	floorMaterial["Kd"]->setFloat(0.6f, 0.7f, 0.8f);
+	floorMaterial["Kd"]->setFloat(0.6f, 0.6f, 0.7f);
 	floorMaterial["Ks"]->setFloat(0.0f, 0.0f, 0.0f);
 	floorMaterial["phong_exp"]->setFloat(0.0f);
 	floorMaterial["tile_v0"]->setFloat(0.25f, 0, .15f);
@@ -117,9 +122,9 @@ void Scene::createMaterials()
 	wallMaterial->setClosestHitProgram(0, phongClosestHit);
 	wallMaterial->setAnyHitProgram(1, shadowAnyHit);
 
-	wallMaterial["Ka"]->setFloat(0.3f, 0.3f, 0.3f);
-	wallMaterial["Kd"]->setFloat(0.6f, 0.7f, 0.8f);
-	wallMaterial["Ks"]->setFloat(0.8f, 0.9f, 0.8f);
+	wallMaterial["Ka"]->setFloat(0.8f, 0.8f, 0.8f);
+	wallMaterial["Kd"]->setFloat(0.8f, 0.8f, 0.8f);
+	wallMaterial["Ks"]->setFloat(0.8f, 0.8f, 0.8f);
 	wallMaterial["phong_exp"]->setFloat(88.0f);
 
 	materials[WALL] = wallMaterial;
@@ -129,10 +134,10 @@ void Scene::createMaterials()
 	mirrorMaterial->setAnyHitProgram(1, shadowAnyHit);
 
 	mirrorMaterial["Ka"]->setFloat(0.3f, 0.3f, 0.3f);
-	mirrorMaterial["Kd"]->setFloat(0.6f, 0.7f, 0.8f);
-	mirrorMaterial["Ks"]->setFloat(0.8f, 0.9f, 0.8f);
+	mirrorMaterial["Kd"]->setFloat(0.7f, 0.7f, 0.7f);
+	mirrorMaterial["Ks"]->setFloat(0.8f, 0.8f, 0.8f);
 	mirrorMaterial["phong_exp"]->setFloat(88.0f);
-    mirrorMaterial["reflectivity"]->setFloat( 0.1f, 0.1f, 0.1f );
+    mirrorMaterial["reflectivity"]->setFloat(0.7f, 0.7f, 0.7f);
 
 	materials[MIRROR] = mirrorMaterial;
 
