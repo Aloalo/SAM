@@ -10,7 +10,6 @@ Thumbs.db
 *.pch
 *.vspscc
 *.sdf
-*.sln
 *.opensdf
 *_i.c
 *_p.c

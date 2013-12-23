@@ -113,21 +113,15 @@ void GameEngine::initDrawing()
 	try
 	{
 		scene.initialize(drawer.createGLBuffer(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]));
-
 		lab.generateLabyrinth(20, 20);
 
 		scene.createSceneGraph(lab);
 		scene.setCamera(player.getCam());
 		drawer.init(scene.getBuffer());
 	}
-	catch(exception ex)
+	catch(exception &ex)
 	{
-		printf("%s", ex.what());
-		exit(0);
-	}
-	catch(Exception ex)
-	{
-		printf("%s", ex.what());
+		puts(ex.what());
 		exit(0);
 	}
 }

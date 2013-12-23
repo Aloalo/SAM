@@ -4,7 +4,7 @@
 	// nvopencc 4.1 built on 2013-07-10
 
 	//-----------------------------------------------------------
-	// Compiling C:/Users/toi333/AppData/Local/Temp/tmpxft_00001868_00000000-12_rectangleAA.cpp3.i (C:/Users/toi333/AppData/Local/Temp/ccBI#.a09032)
+	// Compiling C:/Users/toi333/AppData/Local/Temp/tmpxft_00001ac0_00000000-12_rectangleAA.cpp3.i (C:/Users/toi333/AppData/Local/Temp/ccBI#.a08368)
 	//-----------------------------------------------------------
 
 	//-----------------------------------------------------------
@@ -16,11 +16,11 @@
 	//  -m2	(Report advisories)
 	//-----------------------------------------------------------
 
-	.file	1	"C:/Users/toi333/AppData/Local/Temp/tmpxft_00001868_00000000-11_rectangleAA.cudafe2.gpu"
+	.file	1	"C:/Users/toi333/AppData/Local/Temp/tmpxft_00001ac0_00000000-11_rectangleAA.cudafe2.gpu"
 	.file	2	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_datatypes.h"
 	.file	3	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optixu/optixu_aabb_namespace.h"
 	.file	4	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal\optix_defines.h"
-	.file	5	"C:/Users/toi333/AppData/Local/Temp/tmpxft_00001868_00000000-2_rectangleAA.cudafe1.gpu"
+	.file	5	"C:/Users/toi333/AppData/Local/Temp/tmpxft_00001ac0_00000000-2_rectangleAA.cudafe1.gpu"
 	.file	6	"D:\Program Files\Microsoft Visual Studio 11.0\VC\include\crtdefs.h"
 	.file	7	"D:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\crt/device_runtime.h"
 	.file	8	"D:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\host_defines.h"
@@ -202,12 +202,12 @@ $L_0_10498:
 	@%p19 bra 	$Lt_0_15106;
 	.loc	20	33	0
 	mov.s32 	%r19, 1;
-	bra.uni 	$LDWendi__ZN68_INTERNAL_46_tmpxft_00001868_00000000_5_rectangleAA_cpp1_ii_40b6c2ed9isBetweenERK6float3S2_S2__243_1;
+	bra.uni 	$LDWendi__ZN68_INTERNAL_46_tmpxft_00001ac0_00000000_5_rectangleAA_cpp1_ii_40b6c2ed9isBetweenERK6float3S2_S2__243_1;
 $Lt_0_15106:
 $Lt_0_2050:
 	.loc	20	34	0
 	mov.s32 	%r19, 0;
-$LDWendi__ZN68_INTERNAL_46_tmpxft_00001868_00000000_5_rectangleAA_cpp1_ii_40b6c2ed9isBetweenERK6float3S2_S2__243_1:
+$LDWendi__ZN68_INTERNAL_46_tmpxft_00001ac0_00000000_5_rectangleAA_cpp1_ii_40b6c2ed9isBetweenERK6float3S2_S2__243_1:
 	.loc	21	21	0
 	mov.u32 	%r20, 0;
 	setp.eq.s32 	%p20, %r19, %r20;
