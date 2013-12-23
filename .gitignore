@@ -38,3 +38,4 @@ _ReSharper*/
 *.vssscc
 $tf*/
 RenderingEngine*/
+SAM/ptxfiles*/
