@@ -40,3 +40,4 @@ $tf*/
 RenderingEngine*/
 SAM/ptxfiles*/
 *.ptx
+*.cu.ptx
