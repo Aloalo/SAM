@@ -12,7 +12,7 @@ class GameEngine :
 	public UnLitObject, public Updateable, public InputObserver
 {
 public:
-	GameEngine(int width, int height);
+	GameEngine(void);
 	~GameEngine(void);
 
 	void keyPress(int key, int scancode, int action, int mods);
@@ -25,11 +25,14 @@ public:
 	void initDrawing();
 	void draw(const glm::mat4 &View, const glm::mat4 &Projection);
 
+	void generateLabyrinth(int width, int height);
+
 	Mouse mouse;
 
 private:
 	Scene scene;
 	BufferDrawer drawer;
 	Player player;
+	Labyrinth lab;
 };
 

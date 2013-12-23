@@ -1,0 +1,10 @@
+Opcenito:
+
+-glatki mis
+-zidovi labirinta
+-game settings
+
+-popraviti cudnu kameru??
+
+-Shadeing tweakovi
+-light attenuation

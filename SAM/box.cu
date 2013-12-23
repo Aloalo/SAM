@@ -51,6 +51,6 @@ RT_PROGRAM void box_intersect(int)
 
 RT_PROGRAM void box_bounds(int, float result[6])
 {
-	optix::Aabb *aabb = (optix::Aabb*)result;
+	optix::Aabb* aabb = (optix::Aabb*)result;
 	aabb->set(boxmin, boxmax);
 }

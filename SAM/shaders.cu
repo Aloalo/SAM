@@ -25,8 +25,8 @@ rtDeclareVariable(float3, U, , );
 rtDeclareVariable(float3, V, , );
 rtDeclareVariable(float3, W, , );
 
-rtDeclareVariable(float3, bad_color, , );
-rtBuffer<uchar4, 2> output_buffer;
+//rtBuffer<uchar4, 2> output_buffer;
+rtBuffer<float4, 2> output_buffer;
 
 RT_PROGRAM void pinhole_camera()
 {
@@ -44,7 +44,8 @@ RT_PROGRAM void pinhole_camera()
 
 	rtTrace(top_object, ray, prd);
 
-	output_buffer[launch_index] = make_color(prd.result);
+	//output_buffer[launch_index] = make_color(prd.result);
+	output_buffer[launch_index] = make_float4(prd.result, 1.0f);
 }
 
 //
@@ -89,7 +90,8 @@ static __device__ inline float3 get_ffnormal()
 rtDeclareVariable(float3, Ka, , );
 rtDeclareVariable(float3, Kd, , );
 rtDeclareVariable(float3, Ks, , );
-rtDeclareVariable(float,  phong_exp, , );
+rtDeclareVariable(float, phong_exp, , );
+rtDeclareVariable(int, casts_shadows, , );
 rtBuffer<BasicLight> lights; 
 
 static __device__ inline float3 phong_and_shadows(const float3 &ffnormal, const float3 &hit_point, const float3 &local_Kd)
@@ -105,14 +107,17 @@ static __device__ inline float3 phong_and_shadows(const float3 &ffnormal, const 
 		{
 			PerRayData_shadow shadow_prd;
 			shadow_prd.attenuation = make_float3(1.0f);
-			float Ldist = length(light.pos - hit_point);
-			optix::Ray shadow_ray(hit_point, L, shadow_ray_type, scene_epsilon, Ldist);
-			rtTrace(top_object, shadow_ray, shadow_prd);
+			if(casts_shadows)
+			{
+				float Ldist = length(light.pos - hit_point);
+				optix::Ray shadow_ray(hit_point, L, shadow_ray_type, scene_epsilon, Ldist);
+				rtTrace(top_object, shadow_ray, shadow_prd);
+			}
 
 			if(fmaxf(shadow_prd.attenuation) > 0.0f)
 			{
 				float3 light_color = light.color * shadow_prd.attenuation;
-				color += local_Kd * nDl * light.color;
+				color += local_Kd * nDl * light_color;
 
 				float3 H = normalize(L - ray.direction);
 				float nDh = dot(ffnormal, H);
@@ -128,7 +133,6 @@ static __device__ inline float3 phong_and_shadows(const float3 &ffnormal, const 
 RT_PROGRAM void closest_hit_phong()
 {
 	float3 ffnormal = get_ffnormal();
-	float3 color = make_float3(0.0f);
 	float3 hit_point = ray.origin + t_hit * ray.direction;
 
 	prd_radiance.result = phong_and_shadows(ffnormal, hit_point, Kd);
@@ -168,6 +172,7 @@ RT_PROGRAM void closest_hit_phong_tile()
 rtDeclareVariable(float3, reflectivity, , );
 rtDeclareVariable(float, importance_cutoff, , );
 rtDeclareVariable(int, max_depth, , );
+rtDeclareVariable(int, use_schlick, , );
 
 RT_PROGRAM void closest_hit_reflection()
 {
@@ -175,7 +180,12 @@ RT_PROGRAM void closest_hit_reflection()
 	float3 hit_point = ray.origin + t_hit * ray.direction;
 	float3 color = phong_and_shadows(ffnormal, hit_point, Kd);
 	
-	float3 r = schlick(-dot(ffnormal, ray.direction), reflectivity);
+	float3 r;
+	if(use_schlick)
+		r = schlick(-dot(ffnormal, ray.direction), reflectivity);
+	else
+		r = reflectivity;
+
 	float importance = prd_radiance.importance * optix::luminance(r);
 
 	//reflection ray
@@ -204,7 +214,7 @@ RT_PROGRAM void any_hit_shadow_glass()
   float3 world_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
   float nDi = fabs(dot(world_normal, ray.direction));
 
-  prd_shadow.attenuation *= 1.0f - fresnel_schlick(nDi, 5.0f, 1.0f - shadow_attenuation, make_float3(1.0f));
+  prd_shadow.attenuation *= 1 - fresnel_schlick(nDi, 5.0f, 1.0f - shadow_attenuation, make_float3(1.0f));
 
   rtIgnoreIntersection();
 }
@@ -220,6 +230,7 @@ rtDeclareVariable(float, refraction_index, , );
 rtDeclareVariable(float3, refraction_color, , );
 rtDeclareVariable(float3, reflection_color, , );
 rtDeclareVariable(float3, extinction_constant, , );
+rtDeclareVariable(int, use_internal_reflections, , );
 
 RT_PROGRAM void closest_hit_glass()
 {
@@ -236,7 +247,8 @@ RT_PROGRAM void closest_hit_glass()
 	else
 		beer_attenuation = make_float3(1);
 
-	// refraction
+	bool inside = false;
+	
 	if(prd_radiance.depth < max_depth)
 	{
 		float3 t;
@@ -245,7 +257,10 @@ RT_PROGRAM void closest_hit_glass()
 			// check for external or internal reflection
 			float cos_theta = dot(i, n);
 			if(cos_theta < 0.0f)
+			{
+				inside = true;
 				cos_theta = -cos_theta;
+			}
 			else
 				cos_theta = dot(t, n);
 
@@ -265,26 +280,25 @@ RT_PROGRAM void closest_hit_glass()
 			else
 				result += (1.0f - reflection) * refraction_color * cutoff_color;
 		}
-	}
 
-	// reflection
-	if(prd_radiance.depth < max_depth)
-	{
-		float3 r = reflect(i, n);
-
-		float importance = prd_radiance.importance * reflection * optix::luminance(reflection_color * beer_attenuation);
-		if(importance > importance_cutoff)
+		if(!inside || (inside && use_internal_reflections))
 		{
-			optix::Ray ray(h, r, radiance_ray_type, scene_epsilon);
-			PerRayData_radiance refl_prd;
-			refl_prd.depth = prd_radiance.depth + 1;
-			refl_prd.importance = importance;
+			float3 r = reflect(i, n);
 
-			rtTrace(top_object, ray, refl_prd);
-			result += reflection * reflection_color * refl_prd.result;
+			float importance = prd_radiance.importance * reflection * optix::luminance(reflection_color * beer_attenuation);
+			if(importance > importance_cutoff)
+			{
+				optix::Ray ray(h, r, radiance_ray_type, scene_epsilon);
+				PerRayData_radiance refl_prd;
+				refl_prd.depth = prd_radiance.depth + 1;
+				refl_prd.importance = importance;
+
+				rtTrace(top_object, ray, refl_prd);
+				result += reflection * reflection_color * refl_prd.result;
+			}
+			else
+				result += reflection * reflection_color * cutoff_color;
 		}
-		else
-			result += reflection * reflection_color * cutoff_color;
 	}
 
 	result = result * beer_attenuation;
@@ -295,7 +309,11 @@ RT_PROGRAM void closest_hit_glass()
 //
 // Set pixel to solid color upon failure
 //
+
+rtDeclareVariable(float3, bad_color, , );
+
 RT_PROGRAM void exception()
 {
-	output_buffer[launch_index] = make_color(bad_color);
+	//output_buffer[launch_index] = make_color(bad_color);
+	output_buffer[launch_index] = make_float4(bad_color, 1.0f);
 }
