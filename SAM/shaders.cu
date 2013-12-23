@@ -32,7 +32,8 @@ RT_PROGRAM void pinhole_camera()
 {
 	size_t2 screen = output_buffer.size();
 
-	float2 d = make_float2(launch_index) / make_float2(screen) * 2.f - 1.f;
+	//WORK IN PROGRESS
+	float2 d = make_float2(launch_index) / screen.x * 2.f - 1.f;
 	float3 ray_origin = eye;
 	float3 ray_direction = normalize(d.x * U + d.y * V + W);
 
@@ -44,8 +45,10 @@ RT_PROGRAM void pinhole_camera()
 
 	rtTrace(top_object, ray, prd);
 
-	//output_buffer[launch_index] = make_color(prd.result);
-	output_buffer[launch_index] = make_float4(prd.result, 1.0f);
+	//if(d.x > 1)
+		//d.x = 0;
+	output_buffer[launch_index] = make_float4(prd.result);
+	//output_buffer[launch_index] = make_float4(d, 0.f, 1.0f);
 }
 
 //
