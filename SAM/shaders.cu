@@ -30,10 +30,10 @@ rtBuffer<float4, 2> output_buffer;
 
 RT_PROGRAM void pinhole_camera()
 {
-	size_t2 screen = output_buffer.size();
+	float2 screen = make_float2(output_buffer.size());
 
 	//WORK IN PROGRESS
-	float2 d = make_float2(launch_index) / screen.x * 2.f - 1.f;
+	float2 d = make_float2(launch_index) / screen * 2.f - 1.f;
 	float3 ray_origin = eye;
 	float3 ray_direction = normalize(d.x * U + d.y * V + W);
 
