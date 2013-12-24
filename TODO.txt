@@ -7,3 +7,4 @@ Opcenito:
 -game settings
 
 -Shadeing tweakovi
+-internal reflection jump
