@@ -59,12 +59,6 @@ GraphicsSettings::GraphicsSettings(const string &path)
 		exit(0);
 	}
 	f.close();
-
-	if(!settings["useVBO"])
-	{
-		settings["screenHeight"] = settings["bufferHeight"];
-		settings["screenWidth"] = settings["bufferWidth"];
-	}
 }
 
 

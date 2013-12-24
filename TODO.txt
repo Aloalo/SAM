@@ -1,10 +1,9 @@
 Opcenito:
 
 -glatki mis
+-light attenuation
 -zidovi labirinta
 
--buffer format support?
 -game settings
 
 -Shadeing tweakovi
--light attenuation

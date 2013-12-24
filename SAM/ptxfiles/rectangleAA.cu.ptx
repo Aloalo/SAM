@@ -1,10 +1,10 @@
 	.version 1.4
 	.target sm_10, map_f64_to_f32
-	// compiled with D:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.5\bin/../open64/lib//be.exe
+	// compiled with D:\Program Files\NVIDIA GPU Computing\bin/../open64/lib//be.exe
 	// nvopencc 4.1 built on 2013-07-10
 
 	//-----------------------------------------------------------
-	// Compiling C:/Users/toi333/AppData/Local/Temp/tmpxft_00001868_00000000-12_rectangleAA.cpp3.i (C:/Users/toi333/AppData/Local/Temp/ccBI#.a09032)
+	// Compiling C:/Users/Jure/AppData/Local/Temp/tmpxft_00001aac_00000000-12_rectangleAA.cpp3.i (C:/Users/Jure/AppData/Local/Temp/ccBI#.a06780)
 	//-----------------------------------------------------------
 
 	//-----------------------------------------------------------
@@ -16,47 +16,47 @@
 	//  -m2	(Report advisories)
 	//-----------------------------------------------------------
 
-	.file	1	"C:/Users/toi333/AppData/Local/Temp/tmpxft_00001868_00000000-11_rectangleAA.cudafe2.gpu"
+	.file	1	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00001aac_00000000-11_rectangleAA.cudafe2.gpu"
 	.file	2	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_datatypes.h"
 	.file	3	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optixu/optixu_aabb_namespace.h"
 	.file	4	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal\optix_defines.h"
-	.file	5	"C:/Users/toi333/AppData/Local/Temp/tmpxft_00001868_00000000-2_rectangleAA.cudafe1.gpu"
+	.file	5	"C:/Users/Jure/AppData/Local/Temp/tmpxft_00001aac_00000000-2_rectangleAA.cudafe1.gpu"
 	.file	6	"D:\Program Files\Microsoft Visual Studio 11.0\VC\include\crtdefs.h"
-	.file	7	"D:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\crt/device_runtime.h"
-	.file	8	"D:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\host_defines.h"
-	.file	9	"D:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\builtin_types.h"
-	.file	10	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\device_types.h"
-	.file	11	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\host_defines.h"
-	.file	12	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\driver_types.h"
-	.file	13	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_types.h"
-	.file	14	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_types.h"
-	.file	15	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\vector_types.h"
-	.file	16	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\builtin_types.h"
-	.file	17	"D:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\device_launch_parameters.h"
-	.file	18	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\crt\storage_class.h"
+	.file	7	"D:/Program Files/NVIDIA GPU Computing/include\crt/device_runtime.h"
+	.file	8	"D:/Program Files/NVIDIA GPU Computing/include\host_defines.h"
+	.file	9	"D:/Program Files/NVIDIA GPU Computing/include\builtin_types.h"
+	.file	10	"d:\program files\nvidia gpu computing\include\device_types.h"
+	.file	11	"d:\program files\nvidia gpu computing\include\host_defines.h"
+	.file	12	"d:\program files\nvidia gpu computing\include\driver_types.h"
+	.file	13	"d:\program files\nvidia gpu computing\include\surface_types.h"
+	.file	14	"d:\program files\nvidia gpu computing\include\texture_types.h"
+	.file	15	"d:\program files\nvidia gpu computing\include\vector_types.h"
+	.file	16	"d:\program files\nvidia gpu computing\include\builtin_types.h"
+	.file	17	"D:/Program Files/NVIDIA GPU Computing/include\device_launch_parameters.h"
+	.file	18	"d:\program files\nvidia gpu computing\include\crt\storage_class.h"
 	.file	19	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optix_device.h"
-	.file	20	"d:\projects\github repos\sam\sam\helper.h"
-	.file	21	"D:/Projects/GitHub Repos/SAM/SAM/rectangleAA.cu"
+	.file	20	"d:\stuff\projects\sam\sam\helper.h"
+	.file	21	"D:/STUFF/projects/SAM/SAM/rectangleAA.cu"
 	.file	22	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_internal.h"
-	.file	23	"D:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\common_functions.h"
-	.file	24	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_functions.h"
-	.file	25	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_constants.h"
-	.file	26	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\device_functions.h"
-	.file	27	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_11_atomic_functions.h"
-	.file	28	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_12_atomic_functions.h"
-	.file	29	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_13_double_functions.h"
-	.file	30	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_20_atomic_functions.h"
-	.file	31	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_32_atomic_functions.h"
-	.file	32	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_35_atomic_functions.h"
-	.file	33	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_20_intrinsics.h"
-	.file	34	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_30_intrinsics.h"
-	.file	35	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_32_intrinsics.h"
-	.file	36	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\sm_35_intrinsics.h"
-	.file	37	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_functions.h"
-	.file	38	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_fetch_functions.h"
-	.file	39	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\texture_indirect_functions.h"
-	.file	40	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\surface_indirect_functions.h"
-	.file	41	"d:\program files\nvidia gpu computing toolkit\cuda\v5.5\include\math_functions_dbl_ptx1.h"
+	.file	23	"D:/Program Files/NVIDIA GPU Computing/include\common_functions.h"
+	.file	24	"d:\program files\nvidia gpu computing\include\math_functions.h"
+	.file	25	"d:\program files\nvidia gpu computing\include\math_constants.h"
+	.file	26	"d:\program files\nvidia gpu computing\include\device_functions.h"
+	.file	27	"d:\program files\nvidia gpu computing\include\sm_11_atomic_functions.h"
+	.file	28	"d:\program files\nvidia gpu computing\include\sm_12_atomic_functions.h"
+	.file	29	"d:\program files\nvidia gpu computing\include\sm_13_double_functions.h"
+	.file	30	"d:\program files\nvidia gpu computing\include\sm_20_atomic_functions.h"
+	.file	31	"d:\program files\nvidia gpu computing\include\sm_32_atomic_functions.h"
+	.file	32	"d:\program files\nvidia gpu computing\include\sm_35_atomic_functions.h"
+	.file	33	"d:\program files\nvidia gpu computing\include\sm_20_intrinsics.h"
+	.file	34	"d:\program files\nvidia gpu computing\include\sm_30_intrinsics.h"
+	.file	35	"d:\program files\nvidia gpu computing\include\sm_32_intrinsics.h"
+	.file	36	"d:\program files\nvidia gpu computing\include\sm_35_intrinsics.h"
+	.file	37	"d:\program files\nvidia gpu computing\include\surface_functions.h"
+	.file	38	"d:\program files\nvidia gpu computing\include\texture_fetch_functions.h"
+	.file	39	"d:\program files\nvidia gpu computing\include\texture_indirect_functions.h"
+	.file	40	"d:\program files\nvidia gpu computing\include\surface_indirect_functions.h"
+	.file	41	"d:\program files\nvidia gpu computing\include\math_functions_dbl_ptx1.h"
 
 	.global .align 16 .b8 plane_normal[12];
 	.global .align 16 .b8 recmin[12];
@@ -202,12 +202,12 @@ $L_0_10498:
 	@%p19 bra 	$Lt_0_15106;
 	.loc	20	33	0
 	mov.s32 	%r19, 1;
-	bra.uni 	$LDWendi__ZN68_INTERNAL_46_tmpxft_00001868_00000000_5_rectangleAA_cpp1_ii_40b6c2ed9isBetweenERK6float3S2_S2__243_1;
+	bra.uni 	$LDWendi__ZN68_INTERNAL_46_tmpxft_00001aac_00000000_5_rectangleAA_cpp1_ii_40b6c2ed9isBetweenERK6float3S2_S2__243_1;
 $Lt_0_15106:
 $Lt_0_2050:
 	.loc	20	34	0
 	mov.s32 	%r19, 0;
-$LDWendi__ZN68_INTERNAL_46_tmpxft_00001868_00000000_5_rectangleAA_cpp1_ii_40b6c2ed9isBetweenERK6float3S2_S2__243_1:
+$LDWendi__ZN68_INTERNAL_46_tmpxft_00001aac_00000000_5_rectangleAA_cpp1_ii_40b6c2ed9isBetweenERK6float3S2_S2__243_1:
 	.loc	21	21	0
 	mov.u32 	%r20, 0;
 	setp.eq.s32 	%p20, %r19, %r20;

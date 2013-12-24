@@ -52,18 +52,11 @@ void Scene::initialize(unsigned int GLBO)
 	ctx["use_schlick"]->setInt(Settings::GS["useSchlick"]);
 	ctx["use_internal_reflections"]->setInt(Settings::GS["useInternalReflections"]);
 
-	Buffer buff;
-	if(Settings::GS["useVBO"])
-	{
-		buff = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
-		buff->setFormat((RTformat)Settings::GS["bufferFormat"]);
-		buff->setSize(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
-	}
-	else
-		buff = ctx->createBuffer(RT_BUFFER_OUTPUT, (RTformat)Settings::GS["bufferFormat"], Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
+	Buffer buff = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
+	buff->setFormat(RT_FORMAT_FLOAT4);
+	buff->setSize(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
 
 	ctx["output_buffer"]->setBuffer(buff);
-
 
 	std::string path = pathToPTX("shaders.cu");
 
@@ -78,7 +71,7 @@ void Scene::initialize(unsigned int GLBO)
 
 	BasicLight lights[] = 
 	{ 
-		{make_float3(-5.0f, 60.0f, -16.0f), make_float3(1.0f, 1.0f, 1.0f)}
+		{make_float3(-5.0f, 60.0f, -16.0f), make_float3(1.0f, 1.0f, 1.0f), make_float3(1.0f, 0.0f, 0.0f)}
 	};
 
 	Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT);
