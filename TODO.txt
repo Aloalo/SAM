@@ -1,10 +1,4 @@
 Opcenito:
 
--glatki mis
--light attenuation
 -zidovi labirinta
-
 -game settings
-
--Shadeing tweakovi
--internal reflection jump

@@ -61,8 +61,11 @@ void GameEngine::keyPress(int key, int scancode, int action, int mods)
 		player.translate(glm::vec3(0, 1., 0) * mod);
 		break;
 	case 'L':
-		lab.generateLabyrinth(lab.getWidth(), lab.getHeight());
-		scene.createSceneGraph(lab);
+		if(action != GLFW_RELEASE)
+		{
+			lab.generateLabyrinth(lab.getWidth(), lab.getHeight());
+			scene.createSceneGraph(lab);
+		}
 		break;
 	}
 }
@@ -74,12 +77,6 @@ void GameEngine::mouseMove(double x, double y)
 
 	int windowWidth, windowHeight;
 	Engine::getWindowSize(windowWidth, windowHeight);
-
-	//static float usex = windowWidth, usey = windowHeight;
-
-	//float d = 1 - exp(log(0.5) * 55.f * dt);
-	//usex += (x - usex) * d;
-	//usey += (y - usey) * d;
 
 	player.rotate(float(windowWidth / 2 - x) * mouse.speed, float(windowHeight / 2 - y) * mouse.speed);
 	glfwSetCursorPos(Engine::getWindow(), windowWidth / 2, windowHeight / 2);
