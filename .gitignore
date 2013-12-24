@@ -1,8 +1,6 @@
 Thumbs.db
 *.obj
 *.exe
-*.vcxproj
-*.filters
 *.user
 *.pdb
 *.user

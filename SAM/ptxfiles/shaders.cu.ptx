@@ -6,7 +6,7 @@
 	.func _ZN5optix16rt_undefined_useEi (.reg .u32 %ra1)
 
 	//-----------------------------------------------------------
-	// Compiling C:/Users/toi333/AppData/Local/Temp/tmpxft_00000e8c_00000000-12_shaders.cpp3.i (C:/Users/toi333/AppData/Local/Temp/ccBI#.a03836)
+	// Compiling C:/Users/toi333/AppData/Local/Temp/tmpxft_00002134_00000000-12_shaders.cpp3.i (C:/Users/toi333/AppData/Local/Temp/ccBI#.a10172)
 	//-----------------------------------------------------------
 
 	//-----------------------------------------------------------
@@ -18,13 +18,13 @@
 	//  -m2	(Report advisories)
 	//-----------------------------------------------------------
 
-	.file	1	"C:/Users/toi333/AppData/Local/Temp/tmpxft_00000e8c_00000000-11_shaders.cudafe2.gpu"
+	.file	1	"C:/Users/toi333/AppData/Local/Temp/tmpxft_00002134_00000000-11_shaders.cudafe2.gpu"
 	.file	2	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal\optix_defines.h"
 	.file	3	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\optix_device.h"
 	.file	4	"d:\projects\github repos\sam\sam\lights.h"
 	.file	5	"d:\projects\github repos\sam\sam\helper.h"
 	.file	6	"d:\program files\nvidia corporation\optix sdk 3.0.1\include\internal/optix_datatypes.h"
-	.file	7	"C:/Users/toi333/AppData/Local/Temp/tmpxft_00000e8c_00000000-2_shaders.cudafe1.gpu"
+	.file	7	"C:/Users/toi333/AppData/Local/Temp/tmpxft_00002134_00000000-2_shaders.cudafe1.gpu"
 	.file	8	"D:\Program Files\Microsoft Visual Studio 11.0\VC\include\crtdefs.h"
 	.file	9	"D:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\crt/device_runtime.h"
 	.file	10	"D:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v5.5/include\host_defines.h"
@@ -75,7 +75,7 @@
 	.entry _Z14pinhole_camerav
 	{
 	.reg .u32 %ra1;
-	.reg .u32 %r<40>;
+	.reg .u32 %r<41>;
 	.reg .f32 %f<60>;
 	.local .align 4 .b8 __cuda___cuda_local_var_148241_22_non_const_prd_16344[20];
 	.loc	22	31	0
@@ -89,14 +89,15 @@ $LDWbegin__Z14pinhole_camerav:
 	mov.u32 	%r6, %r5;
 	call (%r7, %r8, %r9, %r10), _rt_buffer_get_size, (%r2, %r4, %r6);
 	mov.s32 	%r11, %r7;
-	ld.global.v2.u32 	{%r12,%r13}, [launch_index+0];
+	mov.s32 	%r12, %r8;
+	ld.global.v2.u32 	{%r13,%r14}, [launch_index+0];
 	.loc	22	38	0
-	cvt.rn.f32.u32 	%f1, %r12;
+	cvt.rn.f32.u32 	%f1, %r13;
 	cvt.rn.f32.u32 	%f2, %r11;
-	cvt.rn.f32.u32 	%f3, %r13;
-	rcp.approx.f32 	%f4, %f2;
-	mul.f32 	%f5, %f1, %f4;
-	mul.f32 	%f6, %f3, %f4;
+	cvt.rn.f32.u32 	%f3, %r14;
+	cvt.rn.f32.u32 	%f4, %r12;
+	div.full.f32 	%f5, %f1, %f2;
+	div.full.f32 	%f6, %f3, %f4;
 	add.f32 	%f7, %f5, %f5;
 	add.f32 	%f8, %f6, %f6;
 	mov.f32 	%f9, 0fbf800000;     	// -1
@@ -126,63 +127,63 @@ $LDWbegin__Z14pinhole_camerav:
 	mov.f32 	%f38, 0f3f800000;    	// 1
 	st.local.f32 	[__cuda___cuda_local_var_148241_22_non_const_prd_16344+12], %f38;
 	.loc	22	44	0
-	mov.s32 	%r14, 0;
-	st.local.s32 	[__cuda___cuda_local_var_148241_22_non_const_prd_16344+16], %r14;
+	mov.s32 	%r15, 0;
+	st.local.s32 	[__cuda___cuda_local_var_148241_22_non_const_prd_16344+16], %r15;
 	.loc	22	46	0
-	ld.global.u32 	%r15, [top_object+0];
+	ld.global.u32 	%r16, [top_object+0];
 	ld.global.v4.f32 	{%f39,%f40,%f41,_}, [eye+0];
 	.loc	3	1071	0
 	mul.f32 	%f42, %f32, %f37;
 	mul.f32 	%f43, %f31, %f37;
 	mul.f32 	%f44, %f33, %f37;
-	ld.global.u32 	%r16, [radiance_ray_type];
+	ld.global.u32 	%r17, [radiance_ray_type];
 	ld.global.f32 	%f45, [scene_epsilon];
 	.loc	23	155	0
 	mov.u32 	%ra1, __cuda___cuda_local_var_148241_22_non_const_prd_16344;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	23	157	0
-	mov.u32 	%r17, %r15;
+	mov.u32 	%r18, %r16;
 	mov.f32 	%f46, %f39;
 	mov.f32 	%f47, %f40;
 	mov.f32 	%f48, %f41;
 	mov.f32 	%f49, %f42;
 	mov.f32 	%f50, %f43;
 	mov.f32 	%f51, %f44;
-	mov.u32 	%r18, %r16;
+	mov.u32 	%r19, %r17;
 	mov.f32 	%f52, %f45;
 	mov.f32 	%f53, 0f6c4ecb8f;    	// 1e+027
 	mov.f32 	%f54, %f53;
-	mov.u32 	%r19, __cuda___cuda_local_var_148241_22_non_const_prd_16344;
-	mov.u32 	%r20, %r19;
-	mov.u32 	%r21, 20;
-	mov.u32 	%r22, %r21;
-	call _rt_trace, (%r17, %f46, %f47, %f48, %f49, %f50, %f51, %r18, %f52, %f54, %r20, %r22);
+	mov.u32 	%r20, __cuda___cuda_local_var_148241_22_non_const_prd_16344;
+	mov.u32 	%r21, %r20;
+	mov.u32 	%r22, 20;
+	mov.u32 	%r23, %r22;
+	call _rt_trace, (%r18, %f46, %f47, %f48, %f49, %f50, %f51, %r19, %f52, %f54, %r21, %r23);
 	.loc	22	50	0
 	ld.local.f32 	%f55, [__cuda___cuda_local_var_148241_22_non_const_prd_16344+0];
 	ld.local.f32 	%f56, [__cuda___cuda_local_var_148241_22_non_const_prd_16344+4];
 	ld.local.f32 	%f57, [__cuda___cuda_local_var_148241_22_non_const_prd_16344+8];
 	.loc	23	120	0
-	mov.u32 	%r23, output_buffer;
-	mov.u32 	%r24, %r23;
-	mov.u32 	%r25, 2;
-	mov.u32 	%r26, %r25;
-	mov.u32 	%r27, 16;
-	mov.u32 	%r28, %r27;
-	ld.global.v2.u32 	{%r29,%r30}, [launch_index+0];
-	mov.u32 	%r31, %r29;
+	mov.u32 	%r24, output_buffer;
+	mov.u32 	%r25, %r24;
+	mov.u32 	%r26, 2;
+	mov.u32 	%r27, %r26;
+	mov.u32 	%r28, 16;
+	mov.u32 	%r29, %r28;
+	ld.global.v2.u32 	{%r30,%r31}, [launch_index+0];
 	mov.u32 	%r32, %r30;
-	mov.u32 	%r33, 0;
-	mov.u32 	%r34, %r33;
-	mov.u32 	%r35, 0;
-	mov.u32 	%r36, %r35;
-	call (%r37), _rt_buffer_get, (%r24, %r26, %r28, %r31, %r32, %r34, %r36);
-	mov.s32 	%r38, %r37;
+	mov.u32 	%r33, %r31;
+	mov.u32 	%r34, 0;
+	mov.u32 	%r35, %r34;
+	mov.u32 	%r36, 0;
+	mov.u32 	%r37, %r36;
+	call (%r38), _rt_buffer_get, (%r25, %r27, %r29, %r32, %r33, %r35, %r37);
+	mov.s32 	%r39, %r38;
 	.loc	23	129	0
-	mov.s32 	%ra1, %r38;
+	mov.s32 	%ra1, %r39;
 	call.uni _ZN5optix16rt_undefined_useEi, (%ra1);
 	.loc	22	50	0
 	mov.f32 	%f58, 0f00000000;    	// 0
-	st.global.v4.f32 	[%r38+0], {%f55,%f56,%f57,%f58};
+	st.global.v4.f32 	[%r39+0], {%f55,%f56,%f57,%f58};
 	.loc	22	52	0
 	exit;
 $LDWend__Z14pinhole_camerav:
