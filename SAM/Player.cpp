@@ -2,7 +2,7 @@
 
 
 Player::Player(const Camera &cam, float speed)
-	: cam(cam), speed(speed)
+	: cam(cam), speed(speed), camdx(0), camdy(0)
 {
 }
 
@@ -13,12 +13,19 @@ Player::~Player(void)
 
 void Player::move(float dt)
 {
+	float cf = 1 - exp(-100 * dt);
+	float dxr = cf * camdx;
+	float dyr = cf * camdy;
+	cam.rotate(dxr, dyr);
+	camdx -= dxr;
+	camdy -= dyr;
 	cam.update(dt * speed);
 }
 
 void Player::rotate(float yaw, float pitch)
 {
-	cam.rotate(yaw, pitch);
+	camdx += yaw;
+	camdy += pitch;
 }
 
 void Player::translate(const glm::vec3 &dir)
