@@ -88,12 +88,6 @@ void GameEngine::mouseMove(double x, double y)
 void GameEngine::windowResize(int width, int height)
 {
 	player.setAspectRatio((float) width / (float) height);
-	if(!Settings::GS["useVBO"])
-	{
-		scene.setBufferSize(width, height);
-		Settings::GS["bufferHeight"] = height;
-		Settings::GS["bufferWidth"] = width;
-	}
 	Settings::GS["screenHeight"] = height;
 	Settings::GS["screenWidth"] = width;
 }
@@ -128,6 +122,14 @@ void GameEngine::initDrawing()
 
 void GameEngine::draw(const glm::mat4 &View, const glm::mat4 &Projection)
 {
-	scene.trace();
-	drawer.draw(scene.getBuffer());
+	try
+	{
+		scene.trace();
+		drawer.draw(scene.getBuffer());
+	}
+	catch(exception &ex)
+	{
+		puts(ex.what());
+		exit(0);
+	}
 }

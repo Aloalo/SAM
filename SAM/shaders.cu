@@ -25,7 +25,6 @@ rtDeclareVariable(float3, U, , );
 rtDeclareVariable(float3, V, , );
 rtDeclareVariable(float3, W, , );
 
-//rtBuffer<uchar4, 2> output_buffer;
 rtBuffer<float4, 2> output_buffer;
 
 RT_PROGRAM void pinhole_camera()
@@ -46,7 +45,6 @@ RT_PROGRAM void pinhole_camera()
 	rtTrace(top_object, ray, prd);
 
 	output_buffer[launch_index] = make_float4(prd.result);
-	//output_buffer[launch_index] = make_float4(d, 0.f, 1.0f);
 }
 
 //
@@ -108,16 +106,17 @@ static __device__ inline float3 phong_and_shadows(const float3 &ffnormal, const 
 		{
 			PerRayData_shadow shadow_prd;
 			shadow_prd.attenuation = make_float3(1.0f);
+			float Ldist = length(light.pos - hit_point);
+
 			if(casts_shadows)
 			{
-				float Ldist = length(light.pos - hit_point);
 				optix::Ray shadow_ray(hit_point, L, shadow_ray_type, scene_epsilon, Ldist);
 				rtTrace(top_object, shadow_ray, shadow_prd);
 			}
 
 			if(fmaxf(shadow_prd.attenuation) > 0.0f)
 			{
-				float3 light_color = light.color * shadow_prd.attenuation;
+				float3 light_color = light.colorAtDistance(Ldist) * shadow_prd.attenuation;
 				color += local_Kd * nDl * light_color;
 
 				float3 H = normalize(L - ray.direction);
@@ -315,6 +314,5 @@ rtDeclareVariable(float3, bad_color, , );
 
 RT_PROGRAM void exception()
 {
-	//output_buffer[launch_index] = make_color(bad_color);
 	output_buffer[launch_index] = make_float4(bad_color, 1.0f);
 }
