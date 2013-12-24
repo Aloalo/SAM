@@ -101,4 +101,10 @@
       <Filter>CUDA Files</Filter>
     </CudaCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="GraphicsSettings.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\TODO.txt" />
+  </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@ using namespace std;
 using namespace optix;
 
 GameEngine::GameEngine(void)
-	: player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Settings::GS["bufferWidth"] / (float)Settings::GS["bufferHeight"], 60.0f), 5.0f)
+	: player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Settings::GS["screenWidth"] / (float)Settings::GS["screenHeight"], 60.0f), 5.0f)
 {
 }
 

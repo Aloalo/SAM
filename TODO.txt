@@ -2,9 +2,9 @@ Opcenito:
 
 -glatki mis
 -zidovi labirinta
--game settings
 
--popraviti cudnu kameru??
+-buffer format support?
+-game settings
 
 -Shadeing tweakovi
 -light attenuation
