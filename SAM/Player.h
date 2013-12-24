@@ -23,6 +23,7 @@ public:
 	const Camera& getCam() const;
 
 private:
+	float camdx, camdy;
 	Camera cam;
 	float speed;
 };
