@@ -19,6 +19,11 @@ public:
 	int getWidth() const;
 	int getHeight() const;
 
+	struct Cell
+	{
+		bool walls[4];
+	};
+
 private:
 	//generates a list of walls
 	void primRandomized();
@@ -29,14 +34,12 @@ private:
 	//adds a box to the list. merges with others if possible
 	void addBox(const Box &box);
 
-	int getCell(std::pair<int, int> pos) const;
-	int getCell(int x, int y) const;
 	bool outOfBounds(int x, int y) const;
 
 	Box xBox, yBox;
 	float cellDim, crackDim;
 	int width, height;
-	int maze[200][200];
+	Cell maze[200][200];
 	std::vector<std::pair<std::pair<int, int>, std::pair<int, int> > > wallList;
 	std::vector<Box> boxVec;
 };

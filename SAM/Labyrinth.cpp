@@ -27,16 +27,6 @@ int Labyrinth::getHeight() const
 	return height;
 }
 
-int Labyrinth::getCell(pair<int, int> pos) const
-{
-	return maze[pos.first][pos.second];
-}
-
-int Labyrinth::getCell(int x, int y) const
-{
-	return maze[x][y];
-}
-
 float Labyrinth::getRealWidth() const
 {
 	return (float)width * cellDim + (float)(width - 1.0f) * crackDim;
@@ -60,14 +50,14 @@ void Labyrinth::generateLabyrinth(int w, int h)
 	xBox = xBox.translated(offset);
 	yBox = yBox.translated(offset);
 	float wallHeight = xBox.getHeight();
-
+	
 	//outer walls
 	boxVec.push_back(Box(make_float3(0.0f, 0.0f, -crackDim), make_float3(rw, wallHeight, 0.0f), WALL).translated(offset));
 	boxVec.push_back(Box(make_float3(-crackDim, 0.0f, 0.0f), make_float3(0.0f, wallHeight, rh), WALL).translated(offset));
 	boxVec.push_back(Box(make_float3(0.0f, 0.0f, rh), make_float3(rw, wallHeight, rh + crackDim), WALL).translated(offset));
 	boxVec.push_back(Box(make_float3(rw, 0.0f, 0.0f), make_float3(rw + crackDim, wallHeight, rh), WALL).translated(offset));
 
-	memset(maze, WALL, sizeof(int) * 200 * 200);
+	memset(maze, WALL, sizeof(maze));
 	primRandomized();
 	generateGeometry();
 
@@ -77,9 +67,7 @@ void Labyrinth::generateLabyrinth(int w, int h)
 
 bool Labyrinth::outOfBounds(int x, int y) const
 {
-	if(x > width || y >= height || x < 1 || y < 1)
-		return true;
-	return false;	
+	return x >= width || y >= height || x < 0 || y < 0;
 }
 
 void Labyrinth::setWallSize(float w, float h, float d)
@@ -89,6 +77,11 @@ void Labyrinth::setWallSize(float w, float h, float d)
 	
 	cellDim = w;
 	crackDim = d;
+}
+
+char& getCell(vector<vector<char>> &maze, pair<int, int> pos)
+{
+	return maze[pos.first][pos.second];
 }
 
 void Labyrinth::primRandomized()
@@ -104,32 +97,37 @@ void Labyrinth::primRandomized()
 		pii(0, -1)
 	};
 
+	vector<vector<char>> maze(height);
+	for(int i = 0; i < height; ++i)
+		maze[i] = vector<char>(width, WALL);
+
 	srand(time(0));
-	maze[1][1] = EMPTY;
+	maze[0][0] = EMPTY;
 
 	vector<piiii> walls;
-	walls.push_back(piiii(pii(1, 1), pii(1, 2)));
-	walls.push_back(piiii(pii(1, 1), pii(2, 1)));
+	walls.push_back(piiii(pii(0, 0), pii(0, 1)));
+	walls.push_back(piiii(pii(0, 0), pii(1, 0)));
 
 	while(!walls.empty())
 	{
 		int k = rand() % walls.size();
 		piiii wall = walls[k];
-		if(getCell(wall.first) == EMPTY && getCell(wall.second) == EMPTY)
+		if(getCell(maze, wall.second) == EMPTY)
 		{
 			walls.erase(walls.begin() + k);
 			wallList.push_back(wall);
 			continue;
 		}
-		pii newCell = getCell(wall.first) != EMPTY ? wall.first : wall.second;
+		pii newCell = wall.second;
 		walls.erase(walls.begin() + k);
+		getCell(maze, newCell) = EMPTY;
 		maze[newCell.first][newCell.second] = EMPTY;
 
 		for(int i = 0; i < 4; ++i)
 		{
 			pii candidate(newCell.first + d[i].first, newCell.second + d[i].second);
 			if(!outOfBounds(candidate.first, candidate.second))
-				if(getCell(candidate) != EMPTY)
+				if(getCell(maze, candidate) == WALL)
 					walls.push_back(piiii(newCell, candidate));
 		}
 	}
@@ -140,6 +138,7 @@ void Labyrinth::generateGeometry()
 	typedef pair<int, int> pii;
 	typedef pair<pii, pii> piiii;
 
+	memset(maze, 0, sizeof maze);
 	int n = wallList.size();
 	for(int i = 0; i < n; ++i)
 	{
@@ -149,14 +148,18 @@ void Labyrinth::generateGeometry()
 		int miny = min(wall.first.second, wall.second.second);
 		int t = wall.first.first - wall.second.first;
 
-		if(t)
+		if(t) //vertikalni
 		{
-			float3 translateVec = make_float3(minx * cellDim + (minx - 1) * crackDim, 0.0f, miny * cellDim + miny * crackDim);
+			maze[minx][miny].walls[3] = 1;
+			maze[minx+1][miny].walls[1] = 1;
+			float3 translateVec = make_float3((minx + 1) * cellDim + minx * crackDim, 0.0f, miny * cellDim + miny * crackDim);
 			addBox(yBox.translated(translateVec, rand() % 3));
 		}
-		else
+		else //horizontalni
 		{
-			float3 translateVec = make_float3((minx - 1) * cellDim + (minx - 1) * crackDim, 0.0f, miny * cellDim + (miny - 1) * crackDim);
+			maze[minx][miny].walls[0] = 1;
+			maze[minx][miny+1].walls[2] = 1;
+			float3 translateVec = make_float3(minx * cellDim + minx * crackDim, 0.0f, (miny + 1) * cellDim + miny * crackDim);
 			addBox(xBox.translated(translateVec, rand() % 3));
 		}
 	}
@@ -167,7 +170,7 @@ void Labyrinth::addBox(const Box &box)
 {
 	int n = boxVec.size();
 	int push = 1;
-	for(int i = 4; i < n; ++i)
+	for(int i = 0; i < n; ++i)
 	{
 		Box b = boxVec[i];
 		if(b.matIdx == box.matIdx)
@@ -180,7 +183,8 @@ void Labyrinth::addBox(const Box &box)
 					equals(left.boxmax.z, right.boxmax.z))
 				{
 					boxVec.erase(boxVec.begin() + i);
-					boxVec.push_back(Box(right.boxmin, left.boxmax, left.matIdx));
+					Box newBox(right.boxmin, left.boxmax, left.matIdx);
+					addBox(newBox);
 					push = 0;
 					break;
 				}
@@ -193,7 +197,8 @@ void Labyrinth::addBox(const Box &box)
 					equals(down.boxmax.x, up.boxmax.x))
 				{
 					boxVec.erase(boxVec.begin() + i);
-					boxVec.push_back(Box(down.boxmin, up.boxmax, up.matIdx));
+					Box newBox(down.boxmin, up.boxmax, up.matIdx);
+					addBox(newBox);
 					push = 0;
 					break;
 				}

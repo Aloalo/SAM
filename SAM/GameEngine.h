@@ -16,7 +16,6 @@ public:
 	~GameEngine(void);
 
 	void keyPress(int key, int scancode, int action, int mods);
-	void mouseMove(double x, double y);
 	void windowResize(int width, int height);
 
 	void initState();
@@ -32,7 +31,7 @@ public:
 private:
 	Scene scene;
 	BufferDrawer drawer;
-	Player player;
+	Player *player;
 	Labyrinth lab;
 };
 

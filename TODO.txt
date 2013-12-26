@@ -1,4 +1,8 @@
 Opcenito:
 
--zidovi labirinta
 -game settings
+-input handling
+
+Rendering Engine
+-misonja
+-kvantizirat vrijeme
