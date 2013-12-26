@@ -30,9 +30,6 @@
     <ClCompile Include="GraphicsSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Labyrinth.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,6 +45,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Labyrinth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h">
@@ -60,9 +60,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Labyrinth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Macros.h">
@@ -89,6 +86,12 @@
     <ClInclude Include="lights.h">
       <Filter>CUDA Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Labyrinth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="box.cu">
@@ -106,5 +109,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SAM.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

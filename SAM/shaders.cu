@@ -257,12 +257,12 @@ RT_PROGRAM void closest_hit_glass()
 			// check for external or internal reflection
 			float cos_theta = dot(i, n);
 			if(cos_theta < 0.0f)
+				cos_theta = -cos_theta;
+			else
 			{
 				inside = true;
-				cos_theta = -cos_theta;
-			}
-			else
 				cos_theta = dot(t, n);
+			}
 
 			reflection = fresnel_schlick(cos_theta, fresnel_exponent, fresnel_minimum, fresnel_maximum);
 
@@ -281,24 +281,21 @@ RT_PROGRAM void closest_hit_glass()
 				result += (1.0f - reflection) * refraction_color * cutoff_color;
 		}
 
-		if(!inside || (inside && use_internal_reflections))
+		float3 r = reflect(i, n);
+
+		float importance = prd_radiance.importance * reflection * optix::luminance(reflection_color * beer_attenuation);
+		if(importance > importance_cutoff && (!inside || (inside && use_internal_reflections)))
 		{
-			float3 r = reflect(i, n);
+			optix::Ray ray(h, r, radiance_ray_type, scene_epsilon);
+			PerRayData_radiance refl_prd;
+			refl_prd.depth = prd_radiance.depth + 1;
+			refl_prd.importance = importance;
 
-			float importance = prd_radiance.importance * reflection * optix::luminance(reflection_color * beer_attenuation);
-			if(importance > importance_cutoff)
-			{
-				optix::Ray ray(h, r, radiance_ray_type, scene_epsilon);
-				PerRayData_radiance refl_prd;
-				refl_prd.depth = prd_radiance.depth + 1;
-				refl_prd.importance = importance;
-
-				rtTrace(top_object, ray, refl_prd);
-				result += reflection * reflection_color * refl_prd.result;
-			}
-			else
-				result += reflection * reflection_color * cutoff_color;
+			rtTrace(top_object, ray, refl_prd);
+			result += reflection * reflection_color * refl_prd.result;
 		}
+		else
+			result += reflection * reflection_color * cutoff_color;
 	}
 
 	result = result * beer_attenuation;

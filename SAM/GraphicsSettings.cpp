@@ -14,12 +14,7 @@ GraphicsSettings::GraphicsSettings(void)
 }
 
 GraphicsSettings::GraphicsSettings(const string &path)
-{
-	format["RT_FORMAT_UNSIGNED_BYTE4"] = RT_FORMAT_UNSIGNED_BYTE4;
-	format["RT_FORMAT_FLOAT"] = RT_FORMAT_FLOAT;
-	format["RT_FORMAT_FLOAT3"] = RT_FORMAT_FLOAT4;
-	format["RT_FORMAT_FLOAT4"] = RT_FORMAT_FLOAT4;
-	
+{	
 	format["GL_NEAREST"] = GL_NEAREST;
 	format["GL_LINEAR"] = GL_LINEAR;
 

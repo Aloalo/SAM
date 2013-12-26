@@ -11,11 +11,13 @@ int main()
 	Engine e(1. / 60., Settings::GS["screenWidth"], Settings::GS["screenHeight"]);
 	Input input;
 
-	std::shared_ptr<GameEngine> ptr(new GameEngine());
-	input.addInputObserver(std::shared_ptr<InputObserver>(ptr));
+	GameEngine *ptr = new GameEngine();
+	input.addInputObserver(ptr);
 	input.setMouseMoveCallback();
-	e.addToUpdateList(std::shared_ptr<Updateable>(ptr));
-	e.addToDisplayList(std::shared_ptr<Drawable>(ptr));
+	e.addToUpdateList(ptr);
+	e.addToDisplayList(ptr);
 	e.start();
+
+	delete ptr;
 	return 0;
 }
