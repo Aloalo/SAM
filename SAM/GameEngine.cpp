@@ -11,12 +11,13 @@ using namespace optix;
 GameEngine::GameEngine(void)
 	: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Settings::GS["screenWidth"] / (float)Settings::GS["screenHeight"], 60.0f), 0.003f, 5))
 {
-	Input::addInputObserver(shared_ptr<InputObserver>(player));
+	Input::addInputObserver(player);
 }
 
 
 GameEngine::~GameEngine(void)
 {
+	delete player;
 }
 
 

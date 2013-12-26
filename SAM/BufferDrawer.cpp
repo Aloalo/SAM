@@ -8,7 +8,6 @@ using namespace glm;
 BufferDrawer::BufferDrawer(void)
 	: tex(GL_TEXTURE_2D), vbo(GL_ARRAY_BUFFER, GL_STREAM_DRAW)
 {
-	
 	glDataType = GL_FLOAT;
 	glFormat = GL_RGBA;
 	glTextureFormat = GL_RGBA32F_ARB;

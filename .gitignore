@@ -35,7 +35,6 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 *.vssscc
 $tf*/
-RenderingEngine*/
 SAM/ptxfiles*/
 *.ptx
 *.cu.ptx

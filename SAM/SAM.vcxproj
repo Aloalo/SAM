@@ -38,13 +38,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;..\Rendering\RenderingEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;..\Rendering\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;..\Rendering\RenderingEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(GLEW_HOME)\lib;$(GLFW_HOME)\lib-msvc110;$(OPTIX_HOME)\lib;..\Rendering\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
