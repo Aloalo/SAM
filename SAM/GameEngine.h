@@ -6,7 +6,6 @@
 #include "Scene.h"
 #include "BufferDrawer.h"
 #include "Player.h"
-#include "Mouse.h"
 
 class GameEngine :
 	public UnLitObject, public Updateable, public InputObserver
@@ -16,9 +15,9 @@ public:
 	~GameEngine(void);
 
 	void keyPress(int key, int scancode, int action, int mods);
+	void mouseMove(double x, double y);
 	void windowResize(int width, int height);
 
-	void initState();
 	void update(float deltaTime);
 
 	void initDrawing();
@@ -26,12 +25,11 @@ public:
 
 	void generateLabyrinth(int width, int height);
 
-	Mouse mouse;
-
 private:
 	Scene scene;
 	BufferDrawer drawer;
 	Player *player;
 	Labyrinth lab;
+	bool mouseLocked;
 };
 

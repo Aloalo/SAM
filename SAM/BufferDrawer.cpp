@@ -1,12 +1,12 @@
 #include "BufferDrawer.h"
 #include "Engine.h"
-#include "Settings.h"
+#include "Environment.h"
 
 using namespace optix;
 using namespace glm;
 
 BufferDrawer::BufferDrawer(void)
-	: tex(GL_TEXTURE_2D), vbo(GL_ARRAY_BUFFER, GL_STREAM_DRAW)
+	: tex(GL_TEXTURE_2D), vbo(GL_ARRAY_BUFFER, GL_STREAM_DRAW), SETTING(textureFilter)
 {
 	glDataType = GL_FLOAT;
 	glFormat = GL_RGBA;
@@ -20,18 +20,18 @@ BufferDrawer::~BufferDrawer(void)
 	vbo.destroy();
 }
 
-unsigned int BufferDrawer::createGLBuffer(int width, int height)
+unsigned int BufferDrawer::createGLBuffer()
 {
 	vbo.bind();
-	vbo.setData(0, Settings::GS["maxBufferWidth"] * Settings::GS["maxBufferHeight"] * sizeof(float4));
+	vbo.setData(0, Environment::get().maxBufferWidth * Environment::get().maxBufferHeight * sizeof(float4));
 	return vbo.getID();
 }
 
 void BufferDrawer::init(const Buffer &buffer)
 {
 	tex.bind();
-	tex.texParami(GL_TEXTURE_MAG_FILTER, Settings::GS["textureFilter"]);
-	tex.texParami(GL_TEXTURE_MIN_FILTER, Settings::GS["textureFilter"]);
+	tex.texParami(GL_TEXTURE_MAG_FILTER, textureFilter);
+	tex.texParami(GL_TEXTURE_MIN_FILTER, textureFilter);
 	tex.texParami(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	tex.texParami(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
@@ -57,11 +57,11 @@ void BufferDrawer::draw(optix::Buffer &buffer)
 {
 	try
 	{
-		tex.texImage(0, glTextureFormat, vec3(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"], 0), glFormat, glDataType, 0);
+		tex.texImage(0, glTextureFormat, vec3(Environment::get().bufferWidth.x, Environment::get().bufferHeight.x, 0), glFormat, glDataType, 0);
 		glEnable(GL_TEXTURE_2D);
 		{
-			float u = 0.5f / (float)Settings::GS["screenWidth"];
-			float v = 0.5f / (float)Settings::GS["screenHeight"];
+			float u = 0.5f / (float)Environment::get().screenWidth.x;
+			float v = 0.5f / (float)Environment::get().screenHeight.x;
 
 			glBegin(GL_QUADS);
 			{

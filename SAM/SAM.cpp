@@ -2,15 +2,13 @@
 #include "Engine.h"
 #include "Input.h"
 #include "GameEngine.h"
-#include "Settings.h"
+#include "Environment.h"
 
 int main()
 {
-	Settings::GS = GraphicsSettings("../SAM/GraphicsSettings.ini");
-	
-	Engine e(1. / 60., Settings::GS["screenWidth"], Settings::GS["screenHeight"]);
+	Engine e(1. / 60., Environment::get().screenWidth, Environment::get().screenHeight);
 	Input input;
-
+	
 	GameEngine *ptr = new GameEngine();
 	input.addInputObserver(ptr);
 	input.setMouseMoveCallback();

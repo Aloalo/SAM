@@ -1,4 +1,4 @@
-#include "GraphicsSettings.h"
+#include "InitialSettings.h"
 #include "macros.h"
 #include <iostream>
 #include <fstream>
@@ -8,12 +8,16 @@
 
 using namespace std;
 
+InitialSettings *InitialSettings::instance = 0;
 
-GraphicsSettings::GraphicsSettings(void)
+InitialSettings& InitialSettings::get()
 {
+	if(instance)
+		return *instance;
+	return *(instance = new InitialSettings("../SAM/GraphicsSettings.ini"));
 }
 
-GraphicsSettings::GraphicsSettings(const string &path)
+InitialSettings::InitialSettings(const string &path)
 {	
 	format["GL_NEAREST"] = GL_NEAREST;
 	format["GL_LINEAR"] = GL_LINEAR;
@@ -33,11 +37,11 @@ GraphicsSettings::GraphicsSettings(const string &path)
 					name = name.substr(1);
 					try
 					{
-						settings[name] = stoi(value);
+						values[name] = stoi(value);
 					}
 					catch(exception ex)
 					{
-						settings[name] = format[value];
+						values[name] = format[value];
 					}
 				}
 			}
@@ -57,7 +61,7 @@ GraphicsSettings::GraphicsSettings(const string &path)
 }
 
 
-unsigned int& GraphicsSettings::operator[](const string &variableName)
+unsigned int& InitialSettings::operator[](const string &variableName)
 {
-	return settings[variableName];
+	return values[variableName];
 }

@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include <map>
 #include "Labyrinth.h"
+#include "Setting.h"
 
 //handles optix traceing
 class Scene
@@ -24,5 +25,10 @@ private:
 	void createMaterials();
 	optix::Context ctx;
 	std::map<int, optix::Material> materials;
+
+	Setting<int> maxRayDepth;
+	Setting<int> castsShadows;
+	Setting<int> useSchlick;
+	Setting<int> useInternalReflections;
 };
 
