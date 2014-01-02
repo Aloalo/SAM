@@ -1,14 +1,16 @@
 #include "Scene.h"
 #include "Utils.h"
 #include "lights.h"
-#include "Settings.h"
+#include "Environment.h"
 
 using namespace optix;
 using namespace utils;
 using namespace glm;
 using namespace std;
 
-Scene::Scene(void)
+Scene::Scene(void) :
+	SETTING(useInternalReflections), SETTING(castsShadows),
+	SETTING(useSchlick), SETTING(maxRayDepth)
 {
 }
 
@@ -26,10 +28,10 @@ Buffer Scene::getBuffer()
 void Scene::setBufferSize(int w, int h)
 {
 	w = max(1, w);
-	w = min(w, Settings::GS["maxBufferWidth"]);
+	w = min(w, Environment::get().maxBufferWidth);
 	
 	h = max(1, h);
-	h = min(h, Settings::GS["maxBufferHeight"]);
+	h = min(h, Environment::get().maxBufferHeight);
 	ctx["output_buffer"]->getBuffer()->setSize(w, h);
 }
 
@@ -47,14 +49,14 @@ void Scene::initialize(unsigned int GLBO)
 	ctx["importance_cutoff"]->setFloat(0.01f);
 	ctx["ambient_light_color"]->setFloat(0.3f, 0.3f, 0.3f);
 
-	ctx["max_depth"]->setInt(Settings::GS["maxRayDepth"]);
-	ctx["casts_shadows"]->setInt(Settings::GS["castsShadows"]);
-	ctx["use_schlick"]->setInt(Settings::GS["useSchlick"]);
-	ctx["use_internal_reflections"]->setInt(Settings::GS["useInternalReflections"]);
+	ctx["max_depth"]->setInt(maxRayDepth);
+	ctx["casts_shadows"]->setInt(castsShadows);
+	ctx["use_schlick"]->setInt(useSchlick);
+	ctx["use_internal_reflections"]->setInt(useInternalReflections);
 
 	Buffer buff = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
 	buff->setFormat(RT_FORMAT_FLOAT4);
-	buff->setSize(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
+	buff->setSize(Environment::get().bufferWidth, Environment::get().bufferHeight);
 
 	ctx["output_buffer"]->setBuffer(buff);
 
@@ -201,7 +203,7 @@ void Scene::createSceneGraph(const Labyrinth &lab)
 
 void Scene::trace()
 {
-	ctx->launch(0, Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]);
+	ctx->launch(0, Environment::get().bufferWidth, Environment::get().bufferHeight);
 }
 
 void Scene::setCamera(const Camera &cam)

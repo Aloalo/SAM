@@ -101,8 +101,9 @@
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="BufferDrawer.cpp" />
+    <ClCompile Include="Environment.cpp" />
     <ClCompile Include="GameEngine.cpp" />
-    <ClCompile Include="GraphicsSettings.cpp" />
+    <ClCompile Include="InitialSettings.cpp" />
     <ClCompile Include="Labyrinth.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SAM.cpp" />
@@ -113,16 +114,17 @@
   <ItemGroup>
     <ClInclude Include="Box.h" />
     <ClInclude Include="BufferDrawer.h" />
+    <ClInclude Include="Environment.h" />
     <ClInclude Include="GameEngine.h" />
-    <ClInclude Include="GraphicsSettings.h" />
+    <ClInclude Include="InitialSettings.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="lights.h" />
     <ClInclude Include="Macros.h" />
-    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Setting.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>

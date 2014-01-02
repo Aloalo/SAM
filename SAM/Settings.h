@@ -1,10 +1,8 @@
 #pragma once
-#include "GraphicsSettings.h"
+#include "InitialSettings.h"
 
 class Settings
 {
-public:
-	static GraphicsSettings GS;
 
 private:
 	Settings(void);

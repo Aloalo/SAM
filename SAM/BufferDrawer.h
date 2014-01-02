@@ -4,6 +4,7 @@
 #include "BufferObject.h"
 #include "Macros.h"
 #include <optix_world.h>
+#include "Setting.h"
 
 /*
 draws the optix::Buffer on the whole screen
@@ -15,7 +16,7 @@ public:
 	BufferDrawer(void);
 	~BufferDrawer(void);
 	
-	unsigned int createGLBuffer(int width, int height);
+	unsigned int createGLBuffer();
 	void init(const optix::Buffer &buffer);
 	void draw(optix::Buffer &buffer);
 
@@ -25,4 +26,6 @@ private:
 	GLenum glTextureFormat;
 	Texture2D tex;
 	BufferObject vbo;
+
+	Setting<int> textureFilter;
 };

@@ -1,8 +1,7 @@
 Opcenito:
 
--game settings
--input handling
+-fizika
 
 Rendering Engine
--misonja
--kvantizirat vrijeme
+-input events
+-active input observers

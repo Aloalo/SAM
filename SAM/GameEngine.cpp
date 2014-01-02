@@ -1,7 +1,7 @@
 #include "GameEngine.h"
 #include "Engine.h"
 #include <GLFW/glfw3.h>
-#include "Settings.h"
+#include "Environment.h"
 #include "Input.h"
 
 using namespace glm;
@@ -9,9 +9,11 @@ using namespace std;
 using namespace optix;
 
 GameEngine::GameEngine(void)
-	: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Settings::GS["screenWidth"] / (float)Settings::GS["screenHeight"], 60.0f), 0.003f, 5))
+	: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Environment::get().screenWidth.x / Environment::get().screenHeight.x, 60.0f))),
+	mouseLocked(true)
 {
-	Input::addInputObserver(player);
+	Engine::hideMouse(true);
+	//Input::addInputObserver(player);
 }
 
 
@@ -26,6 +28,13 @@ void GameEngine::generateLabyrinth(int width, int height)
 	lab.generateLabyrinth(width, height);
 }
 
+
+void GameEngine::mouseMove(double x, double y)
+{
+	if(mouseLocked)
+		player->mouseMove(x, y);
+}
+
 void GameEngine::keyPress(int key, int scancode, int action, int mods)
 {
 	if(action == GLFW_REPEAT)
@@ -33,13 +42,13 @@ void GameEngine::keyPress(int key, int scancode, int action, int mods)
 
 	if(mods == GLFW_MOD_SHIFT && action == GLFW_PRESS)
 	{
-		mouse.locked = false;
-		glfwSetInputMode(Engine::getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		mouseLocked = false;
+		Engine::hideMouse(false);
 	}
 	else
 	{
-		mouse.locked = true;
-		glfwSetInputMode(Engine::getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		mouseLocked = true;
+		Engine::hideMouse(true);
 	}
 
 	switch(key)
@@ -52,21 +61,20 @@ void GameEngine::keyPress(int key, int scancode, int action, int mods)
 		}
 		break;
 	}
+
+	player->keyPress(key, scancode, action, mods);
 }
 
 void GameEngine::windowResize(int width, int height)
 {
-	Settings::GS["screenHeight"] = height;
-	Settings::GS["screenWidth"] = width;
-}
-
-void GameEngine::initState()
-{
+	Environment::get().screenHeight = height;
+	Environment::get().screenWidth = width;
+	player->windowResize(width, height);
 }
 
 void GameEngine::update(float deltaTime)
 {
-	player->move(deltaTime);
+	player->update(deltaTime);
 
 	scene.setCamera(player->getCam());
 }
@@ -75,7 +83,7 @@ void GameEngine::initDrawing()
 {
 	try
 	{
-		scene.initialize(drawer.createGLBuffer(Settings::GS["bufferWidth"], Settings::GS["bufferHeight"]));
+		scene.initialize(drawer.createGLBuffer());
 		lab.generateLabyrinth(15, 15);
 
 		scene.createSceneGraph(lab);
