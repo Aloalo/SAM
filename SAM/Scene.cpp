@@ -4,6 +4,7 @@
 #include "Environment.h"
 
 using namespace optix;
+using namespace reng;
 using namespace utils;
 using namespace glm;
 using namespace std;

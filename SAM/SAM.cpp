@@ -4,6 +4,8 @@
 #include "GameEngine.h"
 #include "Environment.h"
 
+using namespace reng;
+
 int main()
 {
 	Engine e(1. / 60., Environment::get().screenWidth, Environment::get().screenHeight);

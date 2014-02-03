@@ -19,7 +19,7 @@ public:
 	void trace();
 	optix::Buffer getBuffer();
 	void setBufferSize(int w, int h);
-	void setCamera(const Camera &cam);
+	void setCamera(const reng::Camera &cam);
 
 private:
 	void createMaterials();

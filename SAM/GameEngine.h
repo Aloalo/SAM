@@ -8,7 +8,7 @@
 #include "Player.h"
 
 class GameEngine :
-	public UnLitObject, public Updateable, public InputObserver
+	public reng::UnLitObject, public reng::Updateable, public reng::InputObserver
 {
 public:
 	GameEngine(void);

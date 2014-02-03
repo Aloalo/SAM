@@ -7,6 +7,7 @@
 using namespace glm;
 using namespace std;
 using namespace optix;
+using namespace reng;
 
 GameEngine::GameEngine(void)
 	: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Environment::get().screenWidth.x / Environment::get().screenHeight.x, 60.0f))),

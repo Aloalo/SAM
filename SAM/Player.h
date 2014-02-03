@@ -5,11 +5,11 @@
 #include "CameraHandler.h"
 
 class Player :
-	public InputObserver, public Updateable
+	public reng::InputObserver, public reng::Updateable
 {
 public:
-	Player(CameraHandler &cam);
-	Player(const Camera &cam);
+	Player(reng::CameraHandler &cam);
+	Player(const reng::Camera &cam);
 	~Player(void);
 
 	void keyPress(int key, int scancode, int action, int mods);
@@ -17,10 +17,10 @@ public:
 	void windowResize(int width, int height);
 
 	void update(float deltaTime);
-	const Camera& getCam() const;
+	const reng::Camera& getCam() const;
 
 private:
 
-	CameraHandler &cam;
+	reng::CameraHandler &cam;
 };
 

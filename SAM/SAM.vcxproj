@@ -38,13 +38,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ASSIMP_HOME)\include;$(DEVIL_HOME)\include;$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ASSIMP_HOME)\lib;$(DEVIL_HOME)\lib;$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ASSIMP_HOME)\include;$(DEVIL_HOME)\include;$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ASSIMP_HOME)\lib;$(DEVIL_HOME)\lib;$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
