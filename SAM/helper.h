@@ -2,7 +2,6 @@
 
 #include <optix.h>
 #include <optix_math.h>
-#include "lights.h"
 
 using namespace optix;
 

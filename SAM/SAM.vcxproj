@@ -107,7 +107,7 @@
     <ClCompile Include="Labyrinth.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SAM.cpp" />
-    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="OptixTracer.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
@@ -121,9 +121,10 @@
     <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="lights.h" />
     <ClInclude Include="Macros.h" />
+    <ClInclude Include="phong.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Scene.h" />
+    <ClInclude Include="OptixTracer.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Utils.h" />
@@ -132,6 +133,7 @@
     <CudaCompile Include="box.cu" />
     <CudaCompile Include="rectangleAA.cu" />
     <CudaCompile Include="shaders.cu" />
+    <CudaCompile Include="triangle_mesh.cu" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GraphicsSettings.ini" />

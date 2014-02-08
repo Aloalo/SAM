@@ -1,7 +1,17 @@
+Fix:
+
+-spotlight
+
 Opcenito:
+
+-EPIC REFACTOR (napraviti lako rukovanje klasama)
+-scene graph (reci optixu sta zelis)
+-AA
+-bump/normal/displacement/parallax mapping?
+-transparent meshes
 
 -fizika
 
-Rendering Engine
+Rendering Engine:
 -input events
 -active input observers

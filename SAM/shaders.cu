@@ -1,25 +1,12 @@
-#include "helper.h"
+#include "phong.h"
 
 rtDeclareVariable(float3, shading_normal, attribute shading_normal, ); 
 rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, ); 
 
-rtDeclareVariable(PerRayData_radiance, prd_radiance, rtPayload, );
-rtDeclareVariable(PerRayData_shadow, prd_shadow,   rtPayload, );
-
-rtDeclareVariable(float, t_hit, rtIntersectionDistance, );
-rtDeclareVariable(optix::Ray, ray, rtCurrentRay, );
-rtDeclareVariable(uint2, launch_index, rtLaunchIndex, );
-
-rtDeclareVariable(unsigned int, radiance_ray_type, , );
-rtDeclareVariable(unsigned int, shadow_ray_type, , );
-rtDeclareVariable(float, scene_epsilon, , );
-rtDeclareVariable(rtObject, top_object, , );
-
-rtDeclareVariable(float3, ambient_light_color, , );
-
 //
 // Pinhole camera implementation
 //
+rtDeclareVariable(uint2, launch_index, rtLaunchIndex, );
 rtDeclareVariable(float3, eye, , );
 rtDeclareVariable(float3, U, , );
 rtDeclareVariable(float3, V, , );
@@ -31,7 +18,6 @@ RT_PROGRAM void pinhole_camera()
 {
 	float2 screen = make_float2(output_buffer.size());
 
-	//WORK IN PROGRESS
 	float2 d = make_float2(launch_index) / screen * 2.f - 1.f;
 	float3 ray_origin = eye;
 	float3 ray_direction = normalize(d.x * U + d.y * V + W);
@@ -68,19 +54,21 @@ RT_PROGRAM void gradient_miss()
 }
 
 //
+// Set pixel to solid color upon failure
+//
+rtDeclareVariable(float3, bad_color, , );
+
+RT_PROGRAM void exception()
+{
+	output_buffer[launch_index] = make_float4(bad_color, 1.0f);
+}
+
+//
 // Terminates and fully attenuates ray after any hit
 //
 RT_PROGRAM void any_hit_solid()
 {
-	prd_shadow.attenuation = make_float3(0.0f);
-	rtTerminateRay();
-}
-
-static __device__ inline float3 get_ffnormal()
-{
-	float3 world_geo_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
-	float3 world_shade_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
-	return faceforward(world_shade_normal, -ray.direction, world_geo_normal);
+	phongShadowed();
 }
 
 //
@@ -90,119 +78,16 @@ rtDeclareVariable(float3, Ka, , );
 rtDeclareVariable(float3, Kd, , );
 rtDeclareVariable(float3, Ks, , );
 rtDeclareVariable(float, phong_exp, , );
-rtDeclareVariable(int, casts_shadows, , );
-rtBuffer<BasicLight> lights; 
-
-static __device__ inline float3 phong_and_shadows(const float3 &ffnormal, const float3 &hit_point, const float3 &local_Kd)
-{
-	float3 color = Ka * ambient_light_color;
-	for(int i = 0; i < lights.size(); ++i)
-	{
-		BasicLight light = lights[i];
-		float3 L = normalize(light.pos - hit_point);
-		float nDl = dot(ffnormal, L);
-
-		if(nDl > 0.0f)
-		{
-			PerRayData_shadow shadow_prd;
-			shadow_prd.attenuation = make_float3(1.0f);
-			float Ldist = length(light.pos - hit_point);
-
-			if(casts_shadows)
-			{
-				optix::Ray shadow_ray(hit_point, L, shadow_ray_type, scene_epsilon, Ldist);
-				rtTrace(top_object, shadow_ray, shadow_prd);
-			}
-
-			if(fmaxf(shadow_prd.attenuation) > 0.0f)
-			{
-				float3 light_color = light.colorAtDistance(Ldist) * shadow_prd.attenuation;
-				color += local_Kd * nDl * light_color;
-
-				float3 H = normalize(L - ray.direction);
-				float nDh = dot(ffnormal, H);
-				if(nDh > 0)
-					color += Ks * light.color * powf(nDh, phong_exp);
-			}
-		}
-	}
-	return color;
-}
-
+rtDeclareVariable(float3, reflectivity, , );
 
 RT_PROGRAM void closest_hit_phong()
 {
-	float3 ffnormal = get_ffnormal();
-	float3 hit_point = ray.origin + t_hit * ray.direction;
+	float3 world_geo_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
+	float3 world_shade_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
+	float3 ffnormal =  faceforward(world_shade_normal, -ray.direction, world_geo_normal);
 
-	prd_radiance.result = phong_and_shadows(ffnormal, hit_point, Kd);
+	phongShade(Ka, Kd, Ks, ffnormal, phong_exp, reflectivity);
 }
-
-//
-//ADS phong shader with shadows and procedural tile texture
-//
-
-rtDeclareVariable(float3, tile_v0, , );
-rtDeclareVariable(float3, tile_v1, , );
-rtDeclareVariable(float3, crack_color, , );
-rtDeclareVariable(float, crack_width, , );
-
-RT_PROGRAM void closest_hit_phong_tile()
-{
-	float3 ffnormal = get_ffnormal();
-	float3 hit_point = ray.origin + t_hit * ray.direction;
-
-	float v0 = dot(tile_v0, hit_point);
-	float v1 = dot(tile_v1, hit_point);
-	v0 = v0 - floor(v0);
-	v1 = v1 - floor(v1);
-
-	float3 local_Kd;
-	if(v0 > crack_width && v1 > crack_width )
-		local_Kd = Kd;
-	else
-		local_Kd = crack_color;
-
-	prd_radiance.result = phong_and_shadows(ffnormal, hit_point, local_Kd);
-}
-
-//
-//ADS phong shader with shadows and reflections
-//
-rtDeclareVariable(float3, reflectivity, , );
-rtDeclareVariable(float, importance_cutoff, , );
-rtDeclareVariable(int, max_depth, , );
-rtDeclareVariable(int, use_schlick, , );
-
-RT_PROGRAM void closest_hit_reflection()
-{
-	float3 ffnormal = get_ffnormal();
-	float3 hit_point = ray.origin + t_hit * ray.direction;
-	float3 color = phong_and_shadows(ffnormal, hit_point, Kd);
-	
-	float3 r;
-	if(use_schlick)
-		r = schlick(-dot(ffnormal, ray.direction), reflectivity);
-	else
-		r = reflectivity;
-
-	float importance = prd_radiance.importance * optix::luminance(r);
-
-	//reflection ray
-	if(importance > importance_cutoff && prd_radiance.depth < max_depth)
-	{
-		PerRayData_radiance refl_prd;
-		refl_prd.importance = importance;
-		refl_prd.depth = prd_radiance.depth+1;
-		float3 R = reflect(ray.direction, ffnormal);
-		optix::Ray refl_ray(hit_point, R, radiance_ray_type, scene_epsilon);
-		rtTrace(top_object, refl_ray, refl_prd);
-		color += r * refl_prd.result;
-	}
-
-	prd_radiance.result = color;
-}
-
 
 //
 // Transparent object shadows
@@ -211,12 +96,12 @@ rtDeclareVariable(float3, shadow_attenuation, , );
 
 RT_PROGRAM void any_hit_shadow_glass()
 {
-  float3 world_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
-  float nDi = fabs(dot(world_normal, ray.direction));
+	float3 world_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
+	float nDi = fabs(dot(world_normal, ray.direction));
 
-  prd_shadow.attenuation *= 1 - fresnel_schlick(nDi, 5.0f, 1.0f - shadow_attenuation, make_float3(1.0f));
+	prd_shadow.attenuation *= 1 - fresnel_schlick(nDi, 5.0f, 1.0f - shadow_attenuation, make_float3(1.0f));
 
-  rtIgnoreIntersection();
+	rtIgnoreIntersection();
 }
 
 //
@@ -248,7 +133,7 @@ RT_PROGRAM void closest_hit_glass()
 		beer_attenuation = make_float3(1);
 
 	bool inside = false;
-	
+
 	if(prd_radiance.depth < max_depth)
 	{
 		float3 t;
@@ -302,14 +187,29 @@ RT_PROGRAM void closest_hit_glass()
 	prd_radiance.result = result;
 }
 
+rtTextureSampler<float4, 2> ambient_map;        
+rtTextureSampler<float4, 2> diffuse_map;
+rtTextureSampler<float4, 2> specular_map;
 
-//
-// Set pixel to solid color upon failure
-//
+rtDeclareVariable(float3, texcoord, attribute texcoord, ); 
 
-rtDeclareVariable(float3, bad_color, , );
-
-RT_PROGRAM void exception()
+RT_PROGRAM void closest_hit_mesh()
 {
-	output_buffer[launch_index] = make_float4(bad_color, 1.0f);
+	float3 direction = ray.direction;
+	float3 world_shading_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
+	float3 world_geometric_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
+	float3 ffnormal = faceforward(world_shading_normal, -direction, world_geometric_normal);
+	float3 uv = texcoord;
+
+	float3 black = make_float3(0.0f, 0.0f, 0.0f);
+	
+	/*float3 pKa = make_float3(tex2D(ambient_map, uv.x, uv.y)) * Ka;
+	float3 pKd = make_float3(tex2D(diffuse_map, uv.x, uv.y)) * Kd;
+	float3 pKs = make_float3(tex2D(specular_map, uv.x, uv.y)) * Ks;*/
+
+	float3 pKa = make_float3(tex2D(ambient_map, uv.x, uv.y));
+	float3 pKd = make_float3(tex2D(diffuse_map, uv.x, uv.y));
+	float3 pKs = make_float3(tex2D(specular_map, uv.x, uv.y));
+
+	phongShade(pKa, pKd, pKs, ffnormal, phong_exp, reflectivity);
 }

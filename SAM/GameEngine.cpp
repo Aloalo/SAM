@@ -9,9 +9,9 @@ using namespace std;
 using namespace optix;
 using namespace reng;
 
-GameEngine::GameEngine(void)
+GameEngine::GameEngine(const aiScene *scene)
 	: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Environment::get().screenWidth.x / Environment::get().screenHeight.x, 60.0f))),
-	mouseLocked(true)
+	mouseLocked(true), scene(scene)
 {
 	Engine::hideMouse(true);
 	//Input::addInputObserver(player);
@@ -58,7 +58,7 @@ void GameEngine::keyPress(int key, int scancode, int action, int mods)
 		if(action != GLFW_RELEASE)
 		{
 			lab.generateLabyrinth(lab.getWidth(), lab.getHeight());
-			scene.createSceneGraph(lab);
+			tracer.createSceneGraph(lab);
 		}
 		break;
 	}
@@ -77,19 +77,24 @@ void GameEngine::update(float deltaTime)
 {
 	player->update(deltaTime);
 
-	scene.setCamera(player->getCam());
+	tracer.setCamera(player->getCam());
 }
 
 void GameEngine::initDrawing()
 {
 	try
 	{
-		scene.initialize(drawer.createGLBuffer());
-		lab.generateLabyrinth(15, 15);
+		tracer.initialize(drawer.createGLBuffer());
 
-		scene.createSceneGraph(lab);
-		scene.setCamera(player->getCam());
-		drawer.init(scene.getBuffer());
+		if(scene == NULL)
+		{
+			lab.generateLabyrinth(15, 15);
+			tracer.createSceneGraph(lab);
+		}
+		else
+			tracer.createSceneGraph(scene);
+		tracer.setCamera(player->getCam());
+		drawer.init(tracer.getBuffer());
 	}
 	catch(exception &ex)
 	{
@@ -102,8 +107,8 @@ void GameEngine::draw(const glm::mat4 &View, const glm::mat4 &Projection)
 {
 	try
 	{
-		scene.trace();
-		drawer.draw(scene.getBuffer());
+		tracer.trace();
+		drawer.draw(tracer.getBuffer());
 	}
 	catch(exception &ex)
 	{
