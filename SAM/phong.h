@@ -1,4 +1,5 @@
 #include <optix_world.h>
+#include <optixu/optixu_math_namespace.h>
 #include "helper.h"
 #include "lights.h"
 
@@ -20,13 +21,13 @@ rtDeclareVariable(unsigned int, shadow_ray_type, , );
 rtDeclareVariable(float, importance_cutoff, , );
 rtDeclareVariable(float, scene_epsilon, , );
 
-static __device__ void phongShadowed()
+static __device__ __inline__ void phongShadowed()
 {
 	prd_shadow.attenuation = optix::make_float3(0);
 	rtTerminateRay();
 }
 
-static __device__ void phongShade(float3 p_Ka,
+static __device__ __inline__ void phongShade(float3 p_Ka,
 							   float3 p_Kd,
 							   float3 p_Ks,
 							   float3 ffnormal,
@@ -55,15 +56,17 @@ static __device__ void phongShade(float3 p_Ka,
 			Ldist = length(light.pos - hit_point);
 			attenuation = 1.0f / (light.attenuation.x + light.attenuation.y * Ldist + light.attenuation.z * Ldist * Ldist);
 
+			if(light.spot_cutoff <= 90.0f) // spotlight?
+			{
+				float clampedCosine = max(0.0f, dot(-L, light.spot_direction));
+				float cutoffRadians = light.spot_cutoff * pi / 180.0f;
+				
 			//MASIVNO SE RUSI!!!!
-			//if(light.spot_cutoff <= 90.0f) // spotlight?
-			//{
-			//	float clampedCosine = max(0.0f, dot(-L, light.spot_direction));
-			//	if(clampedCosine < cosf(light.spot_cutoff * pi / 180.0f)) // outside of spotlight cone?
+			//	if(clampedCosine < cosf(cutoffRadians)) // outside of spotlight cone?
 			//		attenuation = 0.0f;
 			//	else
 			//		attenuation = attenuation * powf(clampedCosine, light.spot_exponent);   
-			//}
+			}
 		}
 
 		float nDl = dot(ffnormal, L);

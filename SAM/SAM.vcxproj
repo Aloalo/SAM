@@ -64,7 +64,7 @@
       <CompileOut>..\SAM\ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
       <NvccCompilation>ptx</NvccCompilation>
       <FastMath>true</FastMath>
-      <Optimization>O3</Optimization>
+      <Optimization>Od</Optimization>
       <GPUDebugInfo>false</GPUDebugInfo>
     </CudaCompile>
   </ItemDefinitionGroup>

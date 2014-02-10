@@ -34,6 +34,19 @@ RT_PROGRAM void pinhole_camera()
 }
 
 //
+// Enviormement map
+//
+rtTextureSampler<float4, 2> envmap;
+RT_PROGRAM void envmap_miss()
+{
+	float theta = atan2f(ray.direction.x, ray.direction.z);
+	float phi = M_PIf * 0.5f - acosf(ray.direction.y);
+	float u = (theta + M_PIf) * (0.5f * M_1_PIf);
+	float v = 0.5f * (1.0f + sin(phi));
+	prd_radiance.result = make_float3(tex2D(envmap, u, v));
+}
+
+//
 // Returns solid color for miss rays
 //
 rtDeclareVariable(float3, miss_color, , );
@@ -50,7 +63,7 @@ rtDeclareVariable(float3, miss_max, , );
 RT_PROGRAM void gradient_miss()
 {
 	float phi = asinf(ray.direction.y);
-	prd_radiance.result = 2.0f * phi / pi * (miss_max - miss_min) + miss_min;
+	prd_radiance.result = 2.0f * phi / M_PIf * (miss_max - miss_min) + miss_min;
 }
 
 //

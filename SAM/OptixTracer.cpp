@@ -72,6 +72,19 @@ void OptixTracer::initialize(unsigned int GLBO)
 	ctx["miss_min"]->setFloat(0.3f, 0.3f, 0.3f);
 	ctx["miss_max"]->setFloat(0.8f, 0.8f, 0.8f);
 
+	/*ctx->setMissProgram(0, ctx->createProgramFromPTXFile(path, "envmap_miss"));
+	Texture tex = TextureHandler::getTexture(utils::texPath, std::string("eviorment.jpg"));
+	optix::TextureSampler sampler = ctx->createTextureSamplerFromGLImage(tex.getID(), RT_TARGET_GL_TEXTURE_2D);
+	sampler->setWrapMode(0, RT_WRAP_REPEAT);
+	sampler->setWrapMode(1, RT_WRAP_REPEAT);
+	sampler->setWrapMode(2, RT_WRAP_REPEAT);
+	sampler->setIndexingMode(RT_TEXTURE_INDEX_NORMALIZED_COORDINATES);
+	sampler->setReadMode(RT_TEXTURE_READ_NORMALIZED_FLOAT);
+	sampler->setMaxAnisotropy(1.0f);
+	sampler->setFilteringModes(RT_FILTER_LINEAR, RT_FILTER_LINEAR, RT_FILTER_NONE);
+	ctx["envmap"]->setTextureSampler(sampler);*/
+
+
 	vector<BasicLight> lights;
 	
 	lights.push_back(BasicLight( //light0 - point light

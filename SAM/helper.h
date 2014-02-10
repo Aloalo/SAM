@@ -6,8 +6,8 @@
 using namespace optix;
 
 #define FLT_MAX 1e30;
-__constant__ float pi = 3.1415926;
-__constant__ float EPS = 1e-4;
+__constant__ float pi = 3.1415926f;
+__constant__ float EPS = 1e-4f;
 
 static __device__ __inline__ bool equals(float x, float y)
 {
