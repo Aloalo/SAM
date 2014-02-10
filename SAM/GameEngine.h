@@ -3,15 +3,15 @@
 #include "UnLitObject.h"
 #include "InputObserver.h"
 #include "Updateable.h"
-#include "Scene.h"
+#include "OptixTracer.h"
 #include "BufferDrawer.h"
 #include "Player.h"
 
 class GameEngine :
-	public UnLitObject, public Updateable, public InputObserver
+	public reng::UnLitObject, public reng::Updateable, public reng::InputObserver
 {
 public:
-	GameEngine(void);
+	GameEngine(const aiScene *scene = NULL);
 	~GameEngine(void);
 
 	void keyPress(int key, int scancode, int action, int mods);
@@ -26,7 +26,8 @@ public:
 	void generateLabyrinth(int width, int height);
 
 private:
-	Scene scene;
+	const aiScene *scene;
+	OptixTracer tracer;
 	BufferDrawer drawer;
 	Player *player;
 	Labyrinth lab;

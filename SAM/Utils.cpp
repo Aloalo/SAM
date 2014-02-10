@@ -4,7 +4,17 @@ namespace utils
 {
 	std::string pathToPTX(const std::string &filename)
 	{
-		return "../SAM/ptxfiles/" + filename + ".ptx";
+		return ptxPath + filename + ".ptx";
+	}
+	
+	std::string pathToTextures(const std::string &filename)
+	{
+		return texPath + filename;
+	}
+
+	std::string pathToModels(const std::string &filename)
+	{
+		return modelPath + filename;
 	}
 
 	bool equals(const float3 &x, const float3 &y)

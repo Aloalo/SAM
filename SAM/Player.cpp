@@ -4,6 +4,8 @@
 #include <GLFW\glfw3.h>
 #include "StockCameraHandler.h"
 
+using namespace reng;
+
 Player::Player(CameraHandler &cam)
 	: cam(cam)
 {

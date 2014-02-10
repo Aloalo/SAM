@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Texture2D.h"
+#include "Texture.h"
 #include "BufferObject.h"
 #include "Macros.h"
 #include <optix_world.h>
@@ -24,8 +24,8 @@ private:
 	GLenum glDataType;
 	GLenum glFormat;
 	GLenum glTextureFormat;
-	Texture2D tex;
-	BufferObject vbo;
+	reng::Texture tex;
+	reng::BufferObject vbo;
 
 	Setting<int> textureFilter;
 };

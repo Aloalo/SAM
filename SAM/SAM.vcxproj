@@ -38,13 +38,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ASSIMP_HOME)\include;$(DEVIL_HOME)\include;$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ASSIMP_HOME)\lib;$(DEVIL_HOME)\lib;$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ASSIMP_HOME)\include;$(DEVIL_HOME)\include;$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ASSIMP_HOME)\lib;$(DEVIL_HOME)\lib;$(GLEW_HOME)\lib;$(GLFW_HOME)\lib;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -64,7 +64,7 @@
       <CompileOut>..\SAM\ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
       <NvccCompilation>ptx</NvccCompilation>
       <FastMath>true</FastMath>
-      <Optimization>O3</Optimization>
+      <Optimization>Od</Optimization>
       <GPUDebugInfo>false</GPUDebugInfo>
     </CudaCompile>
   </ItemDefinitionGroup>
@@ -107,7 +107,7 @@
     <ClCompile Include="Labyrinth.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SAM.cpp" />
-    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="OptixTracer.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
@@ -121,9 +121,10 @@
     <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="lights.h" />
     <ClInclude Include="Macros.h" />
+    <ClInclude Include="phong.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Scene.h" />
+    <ClInclude Include="OptixTracer.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Utils.h" />
@@ -132,6 +133,7 @@
     <CudaCompile Include="box.cu" />
     <CudaCompile Include="rectangleAA.cu" />
     <CudaCompile Include="shaders.cu" />
+    <CudaCompile Include="triangle_mesh.cu" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GraphicsSettings.ini" />
