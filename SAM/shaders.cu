@@ -42,7 +42,7 @@ RT_PROGRAM void envmap_miss()
 	float theta = atan2f(ray.direction.x, ray.direction.z);
 	float phi = M_PIf * 0.5f - acosf(ray.direction.y);
 	float u = (theta + M_PIf) * (0.5f * M_1_PIf);
-	float v = 0.5f * (1.0f + sin(phi));
+	float v = 0.5f * (1.0f + sinf(phi));
 	prd_radiance.result = make_float3(tex2D(envmap, u, v));
 }
 
