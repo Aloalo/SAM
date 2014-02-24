@@ -1,11 +1,7 @@
-Fix:
-
--spotlight
-
 Opcenito:
 
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
--scene graph (reci optixu sta zelis)
+-scene graph
 -AA
 -bump/normal/displacement/parallax mapping?
 -transparent meshes

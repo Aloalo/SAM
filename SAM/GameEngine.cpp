@@ -88,7 +88,7 @@ void GameEngine::initDrawing()
 
 		if(scene == NULL)
 		{
-			lab.generateLabyrinth(150, 150);
+			lab.generateLabyrinth(15, 15);
 			tracer.createSceneGraph(lab);
 		}
 		else

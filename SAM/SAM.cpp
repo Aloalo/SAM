@@ -17,14 +17,14 @@ int main()
 	if(!scene)
 	{
 		printf("%s\n", importer.GetErrorString());
-		//return 0;
+		return 0;
 	}
 
 	Engine e(1. / 60., Environment::get().screenWidth, Environment::get().screenHeight);
 	Input input;
 
-	//GameEngine *ptr = new GameEngine(scene);
-	GameEngine *ptr = new GameEngine();
+	GameEngine *ptr = new GameEngine(scene);
+	//GameEngine *ptr = new GameEngine();
 
 	input.addInputObserver(ptr);
 	input.setMouseMoveCallback();
