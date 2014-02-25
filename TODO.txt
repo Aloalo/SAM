@@ -5,8 +5,10 @@ Opcenito:
 
 Grafika:
 -AA
+-transparent textures
 -normal/displacement/parallax mapping?
 -dof
+-motion blur
 -soft shadows
 -global illumination (path traceing)
 

@@ -12,7 +12,7 @@ using namespace reng;
 int main()
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(utils::modelPath + "demon1_OBJ.obj", aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* scene = importer.ReadFile(utils::modelPath + "sponza-crytek.obj", aiProcessPreset_TargetRealtime_MaxQuality);
 
 	if(!scene)
 	{

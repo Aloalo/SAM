@@ -88,9 +88,9 @@ void OptixTracer::initialize(unsigned int GLBO)
 	vector<BasicLight> lights;
 	
 	lights.push_back(BasicLight( //light0 - point light
-			make_float3(-5.0f, 60.0f, -16.0f), //pos/dir
+			make_float3(-5.0f, 180.0f, -16.0f), //pos/dir
 			make_float3(1.0f, 1.0f, 1.0f), //color
-			make_float3(1.0f, 0.01f, 0.0f), //attenuation
+			make_float3(1.0f, 0.0f, 0.0f), //attenuation
 			make_float3(1.0f, 0.0f, 0.0f), //spot_direction
 			360.0f, //spot_cutoff
 			0.0f, //spot_exponent
@@ -328,9 +328,9 @@ void OptixTracer::createSceneGraph(const aiScene *scene)
 		GeometryInstance inst = ctx->createGeometryInstance();
 		inst->setMaterialCount(1);
 		inst->setGeometry(gMesh);
-		//inst->setMaterial(0, material);
+		inst->setMaterial(0, material);
 		//inst->setMaterial(0, materials[MIRROR]);
-		inst->setMaterial(0, materials[GLASS]);
+		//inst->setMaterial(0, materials[GLASS]);
 
 		gis.push_back(inst);
 	}
