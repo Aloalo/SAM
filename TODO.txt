@@ -1,16 +1,16 @@
-Fix:
-
--spotlight
-
 Opcenito:
 
--EPIC REFACTOR (napraviti lako rukovanje klasama)
--scene graph (reci optixu sta zelis)
--AA
--bump/normal/displacement/parallax mapping?
--transparent meshes
+-EPIC REFACTOR (napraviti lako rukovanje klasama), scene graph
+-render to image
 
--fizika
+Grafika:
+-AA
+-normal/displacement/parallax mapping?
+-dof
+-soft shadows
+-global illumination (path traceing)
+
+Fizika:
 
 Rendering Engine:
 -input events
