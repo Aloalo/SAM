@@ -96,7 +96,7 @@
       <NvccCompilation>ptx</NvccCompilation>
       <Optimization>O3</Optimization>
       <FastMath>true</FastMath>
-      <CodeGeneration>compute_30,sm_30</CodeGeneration>
+      <CodeGeneration>compute_10,sm_10</CodeGeneration>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

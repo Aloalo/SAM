@@ -73,7 +73,7 @@ void OptixTracer::initialize(unsigned int GLBO)
 	ctx["miss_max"]->setFloat(0.8f, 0.8f, 0.8f);*/
 
 	ctx->setMissProgram(0, ctx->createProgramFromPTXFile(path, "envmap_miss"));
-	Texture tex = TextureHandler::getTexture(utils::texPath, std::string("eviorment.jpg"));
+	Texture tex = TextureHandler::getTexture(utils::texPath, std::string("environment.png"));
 	optix::TextureSampler sampler = ctx->createTextureSamplerFromGLImage(tex.getID(), RT_TARGET_GL_TEXTURE_2D);
 	sampler->setWrapMode(0, RT_WRAP_REPEAT);
 	sampler->setWrapMode(1, RT_WRAP_REPEAT);
@@ -328,7 +328,9 @@ void OptixTracer::createSceneGraph(const aiScene *scene)
 		GeometryInstance inst = ctx->createGeometryInstance();
 		inst->setMaterialCount(1);
 		inst->setGeometry(gMesh);
-		inst->setMaterial(0, material);
+		//inst->setMaterial(0, material);
+		//inst->setMaterial(0, materials[MIRROR]);
+		inst->setMaterial(0, materials[GLASS]);
 
 		gis.push_back(inst);
 	}
