@@ -106,6 +106,8 @@
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="InitialSettings.cpp" />
     <ClCompile Include="Labyrinth.cpp" />
+    <ClCompile Include="ObjectLoader.cpp" />
+    <ClCompile Include="OptixTextureHandler.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SAM.cpp" />
     <ClCompile Include="OptixTracer.cpp" />
@@ -122,6 +124,8 @@
     <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="lights.h" />
     <ClInclude Include="Macros.h" />
+    <ClInclude Include="ObjectLoader.h" />
+    <ClInclude Include="OptixTextureHandler.h" />
     <ClInclude Include="phong.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />

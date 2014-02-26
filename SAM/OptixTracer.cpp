@@ -11,7 +11,7 @@ using namespace std;
 
 OptixTracer::OptixTracer(void) :
 	SETTING(useInternalReflections), SETTING(castsShadows),
-	SETTING(useSchlick), SETTING(maxRayDepth)
+	SETTING(useSchlick), SETTING(maxRayDepth), texHandler(ctx)
 {
 }
 
@@ -73,7 +73,7 @@ void OptixTracer::initialize(unsigned int GLBO)
 	ctx["miss_max"]->setFloat(0.8f, 0.8f, 0.8f);*/
 
 	ctx->setMissProgram(0, ctx->createProgramFromPTXFile(path, "envmap_miss"));
-	Texture tex = TextureHandler::getTexture(utils::texPath, std::string("environment.png"));
+	Texture tex = TextureHandler::getTexture(utils::envPath + std::string("environment.png"));
 	optix::TextureSampler sampler = ctx->createTextureSamplerFromGLImage(tex.getID(), RT_TARGET_GL_TEXTURE_2D);
 	sampler->setWrapMode(0, RT_WRAP_REPEAT);
 	sampler->setWrapMode(1, RT_WRAP_REPEAT);
@@ -84,43 +84,35 @@ void OptixTracer::initialize(unsigned int GLBO)
 	sampler->setFilteringModes(RT_FILTER_LINEAR, RT_FILTER_LINEAR, RT_FILTER_NONE);
 	ctx["envmap"]->setTextureSampler(sampler);
 
-
-	vector<BasicLight> lights;
-	
-	lights.push_back(BasicLight( //light0 - point light
-			make_float3(-5.0f, 180.0f, -16.0f), //pos/dir
-			make_float3(1.0f, 1.0f, 1.0f), //color
-			make_float3(1.0f, 0.0f, 0.0f), //attenuation
-			make_float3(1.0f, 0.0f, 0.0f), //spot_direction
-			360.0f, //spot_cutoff
-			0.0f, //spot_exponent
-			1, //casts_shadows
-			0 //is_directional
+	lights.push_back(BasicLight(//light0 - point light
+		make_float3(-5.0f, 180.0f, -16.0f), //pos/dir
+		make_float3(1.0f, 1.0f, 1.0f), //color
+		make_float3(1.0f, 0.0f, 0.0f), //attenuation
+		make_float3(1.0f, 0.0f, 0.0f), //spot_direction
+		360.0f, //spot_cutoff
+		0.0f, //spot_exponent
+		1, //casts_shadows
+		0 //is_directional
 		));
 
-	Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT_OUTPUT);
-	lightBuffer->setFormat(RT_FORMAT_USER);
-	lightBuffer->setElementSize(sizeof(BasicLight));
-	lightBuffer->setSize(lights.size());
-	memcpy(lightBuffer->map(), (const void*)lights.data(), lights.size() * sizeof(BasicLight));
-	lightBuffer->unmap();
+	std::string mainPath(pathToPTX("shaders.cu"));
+	std::string meshPath(pathToPTX("triangle_mesh.cu"));
 
-	ctx["lights"]->setBuffer(lightBuffer);
-
+	anyHitSolid = ctx->createProgramFromPTXFile(mainPath, "any_hit_solid");
+	closestHitSolid = ctx->createProgramFromPTXFile(mainPath, "closest_hit_phong");
+	closestHitGlass = ctx->createProgramFromPTXFile(mainPath, "closest_hit_glass");
+	anyHitGlass = ctx->createProgramFromPTXFile(mainPath, "any_hit_shadow_glass");
+	meshBoundingBox = ctx->createProgramFromPTXFile(meshPath, "mesh_bounds");
+	meshIntersect = ctx->createProgramFromPTXFile(meshPath, "mesh_intersect");
+	closestHitMesh = ctx->createProgramFromPTXFile(mainPath, "closest_hit_mesh");
 	createMaterials();
 }
 
 void OptixTracer::createMaterials()
 {
-	std::string mainPath(pathToPTX("shaders.cu"));
-	Program phongClosestHit = ctx->createProgramFromPTXFile(mainPath, "closest_hit_phong");
-	Program shadowAnyHit = ctx->createProgramFromPTXFile(mainPath, "any_hit_solid");
-	Program glassAnyHit = ctx->createProgramFromPTXFile(mainPath, "any_hit_shadow_glass");
-	Program glassClosestHit = ctx->createProgramFromPTXFile(mainPath, "closest_hit_glass");
-
 	Material wallMaterial = ctx->createMaterial();
-	wallMaterial->setClosestHitProgram(0, phongClosestHit);
-	wallMaterial->setAnyHitProgram(1, shadowAnyHit);
+	wallMaterial->setClosestHitProgram(0, closestHitSolid);
+	wallMaterial->setAnyHitProgram(1, anyHitSolid);
 
 	wallMaterial["Ka"]->setFloat(0.8f, 0.8f, 0.8f);
 	wallMaterial["Kd"]->setFloat(0.8f, 0.8f, 0.8f);
@@ -132,8 +124,8 @@ void OptixTracer::createMaterials()
 
 
 	Material mirrorMaterial = ctx->createMaterial();
-	mirrorMaterial->setClosestHitProgram(0, phongClosestHit);
-	mirrorMaterial->setAnyHitProgram(1, shadowAnyHit);
+	mirrorMaterial->setClosestHitProgram(0, closestHitSolid);
+	mirrorMaterial->setAnyHitProgram(1, anyHitSolid);
 
 	mirrorMaterial["Ka"]->setFloat(0.3f, 0.3f, 0.3f);
 	mirrorMaterial["Kd"]->setFloat(0.7f, 0.7f, 0.7f);
@@ -143,8 +135,8 @@ void OptixTracer::createMaterials()
 
 	materials[MIRROR] = mirrorMaterial;
 	Material glassMaterial = ctx->createMaterial();
-	glassMaterial->setClosestHitProgram(0, glassClosestHit);
-	glassMaterial->setAnyHitProgram(1, glassAnyHit);
+	glassMaterial->setClosestHitProgram(0, closestHitGlass);
+	glassMaterial->setAnyHitProgram(1, anyHitGlass);
 
 	glassMaterial["importance_cutoff"]->setFloat(1e-2f);
 	glassMaterial["cutoff_color"]->setFloat(0.55f, 0.55f, 0.55f);
@@ -161,13 +153,12 @@ void OptixTracer::createMaterials()
 	materials[GLASS] = glassMaterial;
 }
 
-void OptixTracer::createSceneGraph(const Labyrinth &lab)
+void OptixTracer::addMesh(const Labyrinth &lab)
 {
 	std::string pathBox = pathToPTX("box.cu");
 	Program boxIntersect = ctx->createProgramFromPTXFile(pathBox, "box_intersect");
 	Program boxAABB = ctx->createProgramFromPTXFile(pathBox, "box_bounds");
 
-	vector<GeometryInstance> gis;
 	const vector<Box> &walls = lab.getWalls();
 	int n = walls.size();
 	for(int i = 0; i < n; ++i)
@@ -194,17 +185,17 @@ void OptixTracer::createSceneGraph(const Labyrinth &lab)
 
 	gis.push_back(ctx->createGeometryInstance(floor, &materials[FLOOR], &materials[FLOOR]+1));
 
-	// Place all in group
-	GeometryGroup geometrygroup = ctx->createGeometryGroup();
-	geometrygroup->setChildCount(gis.size());
-	for(int i = 0; i < gis.size(); ++i)
-		geometrygroup->setChild(i, gis[i]);
-	geometrygroup->setAcceleration(ctx->createAcceleration("Sbvh", "Bvh"));
-	//geometrygroup->setAcceleration(ctx->createAcceleration("NoAccel", "NoAccel"));
+	//// Place all in group
+	//GeometryGroup geometrygroup = ctx->createGeometryGroup();
+	//geometrygroup->setChildCount(gis.size());
+	//for(int i = 0; i < gis.size(); ++i)
+	//	geometrygroup->setChild(i, gis[i]);
+	//geometrygroup->setAcceleration(ctx->createAcceleration("Sbvh", "Bvh"));
+	////geometrygroup->setAcceleration(ctx->createAcceleration("NoAccel", "NoAccel"));
 
-	ctx["top_object"]->set(geometrygroup);
+	//ctx["top_object"]->set(geometrygroup);
 
-	ctx->validate();
+	//ctx->validate();
 }
 
 template<class T>
@@ -218,122 +209,99 @@ Buffer OptixTracer::getBufferFromVector(const vector<T> &vec, RTformat type)
 	return ret;
 }
 
-optix::TextureSampler OptixTracer::getTexture(const aiMaterial *mat, aiTextureType type)
+string OptixTracer::getTextureName(const aiMaterial *mat, aiTextureType type)
 {
-	Texture ret;
-	string name;
-	if(mat->GetTextureCount(type) > 0)
-	{
-		aiString name;
-		if(mat->GetTexture(type, 0, &name, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) 
-			ret = TextureHandler::getTexture(utils::texPath, name.C_Str());
-	}
-	else
-	{
-		bool ok = !TextureHandler::hasTexture("emptyTex");
-		ret = TextureHandler::getTexture("emptyTex", GL_TEXTURE_2D);
-		if(ok)
-		{
-			float data[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-			ret.bind();
-			ret.texImage(0, GL_RGBA32F_ARB, vec3(1, 1, 0), GL_RGBA, GL_FLOAT, data);
-		}
-	}
-
-	if(textures.find(ret.getID()) == textures.end())
-	{
-		optix::TextureSampler sampler = ctx->createTextureSamplerFromGLImage(ret.getID(), RT_TARGET_GL_TEXTURE_2D);
-		sampler->setWrapMode(0, RT_WRAP_REPEAT);
-		sampler->setWrapMode(1, RT_WRAP_REPEAT);
-		sampler->setWrapMode(2, RT_WRAP_REPEAT);
-		sampler->setIndexingMode(RT_TEXTURE_INDEX_NORMALIZED_COORDINATES);
-		sampler->setReadMode(RT_TEXTURE_READ_NORMALIZED_FLOAT);
-		sampler->setMaxAnisotropy(1.0f);
-		sampler->setFilteringModes(RT_FILTER_LINEAR, RT_FILTER_LINEAR, RT_FILTER_NONE);
-		textures[ret.getID()] = sampler;
-	}
-
-	return textures[ret.getID()];
+	aiString name;
+	mat->GetTexture(type, 0, &name, NULL, NULL, NULL, NULL, NULL);
+	return string(name.C_Str());
 }
 
-void OptixTracer::createSceneGraph(const aiScene *scene)
+void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMaterial *mat)
 {
-	std::string pathMesh = pathToPTX("triangle_mesh.cu");
-	Program intersection = ctx->createProgramFromPTXFile(pathMesh, "mesh_intersect");
-	Program meshAABB = ctx->createProgramFromPTXFile(pathMesh, "mesh_bounds");
+	vector<int3> indices;
+	for(int i = 0; i < mesh->mNumFaces; ++i)
+		indices.push_back(make_int3(mesh->mFaces[i].mIndices[0], mesh->mFaces[i].mIndices[1], mesh->mFaces[i].mIndices[2]));
 
-	std::string pathShaders = pathToPTX("shaders.cu");
-	Program closestHit = ctx->createProgramFromPTXFile(pathShaders, "closest_hit_mesh");
-	Program anyHit = ctx->createProgramFromPTXFile(pathShaders, "any_hit_solid");
+	vector<float3> vertexData;
+	vector<float3> normalData;
+	vector<float2> uvData;
 
-	vector<GeometryInstance> gis;
-
-	for(int k = 0; k < scene->mNumMeshes; ++k)
+	for(int i = 0; i < mesh->mNumVertices; ++i)
 	{
-		const aiMesh *mesh = scene->mMeshes[k];
-		vector<int3> indices;
-		for(int i = 0; i < mesh->mNumFaces; ++i)
-			indices.push_back(make_int3(mesh->mFaces[i].mIndices[0], mesh->mFaces[i].mIndices[1], mesh->mFaces[i].mIndices[2]));
-
-		vector<float3> vertexData;
-		vector<float3> normalData;
-		vector<float2> uvData;
-
-		for(int i = 0; i < mesh->mNumVertices; ++i)
-		{
-			vertexData.push_back(make_float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
-			normalData.push_back(make_float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
-			if(mesh->HasTextureCoords(0))
-				uvData.push_back(make_float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
-		}
-		if(uvData.empty())
-			uvData = vector<float2>(mesh->mNumVertices, make_float2(0.0f));
-
-		Geometry gMesh = ctx->createGeometry();
-		gMesh->setPrimitiveCount(indices.size());
-		gMesh->setBoundingBoxProgram(meshAABB);
-		gMesh->setIntersectionProgram(intersection);
-
-		gMesh["vertex_buffer"]->setBuffer(getBufferFromVector(vertexData, RT_FORMAT_FLOAT3));
-		gMesh["normal_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
-		gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
-		gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
-
-		Material material = ctx->createMaterial();
-		material->setClosestHitProgram(0, closestHit);
-		material->setAnyHitProgram(1, anyHit);
-
-		const aiMaterial *mat = scene->mMaterials[mesh->mMaterialIndex];
-		aiColor3D color;
-		mat->Get(AI_MATKEY_COLOR_AMBIENT, color);
-		material["Ka"]->setFloat(make_float3(color.r, color.g, color.b));
-
-		mat->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-		material["Kd"]->setFloat(make_float3(color.r, color.g, color.b));
-
-		mat->Get(AI_MATKEY_COLOR_SPECULAR, color);
-		material["Ks"]->setFloat(make_float3(color.r, color.g, color.b));
-
-		mat->Get(AI_MATKEY_COLOR_REFLECTIVE, color);
-		material["reflectivity"]->setFloat(make_float3(color.r, color.g, color.b));
-
-		float phongexp;
-		mat->Get(AI_MATKEY_SHININESS, phongexp);
-		material["phong_exp"]->setFloat(phongexp);
-
-		material["ambient_map"]->setTextureSampler(getTexture(mat, aiTextureType_AMBIENT));
-		material["diffuse_map"]->setTextureSampler(getTexture(mat, aiTextureType_DIFFUSE));
-		material["specular_map"]->setTextureSampler(getTexture(mat, aiTextureType_SPECULAR));
-
-		GeometryInstance inst = ctx->createGeometryInstance();
-		inst->setMaterialCount(1);
-		inst->setGeometry(gMesh);
-		inst->setMaterial(0, material);
-		//inst->setMaterial(0, materials[MIRROR]);
-		//inst->setMaterial(0, materials[GLASS]);
-
-		gis.push_back(inst);
+		vertexData.push_back(make_float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
+		normalData.push_back(make_float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
+		if(mesh->HasTextureCoords(0))
+			uvData.push_back(make_float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
 	}
+	if(uvData.empty())
+		uvData = vector<float2>(mesh->mNumVertices, make_float2(0.0f));
+
+	Geometry gMesh = ctx->createGeometry();
+	gMesh->setPrimitiveCount(indices.size());
+	gMesh->setBoundingBoxProgram(meshBoundingBox);
+	gMesh->setIntersectionProgram(meshIntersect);
+
+	gMesh["vertex_buffer"]->setBuffer(getBufferFromVector(vertexData, RT_FORMAT_FLOAT3));
+	gMesh["normal_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
+	gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
+	gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
+
+	Material material = ctx->createMaterial();
+	material->setClosestHitProgram(0, closestHitMesh);
+	material->setAnyHitProgram(1, anyHitSolid);
+
+	aiColor3D color;
+	mat->Get(AI_MATKEY_COLOR_AMBIENT, color);
+	material["Ka"]->setFloat(make_float3(color.r, color.g, color.b));
+
+	mat->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+	material["Kd"]->setFloat(make_float3(color.r, color.g, color.b));
+
+	mat->Get(AI_MATKEY_COLOR_SPECULAR, color);
+	material["Ks"]->setFloat(make_float3(color.r, color.g, color.b));
+
+	mat->Get(AI_MATKEY_COLOR_REFLECTIVE, color);
+	material["reflectivity"]->setFloat(make_float3(color.r, color.g, color.b));
+
+	float phongexp;
+	mat->Get(AI_MATKEY_SHININESS, phongexp);
+	material["phong_exp"]->setFloat(phongexp);
+	
+	material["ambient_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_AMBIENT)));
+	material["diffuse_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_DIFFUSE)));
+	material["specular_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_SPECULAR)));
+
+	GeometryInstance inst = ctx->createGeometryInstance();
+	inst->setMaterialCount(1);
+	inst->setGeometry(gMesh);
+	inst->setMaterial(0, material);
+	//inst->setMaterial(0, materials[MIRROR]);
+	//inst->setMaterial(0, materials[GLASS]);
+
+	gis.push_back(inst);
+}
+
+void OptixTracer::addScene(const std::string &path, const aiScene *scene)
+{
+	for(int i = 0; i < scene->mNumMeshes; ++i)
+		addMesh(path, scene->mMeshes[i], scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
+}
+
+void OptixTracer::addLight(const BasicLight &light)
+{
+	lights.push_back(light);
+}
+
+void OptixTracer::compileSceneGraph()
+{
+	Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT_OUTPUT);
+	lightBuffer->setFormat(RT_FORMAT_USER);
+	lightBuffer->setElementSize(sizeof(BasicLight));
+	lightBuffer->setSize(lights.size());
+	memcpy(lightBuffer->map(), (const void*)lights.data(), lights.size() * sizeof(BasicLight));
+	lightBuffer->unmap();
+
+	ctx["lights"]->setBuffer(lightBuffer);
 
 	GeometryGroup geometrygroup = ctx->createGeometryGroup();
 	geometrygroup->setChildCount(gis.size());

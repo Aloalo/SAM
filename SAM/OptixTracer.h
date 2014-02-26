@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Macros.h"
-#include <optix_world.h>
+#include "OptixTextureHandler.h"
 #include <map>
 #include <assimp/scene.h>
 #include <Camera.h>
@@ -18,8 +17,12 @@ public:
 
 	void initialize(unsigned int GLBO);
 
-	void createSceneGraph(const Labyrinth &lab);
-	void createSceneGraph(const aiScene *scene);
+	void addMesh(const Labyrinth &lab);
+	void addMesh(const std::string &path, const aiMesh *mesh, const aiMaterial *mat);
+	void addLight(const BasicLight &light);
+	void addScene(const std::string &path, const aiScene * scene);
+
+	void compileSceneGraph();
 
 	void trace();
 	optix::Buffer getBuffer();
@@ -30,11 +33,24 @@ public:
 private:
 	template<class T>
 	optix::Buffer getBufferFromVector(const std::vector<T> &vec, RTformat type);
-	optix::TextureSampler getTexture(const aiMaterial *mat, aiTextureType type);
+
+	std::string getTextureName(const aiMaterial *mat, aiTextureType type); // TODO: maknut
 
 	void createMaterials();
-	std::map<int, optix::Material> materials;
-	std::map<int, optix::TextureSampler> textures;
+	std::map<int, optix::Material> materials; // TODO: maknut
+
+	optix::Program anyHitSolid;
+	optix::Program closestHitSolid;
+	optix::Program closestHitMesh;
+	optix::Program closestHitGlass;
+	optix::Program anyHitGlass;
+	optix::Program meshBoundingBox;
+	optix::Program meshIntersect;
+
+	std::vector<optix::GeometryInstance> gis;
+	std::vector<BasicLight> lights;
+
+	OptixTextureHandler texHandler;
 
 	Setting<int> maxRayDepth;
 	Setting<int> castsShadows;

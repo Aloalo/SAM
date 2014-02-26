@@ -11,7 +11,7 @@ class GameEngine :
 	public reng::UnLitObject, public reng::Updateable, public reng::InputObserver
 {
 public:
-	GameEngine(const aiScene *scene = NULL);
+	GameEngine(void);
 	~GameEngine(void);
 
 	void keyPress(int key, int scancode, int action, int mods);
@@ -25,9 +25,8 @@ public:
 
 	void generateLabyrinth(int width, int height);
 
-private:
-	const aiScene *scene;
 	OptixTracer tracer;
+private:
 	BufferDrawer drawer;
 	Player *player;
 	Labyrinth lab;

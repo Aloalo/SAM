@@ -12,7 +12,7 @@ using namespace reng;
 int main()
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(utils::modelPath + "sponza-crytek.obj", aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* scene = importer.ReadFile(utils::resPath + "crytek-sponza/sponza.obj", aiProcessPreset_TargetRealtime_MaxQuality);
 
 	if(!scene)
 	{
@@ -23,8 +23,8 @@ int main()
 	Engine e(1. / 60., Environment::get().screenWidth, Environment::get().screenHeight);
 	Input input;
 
-	GameEngine *ptr = new GameEngine(scene);
-	//GameEngine *ptr = new GameEngine();
+	GameEngine *ptr = new GameEngine();
+	ptr->tracer.addScene(utils::resPath + "crytek-sponza/", scene);
 
 	input.addInputObserver(ptr);
 	input.setMouseMoveCallback();

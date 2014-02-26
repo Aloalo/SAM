@@ -61,7 +61,6 @@ static __device__ __inline__ void phongShade(float3 p_Ka,
 				float clampedCosine = max(0.0f, dot(-L, light.spot_direction));
 				float cutoffRadians = light.spot_cutoff * pi / 180.0f;
 				
-			//MASIVNO SE RUSI!!!!
 				if(clampedCosine < cosf(cutoffRadians)) // outside of spotlight cone?
 					attenuation = 0.0f;
 				else

@@ -7,7 +7,7 @@ using namespace glm;
 using namespace reng;
 
 BufferDrawer::BufferDrawer(void)
-	: tex(TextureHandler::getTexture("buffer", GL_TEXTURE_2D)), vbo(GL_ARRAY_BUFFER, GL_STREAM_DRAW), SETTING(textureFilter)
+	: tex(TextureHandler::genTexture("buffer", GL_TEXTURE_2D)), vbo(GL_ARRAY_BUFFER, GL_STREAM_DRAW), SETTING(textureFilter)
 {
 	glDataType = GL_FLOAT;
 	glFormat = GL_RGBA;
