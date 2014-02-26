@@ -1,9 +1,8 @@
 #include "InitialSettings.h"
-#include "macros.h"
+#include "SafeOptix.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <optix_world.h>
 #include <GL/glew.h>
 
 using namespace std;

@@ -7,6 +7,16 @@ namespace utils
 		return ptxPath + filename + ".ptx";
 	}
 
+	std::string defTexture(const std::string &name)
+	{
+		return "../DefaultTextures/" + name;
+	}
+
+	std::string resource(const std::string &name)
+	{
+		return "../Resources/" + name;
+	}
+
 	bool equals(const float3 &x, const float3 &y)
 	{
 		return abs(x.x - y.x) < eps && abs(x.y - y.y) < eps && abs(x.z - y.z) < eps;

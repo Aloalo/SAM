@@ -59,7 +59,9 @@ void GameEngine::keyPress(int key, int scancode, int action, int mods)
 		if(action != GLFW_RELEASE)
 		{
 			lab.generateLabyrinth(lab.getWidth(), lab.getHeight());
-			//tracer.createSceneGraph(lab); //TODO
+			tracer.clearSceneGraph();
+			tracer.addMesh(lab);
+			tracer.compileSceneGraph();
 		}
 		break;
 	}
@@ -76,8 +78,18 @@ void GameEngine::windowResize(int width, int height)
 
 void GameEngine::update(float deltaTime)
 {
-	player->update(deltaTime);
+	static float angle = 0.0f;
+	angle += 0.02f;
 
+	tracer.getLight(0).pos.x = sinf(angle) * 200.0f;
+	tracer.getLight(0).pos.y = cosf(angle) * 200.0f + 400.0f;
+
+	tracer.getLight(0).pos.x = sinf(angle) * 200.0f;
+	tracer.getLight(0).pos.z = cosf(angle) * 200.0f;
+
+	tracer.updateLight(0);
+
+	player->update(deltaTime);
 	tracer.setCamera(player->getCam());
 }
 

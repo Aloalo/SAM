@@ -19,17 +19,22 @@ public:
 
 	void addMesh(const Labyrinth &lab);
 	void addMesh(const std::string &path, const aiMesh *mesh, const aiMaterial *mat);
+	void addMesh(utils::Materials mat, const aiMesh *mesh);
 	void addLight(const BasicLight &light);
 	void addScene(const std::string &path, const aiScene * scene);
+	void addScene(utils::Materials mat, const aiScene * scene);
 
 	void compileSceneGraph();
-
+	void clearSceneGraph();
 	void trace();
+
+	BasicLight& getLight(int i);
+	void updateLight(int idx);
+
 	optix::Buffer getBuffer();
 	void setBufferSize(int w, int h);
 	void setCamera(const reng::Camera &cam);
 
-	optix::Context ctx;
 private:
 	template<class T>
 	optix::Buffer getBufferFromVector(const std::vector<T> &vec, RTformat type);
@@ -38,15 +43,8 @@ private:
 
 	void createMaterials();
 	std::map<int, optix::Material> materials; // TODO: maknut
-
-	optix::Program anyHitSolid;
-	optix::Program closestHitSolid;
-	optix::Program closestHitMesh;
-	optix::Program closestHitGlass;
-	optix::Program anyHitGlass;
-	optix::Program meshBoundingBox;
-	optix::Program meshIntersect;
-
+	
+	optix::Context ctx;
 	std::vector<optix::GeometryInstance> gis;
 	std::vector<BasicLight> lights;
 

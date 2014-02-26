@@ -9,9 +9,9 @@ namespace utils
 {
 	const float eps = 1e-3f;
 	const float pi = 3.1415926;
-	const std::string resPath = "../Resources/";
-	const std::string envPath = "../Resources/envMaps/";
 	const std::string ptxPath = "../SAM/ptxfiles/";
+	std::string defTexture(const std::string &name);
+	std::string resource(const std::string &name);
 
 	enum Materials
 	{

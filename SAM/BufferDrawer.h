@@ -2,8 +2,7 @@
 
 #include "Texture.h"
 #include "BufferObject.h"
-#include "Macros.h"
-#include <optix_world.h>
+#include "SafeOptix.h"
 #include "Setting.h"
 
 /*

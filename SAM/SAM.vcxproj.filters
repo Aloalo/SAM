@@ -57,10 +57,10 @@
     <ClCompile Include="OptixTracer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectLoader.cpp">
+    <ClCompile Include="OptixTextureHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OptixTextureHandler.cpp">
+    <ClCompile Include="Programs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -72,9 +72,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -113,10 +110,16 @@
     <ClInclude Include="phong.h">
       <Filter>CUDA Files</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectLoader.h">
+    <ClInclude Include="OptixTextureHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OptixTextureHandler.h">
+    <ClInclude Include="SafeOptix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Programs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

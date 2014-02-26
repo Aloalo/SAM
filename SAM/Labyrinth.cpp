@@ -7,6 +7,7 @@ using namespace utils;
 using namespace optix;
 
 Labyrinth::Labyrinth(void)
+	: width(15), height(15)
 {
 	setWallSize(4.3f, 7.5f, 0.15f);
 }

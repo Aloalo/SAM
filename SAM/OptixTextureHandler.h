@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Macros.h"
+#include "SafeOptix.h"
 #include <map>
-#include <optix_world.h>
+#include "Utils.h"
 
 class OptixTextureHandler
 {
@@ -10,7 +10,7 @@ public:
 	OptixTextureHandler(optix::Context &ctx);
 	~OptixTextureHandler(void);
 	
-	optix::TextureSampler get(const std::string &path, const std::string &def = "../Resources/error.png");
+	optix::TextureSampler get(const std::string &path, const std::string &def = utils::defTexture("error.png"));
 
 private:
 
