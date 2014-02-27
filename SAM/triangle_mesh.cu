@@ -50,7 +50,6 @@ RT_PROGRAM void mesh_intersect(int primIdx)
 				float2 t2 = texcoord_buffer[idx.z];
 				texcoord = make_float3(t1 * beta + t2 * gamma + t0 * (1.0f - beta - gamma));
 			}
-			//rtReportIntersection(material_buffer[primIdx]);
 			rtReportIntersection(0);
 		}
 	}

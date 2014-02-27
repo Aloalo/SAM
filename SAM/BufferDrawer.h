@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Texture.h"
-#include "BufferObject.h"
+#include <Texture.h>
+#include <BufferObject.h>
 #include "SafeOptix.h"
 #include "Setting.h"
 
@@ -17,7 +17,7 @@ public:
 	
 	unsigned int createGLBuffer();
 	void init(const optix::Buffer &buffer);
-	void draw(optix::Buffer &buffer);
+	void draw(optix::Buffer &buffer) const;
 
 private:
 	GLenum glDataType;

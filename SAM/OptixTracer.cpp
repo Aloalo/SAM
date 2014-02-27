@@ -12,7 +12,7 @@ using namespace std;
 
 OptixTracer::OptixTracer(void) :
 	SETTING(useInternalReflections), SETTING(castsShadows),
-	SETTING(useSchlick), SETTING(maxRayDepth), texHandler(ctx)
+	SETTING(useSchlick), SETTING(maxRayDepth), matHandler(ctx)
 {
 }
 
@@ -47,7 +47,7 @@ void OptixTracer::initialize(unsigned int GLBO)
 
 	ctx["radiance_ray_type"]->setUint(0);
 	ctx["shadow_ray_type"]->setUint(1);
-	ctx["scene_epsilon"]->setFloat(1.e-3f);
+	ctx["scene_epsilon"]->setFloat(1.e-2f);
 	ctx["importance_cutoff"]->setFloat(0.01f);
 	ctx["ambient_light_color"]->setFloat(0.3f, 0.3f, 0.3f);
 
@@ -61,7 +61,6 @@ void OptixTracer::initialize(unsigned int GLBO)
 	buff->setSize(Environment::get().bufferWidth, Environment::get().bufferHeight);
 	ctx["output_buffer"]->setBuffer(buff);
 
-	
 	Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT_OUTPUT);
 	lightBuffer->setFormat(RT_FORMAT_USER);
 	lightBuffer->setElementSize(sizeof(BasicLight));
@@ -86,52 +85,7 @@ void OptixTracer::initialize(unsigned int GLBO)
 	sampler->setFilteringModes(RT_FILTER_LINEAR, RT_FILTER_LINEAR, RT_FILTER_NONE);
 	ctx["envmap"]->setTextureSampler(sampler);
 
-	createMaterials();
-}
-
-void OptixTracer::createMaterials()
-{
-	Material wallMaterial = ctx->createMaterial();
-	wallMaterial->setClosestHitProgram(0, Programs::closestHitSolid);
-	wallMaterial->setAnyHitProgram(1, Programs::anyHitSolid);
-
-	wallMaterial["Ka"]->setFloat(0.8f, 0.8f, 0.8f);
-	wallMaterial["Kd"]->setFloat(0.8f, 0.8f, 0.8f);
-	wallMaterial["Ks"]->setFloat(0.8f, 0.8f, 0.8f);
-	wallMaterial["phong_exp"]->setFloat(88.0f);
-
-	materials[WALL] = wallMaterial;
-	materials[FLOOR] = wallMaterial;
-
-
-	Material mirrorMaterial = ctx->createMaterial();
-	mirrorMaterial->setClosestHitProgram(0, Programs::closestHitSolid);
-	mirrorMaterial->setAnyHitProgram(1, Programs::anyHitSolid);
-
-	mirrorMaterial["Ka"]->setFloat(0.3f, 0.3f, 0.3f);
-	mirrorMaterial["Kd"]->setFloat(0.7f, 0.7f, 0.7f);
-	mirrorMaterial["Ks"]->setFloat(0.8f, 0.8f, 0.8f);
-	mirrorMaterial["phong_exp"]->setFloat(88.0f);
-	mirrorMaterial["reflectivity"]->setFloat(0.7f, 0.7f, 0.7f);
-
-	materials[MIRROR] = mirrorMaterial;
-	Material glassMaterial = ctx->createMaterial();
-	glassMaterial->setClosestHitProgram(0, Programs::closestHitGlass);
-	glassMaterial->setAnyHitProgram(1, Programs::anyHitGlass);
-
-	glassMaterial["importance_cutoff"]->setFloat(1e-2f);
-	glassMaterial["cutoff_color"]->setFloat(0.55f, 0.55f, 0.55f);
-	glassMaterial["fresnel_exponent"]->setFloat(3.0f);
-	glassMaterial["fresnel_minimum"]->setFloat(0.1f);
-	glassMaterial["fresnel_maximum"]->setFloat(1.0f);
-	glassMaterial["refraction_index"]->setFloat(1.4f);
-	glassMaterial["refraction_color"]->setFloat(1.0f, 1.0f, 1.0f);
-	glassMaterial["reflection_color"]->setFloat(1.0f, 1.0f, 1.0f);
-	float3 extinction = make_float3(.80f, .80f, .80f);
-	glassMaterial["extinction_constant"]->setFloat(log(extinction.x), log(extinction.y), log(extinction.z));
-	glassMaterial["shadow_attenuation"]->setFloat(0.4f, 0.4f, 0.4f);
-
-	materials[GLASS] = glassMaterial;
+	matHandler.createLabMaterials();
 }
 
 void OptixTracer::addMesh(const Labyrinth &lab)
@@ -146,7 +100,8 @@ void OptixTracer::addMesh(const Labyrinth &lab)
 		box->setIntersectionProgram(Programs::boxIntersect);
 		box["boxmin"]->setFloat(walls[i].boxmin);
 		box["boxmax"]->setFloat(walls[i].boxmax);
-		gis.push_back(ctx->createGeometryInstance(box, &materials[walls[i].matIdx], &materials[walls[i].matIdx]+1));
+		gis.push_back(ctx->createGeometryInstance(box, &matHandler.getLabyrinthMaterial(walls[i].matIdx), 
+			&matHandler.getLabyrinthMaterial(walls[i].matIdx)+1));
 	}
 
 	std::string pathFloor = pathToPTX("rectangleAA.cu"); //TODO: texture floor
@@ -160,7 +115,7 @@ void OptixTracer::addMesh(const Labyrinth &lab)
 	floor["recmin"]->setFloat(-rw / 2.0f, 0.0f, -rh / 2.0f);
 	floor["recmax"]->setFloat(rw / 2.0f, 0.0f, rh / 2.0f);
 
-	gis.push_back(ctx->createGeometryInstance(floor, &materials[FLOOR], &materials[FLOOR]+1));
+	gis.push_back(ctx->createGeometryInstance(floor, &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL), &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL)+1));
 }
 
 template<class T>
@@ -172,13 +127,6 @@ Buffer OptixTracer::getBufferFromVector(const vector<T> &vec, RTformat type)
 	memcpy(static_cast<void*>(ret->map()), (const void*)vec.data(), vec.size() * sizeof(T));
 	ret->unmap();
 	return ret;
-}
-
-string OptixTracer::getTextureName(const aiMaterial *mat, aiTextureType type)
-{
-	aiString name;
-	mat->GetTexture(type, 0, &name, NULL, NULL, NULL, NULL, NULL);
-	return string(name.C_Str());
 }
 
 void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMaterial *mat)
@@ -211,42 +159,17 @@ void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMateri
 	gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
 	gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
 
-	Material material = ctx->createMaterial();
-	material->setClosestHitProgram(0, Programs::closestHitMesh);
-	material->setAnyHitProgram(1, Programs::anyHitSolid);
-
-	aiColor3D color;
-	mat->Get(AI_MATKEY_COLOR_AMBIENT, color);
-	material["Ka"]->setFloat(make_float3(color.r, color.g, color.b));
-
-	mat->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-	material["Kd"]->setFloat(make_float3(color.r, color.g, color.b));
-
-	mat->Get(AI_MATKEY_COLOR_SPECULAR, color);
-	material["Ks"]->setFloat(make_float3(color.r, color.g, color.b));
-
-	mat->Get(AI_MATKEY_COLOR_REFLECTIVE, color);
-	material["reflectivity"]->setFloat(make_float3(color.r, color.g, color.b));
-
-	float phongexp;
-	mat->Get(AI_MATKEY_SHININESS, phongexp);
-	material["phong_exp"]->setFloat(phongexp);
+	Material material = matHandler.createMaterial(path, mat);
 	
-	material["ambient_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_AMBIENT), defTexture("ambDefault.png")));
-	material["diffuse_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_DIFFUSE), defTexture("diffDefault.png")));
-	material["specular_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_SPECULAR), defTexture("specDefault.png")));
-
 	GeometryInstance inst = ctx->createGeometryInstance();
 	inst->setMaterialCount(1);
 	inst->setGeometry(gMesh);
 	inst->setMaterial(0, material);
-	//inst->setMaterial(0, materials[MIRROR]);
-	//inst->setMaterial(0, materials[GLASS]);
 
 	gis.push_back(inst);
 }
 
-void OptixTracer::addMesh(utils::Materials mat, const aiMesh *mesh)
+void OptixTracer::addMesh(int mat, const aiMesh *mesh)
 {
 	vector<int3> indices;
 	for(int i = 0; i < mesh->mNumFaces; ++i)
@@ -279,7 +202,7 @@ void OptixTracer::addMesh(utils::Materials mat, const aiMesh *mesh)
 	GeometryInstance inst = ctx->createGeometryInstance();
 	inst->setMaterialCount(1);
 	inst->setGeometry(gMesh);
-	inst->setMaterial(0, materials[mat]);
+	inst->setMaterial(0, matHandler.getLabyrinthMaterial(mat));
 
 	gis.push_back(inst);
 }
@@ -290,7 +213,7 @@ void OptixTracer::addScene(const std::string &path, const aiScene *scene)
 		addMesh(path, scene->mMeshes[i], scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
 }
 
-void OptixTracer::addScene(utils::Materials mat, const aiScene * scene)
+void OptixTracer::addScene(int mat, const aiScene * scene)
 {
 	for(int i = 0; i < scene->mNumMeshes; ++i)
 		addMesh(mat, scene->mMeshes[i]);

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Camera.h"
+#include <Camera.h>
 #include <glm/glm.hpp>
-#include "CameraHandler.h"
+#include <CameraHandler.h>
 
 class Player :
 	public reng::InputObserver, public reng::Updateable

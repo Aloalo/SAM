@@ -45,12 +45,6 @@
     <ClCompile Include="Labyrinth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Settings.cpp">
-      <Filter>Source Files\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="Environment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InitialSettings.cpp">
       <Filter>Source Files\Settings</Filter>
     </ClCompile>
@@ -61,6 +55,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Programs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment.cpp">
+      <Filter>Source Files\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,20 +86,11 @@
     <ClInclude Include="lights.h">
       <Filter>CUDA Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Labyrinth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Settings.h">
-      <Filter>Header Files\Settings</Filter>
-    </ClInclude>
     <ClInclude Include="Setting.h">
       <Filter>Header Files\Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="Environment.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InitialSettings.h">
       <Filter>Header Files\Settings</Filter>
@@ -122,6 +113,12 @@
     <ClInclude Include="Programs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Environment.h">
+      <Filter>Header Files\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="box.cu">
@@ -130,10 +127,13 @@
     <CudaCompile Include="rectangleAA.cu">
       <Filter>CUDA Files</Filter>
     </CudaCompile>
-    <CudaCompile Include="shaders.cu">
+    <CudaCompile Include="triangle_mesh.cu">
       <Filter>CUDA Files</Filter>
     </CudaCompile>
-    <CudaCompile Include="triangle_mesh.cu">
+    <CudaCompile Include="material_shaders.cu">
+      <Filter>CUDA Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="context_shaders.cu">
       <Filter>CUDA Files</Filter>
     </CudaCompile>
   </ItemGroup>
@@ -142,10 +142,5 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SAM.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

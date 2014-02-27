@@ -13,6 +13,10 @@ public:
 	static optix::Program closestHitMesh;
 	static optix::Program closestHitGlass;
 	static optix::Program anyHitGlass;
+	static optix::Program anyHitTransparent;
+	static optix::Program closestHitTransparent;
+
+
 	static optix::Program meshBoundingBox;
 	static optix::Program meshIntersect;
 	static optix::Program boxIntersect;

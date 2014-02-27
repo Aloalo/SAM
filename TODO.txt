@@ -1,12 +1,15 @@
 Opcenito:
-
--EPIC REFACTOR (napraviti lako rukovanje klasama), scene graph
+-EPIC REFACTOR (napraviti lako rukovanje klasama)
+	-material handleing
+	-scene graph handleing (transform, selector, instanceing...)
 -render to image
+-ptx version handleing?
 
 Grafika:
 -AA
--transparent textures
 -normal/displacement/parallax mapping?
+-textured glass mesh
+
 -dof
 -motion blur
 -soft shadows

@@ -1,8 +1,8 @@
 #include "Player.h"
-#include "Engine.h"
+#include <Engine.h>
 #include "Environment.h"
 #include <GLFW\glfw3.h>
-#include "StockCameraHandler.h"
+#include <StockCameraHandler.h>
 
 using namespace reng;
 

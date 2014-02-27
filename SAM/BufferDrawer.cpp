@@ -53,7 +53,7 @@ void BufferDrawer::init(const Buffer &buffer)
 	glOrtho(0, 1, 0, 1, -1, 1);
 }
 
-void BufferDrawer::draw(optix::Buffer &buffer)
+void BufferDrawer::draw(optix::Buffer &buffer) const
 {
 	try
 	{
@@ -78,7 +78,7 @@ void BufferDrawer::draw(optix::Buffer &buffer)
 		}
 		glDisable(GL_TEXTURE_2D);
 	}
-	catch(optix::Exception ex)
+	catch(Exception ex)
 	{
 		printf("%s\n", ex.what());
 		exit(-1);

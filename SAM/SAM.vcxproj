@@ -106,12 +106,12 @@
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="InitialSettings.cpp" />
     <ClCompile Include="Labyrinth.cpp" />
+    <ClCompile Include="MaterialHandler.cpp" />
     <ClCompile Include="OptixTextureHandler.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Programs.cpp" />
     <ClCompile Include="SAM.cpp" />
     <ClCompile Include="OptixTracer.cpp" />
-    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -124,21 +124,21 @@
     <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="lights.h" />
     <ClInclude Include="Macros.h" />
+    <ClInclude Include="MaterialHandler.h" />
     <ClInclude Include="OptixTextureHandler.h" />
     <ClInclude Include="phong.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Programs.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="OptixTracer.h" />
     <ClInclude Include="SafeOptix.h" />
     <ClInclude Include="Setting.h" />
-    <ClInclude Include="Settings.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="box.cu" />
+    <CudaCompile Include="material_shaders.cu" />
     <CudaCompile Include="rectangleAA.cu" />
-    <CudaCompile Include="shaders.cu" />
+    <CudaCompile Include="context_shaders.cu" />
     <CudaCompile Include="triangle_mesh.cu" />
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +146,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SAM.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

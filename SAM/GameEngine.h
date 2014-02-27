@@ -1,11 +1,9 @@
 #pragma once
 
-#include "UnLitObject.h"
-#include "InputObserver.h"
-#include "Updateable.h"
+#include <UnLitObject.h>
+#include "Player.h"
 #include "OptixTracer.h"
 #include "BufferDrawer.h"
-#include "Player.h"
 
 class GameEngine :
 	public reng::UnLitObject, public reng::Updateable, public reng::InputObserver

@@ -29,13 +29,13 @@ int main()
 	ptr->tracer.addScene(utils::resource("crytek-sponza/"), scene);
 
 
-	const aiScene* nissan = importer.ReadFile(utils::resource("nissan/nissan.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
+	/*const aiScene* nissan = importer.ReadFile(utils::resource("nissan/nissan.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
 	if(!nissan)
 	{
 		printf("%s\n", importer.GetErrorString());
 		return 0;
 	}
-	ptr->tracer.addScene(utils::Materials::MIRROR, nissan);
+	ptr->tracer.addScene(utils::Materials::MIRROR, nissan);*/
 
 
 	/*Labyrinth lab;

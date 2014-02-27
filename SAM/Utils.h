@@ -12,16 +12,6 @@ namespace utils
 	const std::string ptxPath = "../SAM/ptxfiles/";
 	std::string defTexture(const std::string &name);
 	std::string resource(const std::string &name);
-
-	enum Materials
-	{
-		MIRROR = 0,
-		GLASS = 1,
-		WALL = 2,
-		FLOOR = 3,
-		EMPTY = 4
-	};
-
 	std::string pathToPTX(const std::string &filename);
 
 	bool equals(const optix::float3 &x, const optix::float3 &y);
