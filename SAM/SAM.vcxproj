@@ -100,6 +100,7 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AccelHandler.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="BufferDrawer.cpp" />
     <ClCompile Include="Environment.cpp" />
@@ -115,6 +116,7 @@
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AccelHandler.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="BufferDrawer.h" />
     <ClInclude Include="Environment.h" />

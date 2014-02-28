@@ -40,6 +40,7 @@ void OptixTracer::setBufferSize(int w, int h)
 void OptixTracer::initialize(unsigned int GLBO)
 {
 	ctx = Context::create();
+	Programs::init(ctx);
 
 	ctx->setRayTypeCount(2);
 	ctx->setEntryPointCount(1);
@@ -66,7 +67,6 @@ void OptixTracer::initialize(unsigned int GLBO)
 	lightBuffer->setElementSize(sizeof(BasicLight));
 	ctx["lights"]->setBuffer(lightBuffer);
 
-	Programs::init(ctx);
 
 	ctx->setRayGenerationProgram(0, Programs::rayGeneration);
 
@@ -234,15 +234,36 @@ void OptixTracer::compileSceneGraph()
 	geometrygroup->setChildCount(gis.size());
 	for(int i = 0; i < gis.size(); ++i)
 		geometrygroup->setChild(i, gis[i]);
+	ctx["top_object"]->set(geometrygroup);
 
-	Acceleration accel = ctx->createAcceleration("Sbvh", "Bvh");
+	geometrygroup->setAcceleration(ctx->createAcceleration("Sbvh", "Bvh"));
+
+	accelHandler.setMesh(resource("crytek-sponza/crytek-sponza.obj"));
+	accelHandler.loadAccelCache(geometrygroup);
+
+	if(!accelHandler.accel_cache_loaded)
+	{
+		Acceleration accel = ctx->createAcceleration("Sbvh", "Bvh");
+
+		accel->setProperty("index_buffer_name", "index_buffer");
+		accel->setProperty("vertex_buffer_name", "vertex_buffer");
+		accel->markDirty();
+		geometrygroup->setAcceleration(accel);
+		ctx->launch(0, 0, 0);
+
+		accelHandler.saveAccelCache(geometrygroup);
+	}
+	ctx->validate();
+	ctx->compile();
+	/*Acceleration accel = ctx->createAcceleration("Sbvh", "Bvh");
 
 	accel->setProperty("index_buffer_name", "index_buffer");
 	accel->setProperty("vertex_buffer_name", "vertex_buffer");
-	geometrygroup->setAcceleration(accel);
-	ctx["top_object"]->set(geometrygroup);
+	geometrygroup->setAcceleration(accel);*/
+
+	/*ctx["top_object"]->set(geometrygroup);
 	ctx->validate();
-	ctx->compile();
+	ctx->compile();*/
 }
 
 

@@ -4,14 +4,6 @@ rtDeclareVariable(float3, shading_normal, attribute shading_normal, );
 rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, ); 
 
 //
-// Terminates and fully attenuates ray after any hit
-//
-RT_PROGRAM void any_hit_solid()
-{
-	phongShadowed();
-}
-
-//
 //ADS phong shader with shadows and reflections, no textures
 //
 rtDeclareVariable(float3, Ka, , );
@@ -24,7 +16,7 @@ RT_PROGRAM void closest_hit_phong()
 {
 	float3 world_geo_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
 	float3 world_shade_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
-	float3 ffnormal =  faceforward(world_shade_normal, -ray.direction, world_geo_normal);
+	float3 ffnormal = faceforward(world_shade_normal, -ray.direction, world_geo_normal);
 
 	phongShade(Ka, Kd, Ks, ffnormal, phong_exp, reflectivity);
 }
@@ -127,16 +119,16 @@ RT_PROGRAM void closest_hit_glass()
 	prd_radiance.result = result;
 }
 
-//
-//solid mesh with textures and reflectivity
-//
+
 rtTextureSampler<float4, 2> ambient_map;        
 rtTextureSampler<float4, 2> diffuse_map;
 rtTextureSampler<float4, 2> specular_map;
+rtTextureSampler<float4, 2> opacity_map;
 
 rtDeclareVariable(float3, texcoord, attribute texcoord, ); 
 
-RT_PROGRAM void closest_hit_mesh()
+template<bool transparent>
+static __inline__ __device__ void shade_mesh()
 {
 	float3 direction = ray.direction;
 	float3 world_shading_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
@@ -144,39 +136,21 @@ RT_PROGRAM void closest_hit_mesh()
 	float3 ffnormal = faceforward(world_shading_normal, -direction, world_geometric_normal);
 	float3 uv = texcoord;
 
-	float3 pKa = make_float3(tex2D(ambient_map, uv.x, uv.y));
-	float3 pKd = make_float3(tex2D(diffuse_map, uv.x, uv.y));
-	float3 pKs = make_float3(tex2D(specular_map, uv.x, uv.y));
-
-	phongShade(pKa, pKd, pKs, ffnormal, phong_exp, reflectivity);
-}
-
-
-//
-//mesh with alpha transparency (leafs and such)
-//
-rtTextureSampler<float4, 2> opacity_map;
-
-RT_PROGRAM void closest_hit_transparent_mesh()
-{
-	float3 direction = ray.direction;
-	float3 world_shading_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
-	float3 world_geometric_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
-	float3 ffnormal = faceforward(world_shading_normal, -direction, world_geometric_normal);
-	float3 uv = texcoord;
-
-	float4 opacity = tex2D(opacity_map, uv.x, uv.y);
-	if(opacity.x < importance_cutoff)
+	if(transparent)
 	{
-		float3 hit_point = ray.origin + t_hit * ray.direction;
-		optix::Ray newray(hit_point, ray.direction, radiance_ray_type, scene_epsilon);
-		PerRayData_radiance prd;
-		prd.depth = prd_radiance.depth;
-		prd.importance = prd_radiance.importance;
+		float4 opacity = tex2D(opacity_map, uv.x, uv.y);
+		if(opacity.x < importance_cutoff)
+		{
+			float3 hit_point = ray.origin + t_hit * ray.direction;
+			optix::Ray newray(hit_point, ray.direction, radiance_ray_type, scene_epsilon);
+			PerRayData_radiance prd;
+			prd.depth = prd_radiance.depth;
+			prd.importance = prd_radiance.importance;
 
-		rtTrace(top_object, newray, prd);
-		prd_radiance.result = prd.result;
-		return;
+			rtTrace(top_object, newray, prd);
+			prd_radiance.result = prd.result;
+			return;
+		}
 	}
 
 	float3 pKa = make_float3(tex2D(ambient_map, uv.x, uv.y));
@@ -187,12 +161,46 @@ RT_PROGRAM void closest_hit_transparent_mesh()
 }
 
 //
+//solid mesh with textures and reflectivity
+//
+RT_PROGRAM void closest_hit_mesh()
+{
+	shade_mesh<false>();
+}
+
+//
+//mesh with alpha transparency (leafs and such)
+//
+RT_PROGRAM void closest_hit_transparent_mesh()
+{
+	shade_mesh<true>();
+}
+
+
+template<bool transparent>
+static __inline__ __device__ void any_hit()
+{
+	if(transparent)
+	{
+		float4 opacity = tex2D(opacity_map, texcoord.x, texcoord.y);
+		if(opacity.x < importance_cutoff)
+			rtIgnoreIntersection();
+	}
+	phongShadowed();
+}
+
+//
 // terminates if ray hits solid part
 //
 RT_PROGRAM void any_hit_transparent()
 {
-	float4 opacity = tex2D(opacity_map, texcoord.x, texcoord.y);
-	if(opacity.x < importance_cutoff)
-		rtIgnoreIntersection();
-	phongShadowed();
+	any_hit<true>();
+}
+
+//
+// Terminates and fully attenuates ray after any hit
+//
+RT_PROGRAM void any_hit_solid()
+{
+	any_hit<false>();
 }

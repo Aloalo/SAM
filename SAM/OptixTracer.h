@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MaterialHandler.h"
+#include "AccelHandler.h"
 #include <assimp/scene.h>
 #include <Camera.h>
 #include "Labyrinth.h"
@@ -43,6 +44,7 @@ private:
 	std::vector<BasicLight> lights;
 
 	MaterialHandler matHandler;
+	AccelHandler accelHandler;
 
 	Setting<int> maxRayDepth;
 	Setting<int> castsShadows;

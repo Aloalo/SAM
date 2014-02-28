@@ -7,7 +7,9 @@ using namespace glm;
 using namespace reng;
 
 BufferDrawer::BufferDrawer(void)
-	: tex(TextureHandler::genTexture("buffer", GL_TEXTURE_2D)), vbo(GL_ARRAY_BUFFER, GL_STREAM_DRAW), SETTING(textureFilter)
+	: tex(TextureHandler::genTexture("buffer", GL_TEXTURE_2D)), SETTING(textureFilter),
+	vertices(GL_ARRAY_BUFFER, GL_STATIC_DRAW), outBuffer(GL_ARRAY_BUFFER, GL_STREAM_DRAW),
+	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p("../Shaders/passthrough")
 {
 	glDataType = GL_FLOAT;
 	glFormat = GL_RGBA;
@@ -17,25 +19,36 @@ BufferDrawer::BufferDrawer(void)
 
 BufferDrawer::~BufferDrawer(void)
 {
-	vbo.destroy();
+	vao.destroy();
+	vertices.destroy();
 }
 
 unsigned int BufferDrawer::createGLBuffer()
 {
-	vbo.bind();
-	vbo.setData(0, Environment::get().maxBufferWidth * Environment::get().maxBufferHeight * sizeof(float4));
-	return vbo.getID();
+	outBuffer.bind();
+	outBuffer.setData(0, Environment::get().maxBufferWidth * Environment::get().maxBufferHeight * sizeof(float4));
+	return outBuffer.getID();
 }
 
 void BufferDrawer::init(const Buffer &buffer)
 {
+	GLfloat quad[] = 
+	{ 
+		-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		-1.0f,  1.0f, 0.0f,
+		-1.0f,  1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		1.0f,  1.0f, 0.0f,
+	};
+
 	tex.bind();
 	tex.texParami(GL_TEXTURE_MAG_FILTER, textureFilter);
 	tex.texParami(GL_TEXTURE_MIN_FILTER, textureFilter);
 	tex.texParami(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	tex.texParami(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-	glBindBuffer(GL_PIXEL_UNPACK_BUFFER, vbo.getID());
+	glBindBuffer(GL_PIXEL_UNPACK_BUFFER, outBuffer.getID());
 	RTsize elementSize = buffer->getElementSize();
 	if(elementSize % 8 == 0)
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
@@ -46,19 +59,30 @@ void BufferDrawer::init(const Buffer &buffer)
 	else
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	vbo.bind();
+	vao.bind();
+	vertices.setData(quad, sizeof(quad));
+	vertexAttrib.attribPointer();
 
-	glMatrixMode(GL_PROJECTION);
+	p.use();
+	glActiveTexture(GL_TEXTURE0);
+	p.setUniform("renderedTexture", 0);
+
+	
+	outBuffer.bind();
+	/*glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, 1, 0, 1, -1, 1);
+	glOrtho(0, 1, 0, 1, -1, 1);*/
 }
 
 void BufferDrawer::draw(optix::Buffer &buffer) const
 {
 	try
 	{
+		//outBuffer.bind();
 		tex.texImage(0, glTextureFormat, vec3(Environment::get().bufferWidth.x, Environment::get().bufferHeight.x, 0), glFormat, glDataType, 0);
-		glEnable(GL_TEXTURE_2D);
+		vao.bind();
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		/*glEnable(GL_TEXTURE_2D);
 		{
 			float u = 0.5f / (float)Environment::get().screenWidth.x;
 			float v = 0.5f / (float)Environment::get().screenHeight.x;
@@ -76,7 +100,7 @@ void BufferDrawer::draw(optix::Buffer &buffer) const
 			}
 			glEnd();
 		}
-		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_TEXTURE_2D);*/
 	}
 	catch(Exception ex)
 	{

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <Texture.h>
-#include <BufferObject.h>
+#include <OGLobjects.h>
 #include "SafeOptix.h"
 #include "Setting.h"
 
@@ -23,8 +22,13 @@ private:
 	GLenum glDataType;
 	GLenum glFormat;
 	GLenum glTextureFormat;
+
 	reng::Texture tex;
-	reng::BufferObject vbo;
+	reng::BufferObject vertices;
+	reng::BufferObject outBuffer;
+	reng::VertexArrayObject vao;
+	reng::VertexAttribArray vertexAttrib;
+	reng::Program p;
 
 	Setting<int> textureFilter;
 };

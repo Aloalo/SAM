@@ -1,19 +1,19 @@
 Opcenito:
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
-	-material handleing
-	-scene graph handleing (transform, selector, instanceing...)
+	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 -render to image
--ptx version handleing?
+-broj programa
 
 Grafika:
--AA
+-AA / FXAA
 -normal/displacement/parallax mapping?
+-specular(gloss) mapping
 -textured glass mesh
 
 -dof
 -motion blur
 -soft shadows
--global illumination (path traceing)
+-global illumination (path traceing)?
 
 Fizika:
 
