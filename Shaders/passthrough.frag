@@ -1,12 +1,12 @@
-#version 330 core
+#version 420 core
 
-in vec2 UV;
+noperspective in vec2 UV;
 
-out vec3 color;
+out vec4 FragColor;
 
 uniform sampler2D renderedTexture;
 
 void main()
 {
-	color = texture(renderedTexture, UV).xyz;
+	FragColor = texture(renderedTexture, UV);
 }

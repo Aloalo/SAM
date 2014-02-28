@@ -54,7 +54,6 @@ void AccelHandler::setLargeMesh(bool f)
 
 void AccelHandler::loadAccelCache(GeometryGroup &geometry_group)
 {
-	// If acceleration caching is turned on and a cache file exists, load it.
 	if(accel_caching_on)
 	{
 		const string cachefile = getCacheFileName();
@@ -78,7 +77,7 @@ void AccelHandler::loadAccelCache(GeometryGroup &geometry_group)
 				return;
 			}
 
-			char* data = new char[static_cast<size_t>(size)];
+			char *data = new char[static_cast<size_t>(size)];
 			in.read(data, static_cast<streamsize>(size));
 
 			// Load data into accel

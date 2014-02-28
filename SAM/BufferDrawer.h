@@ -31,4 +31,5 @@ private:
 	reng::Program p;
 
 	Setting<int> textureFilter;
+	Setting<int> postProcess;
 };

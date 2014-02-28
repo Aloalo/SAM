@@ -1,8 +1,8 @@
-#version 330 core
+#version 420 core
 
 layout(location = 0) in vec3 vertexPosition_modelspace;
 
-out vec2 UV;
+noperspective out vec2 UV;
 
 void main()
 {

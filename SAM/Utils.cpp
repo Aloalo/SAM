@@ -17,6 +17,11 @@ namespace utils
 		return "../Resources/" + name;
 	}
 
+	std::string shader(const std::string &name)
+	{
+		return "../Shaders/" + name;
+	}
+
 	bool equals(const float3 &x, const float3 &y)
 	{
 		return abs(x.x - y.x) < eps && abs(x.y - y.y) < eps && abs(x.z - y.z) < eps;

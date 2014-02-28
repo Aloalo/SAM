@@ -1,15 +1,19 @@
 #include "BufferDrawer.h"
 #include "Engine.h"
 #include "Environment.h"
+#include "Utils.h"
+#include <iostream>
 
+using namespace std;
 using namespace optix;
 using namespace glm;
 using namespace reng;
+using namespace utils;
 
 BufferDrawer::BufferDrawer(void)
 	: tex(TextureHandler::genTexture("buffer", GL_TEXTURE_2D)), SETTING(textureFilter),
-	vertices(GL_ARRAY_BUFFER, GL_STATIC_DRAW), outBuffer(GL_ARRAY_BUFFER, GL_STREAM_DRAW),
-	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p("../Shaders/passthrough")
+	vertices(GL_ARRAY_BUFFER, GL_STATIC_DRAW), outBuffer(GL_ARRAY_BUFFER, GL_STREAM_DRAW), SETTING(postProcess),
+	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p(VertexShader(shader("passthrough").c_str()), FragmentShader(shader(postProcess ? "fxaa" : "passthrough").c_str()))
 {
 	glDataType = GL_FLOAT;
 	glFormat = GL_RGBA;
@@ -41,7 +45,7 @@ void BufferDrawer::init(const Buffer &buffer)
 		1.0f, -1.0f, 0.0f,
 		1.0f,  1.0f, 0.0f,
 	};
-
+	
 	tex.bind();
 	tex.texParami(GL_TEXTURE_MAG_FILTER, textureFilter);
 	tex.texParami(GL_TEXTURE_MIN_FILTER, textureFilter);
@@ -59,48 +63,25 @@ void BufferDrawer::init(const Buffer &buffer)
 	else
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	vao.bind();
-	vertices.setData(quad, sizeof(quad));
-	vertexAttrib.attribPointer();
-
 	p.use();
 	glActiveTexture(GL_TEXTURE0);
 	p.setUniform("renderedTexture", 0);
 
+	vao.bind();
+	vertices.setData(quad, sizeof(quad));
+	vertexAttrib.attribPointer();
 	
-	outBuffer.bind();
-	/*glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, 1, 0, 1, -1, 1);*/
+	GLenum err;
+    while((err = glGetError()) != GL_NO_ERROR)
+        cerr << "OpenGL error: 0x" << hex << err << endl;
 }
 
 void BufferDrawer::draw(optix::Buffer &buffer) const
 {
 	try
 	{
-		//outBuffer.bind();
 		tex.texImage(0, glTextureFormat, vec3(Environment::get().bufferWidth.x, Environment::get().bufferHeight.x, 0), glFormat, glDataType, 0);
-		vao.bind();
 		glDrawArrays(GL_TRIANGLES, 0, 6);
-		/*glEnable(GL_TEXTURE_2D);
-		{
-			float u = 0.5f / (float)Environment::get().screenWidth.x;
-			float v = 0.5f / (float)Environment::get().screenHeight.x;
-
-			glBegin(GL_QUADS);
-			{
-				glTexCoord2f(u, v);
-				glVertex2f(0.0f, 0.0f);
-				glTexCoord2f(1.0f, v);
-				glVertex2f(1.0f, 0.0f);
-				glTexCoord2f(1.0f - u, 1.0f - v);
-				glVertex2f(1.0f, 1.0f);
-				glTexCoord2f(u, 1.0f - v);
-				glVertex2f(0.0f, 1.0f); 
-			}
-			glEnd();
-		}
-		glDisable(GL_TEXTURE_2D);*/
 	}
 	catch(Exception ex)
 	{

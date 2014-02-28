@@ -38,7 +38,7 @@ InitialSettings::InitialSettings(const string &path)
 					{
 						values[name] = stoi(value);
 					}
-					catch(exception ex)
+					catch(exception &ex)
 					{
 						values[name] = format[value];
 					}

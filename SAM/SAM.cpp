@@ -20,22 +20,22 @@ int main()
 	GameEngine *ptr = new GameEngine();
 
 	Assimp::Importer importer;
-	/*const aiScene* scene = importer.ReadFile(utils::resource("crytek-sponza/sponza.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* scene = importer.ReadFile(utils::resource("crytek-sponza/sponza.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
 	if(!scene)
 	{
 		printf("%s\n", importer.GetErrorString());
 		return 0;
 	}
-	ptr->tracer.addScene(utils::resource("crytek-sponza/"), scene);*/
+	ptr->tracer.addScene(utils::resource("crytek-sponza/"), scene);
 
 
-	const aiScene* nissan = importer.ReadFile(utils::resource("nissan/nissan.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
+	/*const aiScene* nissan = importer.ReadFile(utils::resource("nissan/nissan.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
 	if(!nissan)
 	{
 		printf("%s\n", importer.GetErrorString());
 		return 0;
 	}
-	ptr->tracer.addScene(MaterialHandler::LabMaterials::MIRROR, nissan);
+	ptr->tracer.addScene(MaterialHandler::LabMaterials::MIRROR, nissan);*/
 
 
 	/*Labyrinth lab;
