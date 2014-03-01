@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-#include <map>
 #include "InitialSettings.h"
 
 #define SETTING(s) s(#s)

@@ -4,88 +4,7 @@ rtDeclareVariable(float3, shading_normal, attribute shading_normal, );
 rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, ); 
 
 //
-// Pinhole camera implementation
-//
-rtDeclareVariable(uint2, launch_index, rtLaunchIndex, );
-rtDeclareVariable(float3, eye, , );
-rtDeclareVariable(float3, U, , );
-rtDeclareVariable(float3, V, , );
-rtDeclareVariable(float3, W, , );
-
-rtBuffer<float4, 2> output_buffer;
-
-RT_PROGRAM void pinhole_camera()
-{
-	float2 screen = make_float2(output_buffer.size());
-
-	float2 d = make_float2(launch_index) / screen * 2.f - 1.f;
-	float3 ray_origin = eye;
-	float3 ray_direction = normalize(d.x * U + d.y * V + W);
-
-	optix::Ray ray(ray_origin, ray_direction, radiance_ray_type, scene_epsilon);
-
-	PerRayData_radiance prd;
-	prd.importance = 1.f;
-	prd.depth = 0;
-
-	rtTrace(top_object, ray, prd);
-
-	output_buffer[launch_index] = make_float4(prd.result);
-}
-
-//
-// Enviormement map
-//
-rtTextureSampler<float4, 2> envmap;
-RT_PROGRAM void envmap_miss()
-{
-	float theta = atan2f(ray.direction.x, ray.direction.z);
-	float phi = M_PIf * 0.5f - acosf(ray.direction.y);
-	float u = (theta + M_PIf) * (0.5f * M_1_PIf);
-	float v = 0.5f * (1.0f + sinf(phi));
-	prd_radiance.result = make_float3(tex2D(envmap, u, v));
-}
-
-//
-// Returns solid color for miss rays
-//
-rtDeclareVariable(float3, miss_color, , );
-RT_PROGRAM void miss()
-{
-	prd_radiance.result = miss_color;
-}
-
-//
-// Returns color from [miss_min, miss_max] lineary interpolated across ray inclination
-//
-rtDeclareVariable(float3, miss_min, , );
-rtDeclareVariable(float3, miss_max, , );
-RT_PROGRAM void gradient_miss()
-{
-	float phi = asinf(ray.direction.y);
-	prd_radiance.result = 2.0f * phi / M_PIf * (miss_max - miss_min) + miss_min;
-}
-
-//
-// Set pixel to solid color upon failure
-//
-rtDeclareVariable(float3, bad_color, , );
-
-RT_PROGRAM void exception()
-{
-	output_buffer[launch_index] = make_float4(bad_color, 1.0f);
-}
-
-//
-// Terminates and fully attenuates ray after any hit
-//
-RT_PROGRAM void any_hit_solid()
-{
-	phongShadowed();
-}
-
-//
-//ADS phong shader with shadows
+//ADS phong shader with shadows and reflections, no textures
 //
 rtDeclareVariable(float3, Ka, , );
 rtDeclareVariable(float3, Kd, , );
@@ -97,13 +16,13 @@ RT_PROGRAM void closest_hit_phong()
 {
 	float3 world_geo_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
 	float3 world_shade_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
-	float3 ffnormal =  faceforward(world_shade_normal, -ray.direction, world_geo_normal);
+	float3 ffnormal = faceforward(world_shade_normal, -ray.direction, world_geo_normal);
 
 	phongShade(Ka, Kd, Ks, ffnormal, phong_exp, reflectivity);
 }
 
 //
-// Transparent object shadows
+// Transparent object shadows, no textures
 //
 rtDeclareVariable(float3, shadow_attenuation, , );
 
@@ -118,7 +37,7 @@ RT_PROGRAM void any_hit_shadow_glass()
 }
 
 //
-// Glass shader
+// Glass shader, no textures
 //
 rtDeclareVariable(float3, cutoff_color, , );
 rtDeclareVariable(float, fresnel_exponent, , );
@@ -200,13 +119,16 @@ RT_PROGRAM void closest_hit_glass()
 	prd_radiance.result = result;
 }
 
+
 rtTextureSampler<float4, 2> ambient_map;        
 rtTextureSampler<float4, 2> diffuse_map;
 rtTextureSampler<float4, 2> specular_map;
+rtTextureSampler<float4, 2> opacity_map;
 
 rtDeclareVariable(float3, texcoord, attribute texcoord, ); 
 
-RT_PROGRAM void closest_hit_mesh()
+template<bool transparent>
+static __inline__ __device__ void shade_mesh()
 {
 	float3 direction = ray.direction;
 	float3 world_shading_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
@@ -214,15 +136,71 @@ RT_PROGRAM void closest_hit_mesh()
 	float3 ffnormal = faceforward(world_shading_normal, -direction, world_geometric_normal);
 	float3 uv = texcoord;
 
-	float3 black = make_float3(0.0f, 0.0f, 0.0f);
-	
-	/*float3 pKa = make_float3(tex2D(ambient_map, uv.x, uv.y)) * Ka;
-	float3 pKd = make_float3(tex2D(diffuse_map, uv.x, uv.y)) * Kd;
-	float3 pKs = make_float3(tex2D(specular_map, uv.x, uv.y)) * Ks;*/
+	if(transparent)
+	{
+		float4 opacity = tex2D(opacity_map, uv.x, uv.y);
+		if(opacity.x < importance_cutoff)
+		{
+			float3 hit_point = ray.origin + t_hit * ray.direction;
+			optix::Ray newray(hit_point, ray.direction, radiance_ray_type, scene_epsilon);
+			PerRayData_radiance prd;
+			prd.depth = prd_radiance.depth;
+			prd.importance = prd_radiance.importance;
+
+			rtTrace(top_object, newray, prd);
+			prd_radiance.result = prd.result;
+			return;
+		}
+	}
 
 	float3 pKa = make_float3(tex2D(ambient_map, uv.x, uv.y));
 	float3 pKd = make_float3(tex2D(diffuse_map, uv.x, uv.y));
 	float3 pKs = make_float3(tex2D(specular_map, uv.x, uv.y));
 
 	phongShade(pKa, pKd, pKs, ffnormal, phong_exp, reflectivity);
+}
+
+//
+//solid mesh with textures and reflectivity
+//
+RT_PROGRAM void closest_hit_mesh()
+{
+	shade_mesh<false>();
+}
+
+//
+//mesh with alpha transparency (leafs and such)
+//
+RT_PROGRAM void closest_hit_transparent_mesh()
+{
+	shade_mesh<true>();
+}
+
+
+template<bool transparent>
+static __inline__ __device__ void any_hit()
+{
+	if(transparent)
+	{
+		float4 opacity = tex2D(opacity_map, texcoord.x, texcoord.y);
+		if(opacity.x < importance_cutoff)
+			rtIgnoreIntersection();
+	}
+	phongShadowed();
+}
+
+//
+// terminates if ray hits solid part
+//
+RT_PROGRAM void any_hit_transparent()
+{
+	any_hit<true>();
+}
+
+//
+// Terminates and fully attenuates ray after any hit
+//
+RT_PROGRAM void any_hit_solid()
+{
+	any_hit<false>();
 }

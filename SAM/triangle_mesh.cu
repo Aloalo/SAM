@@ -10,7 +10,6 @@ rtBuffer<float3> normal_buffer;
 rtBuffer<float2> texcoord_buffer;
 rtBuffer<int3> index_buffer;
 
-//rtBuffer<uint> material_buffer; // per-face material index
 rtDeclareVariable(float3, texcoord, attribute texcoord, ); 
 rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, ); 
 rtDeclareVariable(float3, shading_normal, attribute shading_normal, ); 
@@ -50,7 +49,6 @@ RT_PROGRAM void mesh_intersect(int primIdx)
 				float2 t2 = texcoord_buffer[idx.z];
 				texcoord = make_float3(t1 * beta + t2 * gamma + t0 * (1.0f - beta - gamma));
 			}
-			//rtReportIntersection(material_buffer[primIdx]);
 			rtReportIntersection(0);
 		}
 	}

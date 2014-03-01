@@ -22,6 +22,12 @@
     <Filter Include="Header Files\Settings">
       <UniqueIdentifier>{f881c614-4fdc-4590-94b3-b1759408f3e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Handlers">
+      <UniqueIdentifier>{1dd7e0af-cb6e-4f7b-8f43-e54f1c3a33a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Handlers">
+      <UniqueIdentifier>{c2976fd7-460a-4b6f-8bd4-cc5ea426a642}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp">
@@ -45,17 +51,26 @@
     <ClCompile Include="Labyrinth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Settings.cpp">
-      <Filter>Source Files\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="Environment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InitialSettings.cpp">
       <Filter>Source Files\Settings</Filter>
     </ClCompile>
     <ClCompile Include="OptixTracer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment.cpp">
+      <Filter>Source Files\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="OptixTextureHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Programs.cpp">
+      <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="AccelHandler.cpp">
+      <Filter>Source Files\Handlers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -66,9 +81,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -83,20 +95,11 @@
     <ClInclude Include="lights.h">
       <Filter>CUDA Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Labyrinth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Settings.h">
-      <Filter>Header Files\Settings</Filter>
-    </ClInclude>
     <ClInclude Include="Setting.h">
       <Filter>Header Files\Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="Environment.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InitialSettings.h">
       <Filter>Header Files\Settings</Filter>
@@ -107,6 +110,27 @@
     <ClInclude Include="phong.h">
       <Filter>CUDA Files</Filter>
     </ClInclude>
+    <ClInclude Include="SafeOptix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment.h">
+      <Filter>Header Files\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialHandler.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="OptixTextureHandler.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Programs.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="AccelHandler.h">
+      <Filter>Header Files\Handlers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="box.cu">
@@ -115,10 +139,13 @@
     <CudaCompile Include="rectangleAA.cu">
       <Filter>CUDA Files</Filter>
     </CudaCompile>
-    <CudaCompile Include="shaders.cu">
+    <CudaCompile Include="triangle_mesh.cu">
       <Filter>CUDA Files</Filter>
     </CudaCompile>
-    <CudaCompile Include="triangle_mesh.cu">
+    <CudaCompile Include="material_shaders.cu">
+      <Filter>CUDA Files</Filter>
+    </CudaCompile>
+    <CudaCompile Include="context_shaders.cu">
       <Filter>CUDA Files</Filter>
     </CudaCompile>
   </ItemGroup>
@@ -127,10 +154,5 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SAM.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

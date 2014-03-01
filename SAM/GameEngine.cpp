@@ -9,10 +9,11 @@ using namespace std;
 using namespace optix;
 using namespace reng;
 
-GameEngine::GameEngine(const aiScene *scene)
+GameEngine::GameEngine(void)
 	: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Environment::get().screenWidth.x / Environment::get().screenHeight.x, 60.0f))),
-	mouseLocked(true), scene(scene)
+	mouseLocked(true)
 {
+	tracer.initialize(drawer.createGLBuffer());
 	Engine::hideMouse(true);
 	//Input::addInputObserver(player);
 }
@@ -58,7 +59,9 @@ void GameEngine::keyPress(int key, int scancode, int action, int mods)
 		if(action != GLFW_RELEASE)
 		{
 			lab.generateLabyrinth(lab.getWidth(), lab.getHeight());
-			tracer.createSceneGraph(lab);
+			tracer.clearSceneGraph();
+			tracer.addMesh(lab);
+			tracer.compileSceneGraph();
 		}
 		break;
 	}
@@ -75,8 +78,18 @@ void GameEngine::windowResize(int width, int height)
 
 void GameEngine::update(float deltaTime)
 {
-	player->update(deltaTime);
+	static float angle = 0.0f;
+	angle += 0.02f;
 
+	tracer.getLight(0).pos.x = sinf(angle) * 200.0f;
+	tracer.getLight(0).pos.y = cosf(angle) * 200.0f + 400.0f;
+
+	tracer.getLight(0).pos.x = sinf(angle) * 200.0f;
+	tracer.getLight(0).pos.z = cosf(angle) * 200.0f;
+
+	tracer.updateLight(0);
+
+	player->update(deltaTime);
 	tracer.setCamera(player->getCam());
 }
 
@@ -84,15 +97,7 @@ void GameEngine::initDrawing()
 {
 	try
 	{
-		tracer.initialize(drawer.createGLBuffer());
-
-		if(scene == NULL)
-		{
-			lab.generateLabyrinth(15, 15);
-			tracer.createSceneGraph(lab);
-		}
-		else
-			tracer.createSceneGraph(scene);
+		tracer.compileSceneGraph();
 		tracer.setCamera(player->getCam());
 		drawer.init(tracer.getBuffer());
 	}

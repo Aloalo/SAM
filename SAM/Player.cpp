@@ -1,8 +1,8 @@
 #include "Player.h"
-#include "Engine.h"
+#include <Engine.h>
 #include "Environment.h"
 #include <GLFW\glfw3.h>
-#include "StockCameraHandler.h"
+#include <StockCameraHandler.h>
 
 using namespace reng;
 
@@ -23,7 +23,12 @@ Player::~Player(void)
 
 void Player::keyPress(int key, int scancode, int action, int mods)
 {
-	cam.keyPress(key, scancode, action, mods);
+	if(key == GLFW_KEY_9 && action == GLFW_PRESS)
+		((StockCameraHandler*)&cam)->speed *= 2.0f;
+	else if(key == GLFW_KEY_0 && action == GLFW_PRESS)
+		((StockCameraHandler*)&cam)->speed /= 2.0f;
+	else
+		cam.keyPress(key, scancode, action, mods);
 }
 
 void Player::mouseMove(double x, double y)

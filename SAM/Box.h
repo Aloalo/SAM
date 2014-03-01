@@ -1,6 +1,6 @@
 #pragma once
 
-#include "macros.h"
+#include "Macros.h"
 #include <optix_math.h>
 
 struct Box

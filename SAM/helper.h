@@ -57,7 +57,7 @@ static __device__ __inline__ uchar4 make_color(const float3 &c)
 struct PerRayData_radiance
 {
 	float3 result;
-	float  importance;
+	float importance;
 	int depth;
 };
 

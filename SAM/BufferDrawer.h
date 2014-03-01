@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Texture.h"
-#include "BufferObject.h"
-#include "Macros.h"
-#include <optix_world.h>
+#include <OGLobjects.h>
+#include "SafeOptix.h"
 #include "Setting.h"
 
 /*
@@ -18,14 +16,20 @@ public:
 	
 	unsigned int createGLBuffer();
 	void init(const optix::Buffer &buffer);
-	void draw(optix::Buffer &buffer);
+	void draw(optix::Buffer &buffer) const;
 
 private:
 	GLenum glDataType;
 	GLenum glFormat;
 	GLenum glTextureFormat;
+
 	reng::Texture tex;
-	reng::BufferObject vbo;
+	reng::BufferObject vertices;
+	reng::BufferObject outBuffer;
+	reng::VertexArrayObject vao;
+	reng::VertexAttribArray vertexAttrib;
+	reng::Program p;
 
 	Setting<int> textureFilter;
+	Setting<int> postProcess;
 };

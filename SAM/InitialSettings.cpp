@@ -1,9 +1,8 @@
 #include "InitialSettings.h"
-#include "macros.h"
+#include "SafeOptix.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <optix_world.h>
 #include <GL/glew.h>
 
 using namespace std;
@@ -39,7 +38,7 @@ InitialSettings::InitialSettings(const string &path)
 					{
 						values[name] = stoi(value);
 					}
-					catch(exception ex)
+					catch(exception &ex)
 					{
 						values[name] = format[value];
 					}

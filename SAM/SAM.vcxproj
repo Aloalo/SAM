@@ -39,12 +39,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(ASSIMP_HOME)\include;$(DEVIL_HOME)\include;$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ASSIMP_HOME)\lib;$(DEVIL_HOME)\lib;$(GLEW_HOME)\lib;$(GLFW_HOME)\lib-msvc100;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ASSIMP_HOME)\lib\assimp_release-dll_win32;$(DEVIL_HOME)\lib;$(GLEW_HOME)\lib;$(GLFW_HOME)\lib-msvc100;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(ASSIMP_HOME)\include;$(DEVIL_HOME)\include;$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ASSIMP_HOME)\lib;$(DEVIL_HOME)\lib;$(GLEW_HOME)\lib;$(GLFW_HOME)\lib-msvc100;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Release;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ASSIMP_HOME)\lib\assimp_release-dll_win32;$(DEVIL_HOME)\lib;$(GLEW_HOME)\lib;$(GLFW_HOME)\lib-msvc100;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -100,19 +100,23 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AccelHandler.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="BufferDrawer.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="InitialSettings.cpp" />
     <ClCompile Include="Labyrinth.cpp" />
+    <ClCompile Include="MaterialHandler.cpp" />
+    <ClCompile Include="OptixTextureHandler.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Programs.cpp" />
     <ClCompile Include="SAM.cpp" />
     <ClCompile Include="OptixTracer.cpp" />
-    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AccelHandler.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="BufferDrawer.h" />
     <ClInclude Include="Environment.h" />
@@ -122,18 +126,21 @@
     <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="lights.h" />
     <ClInclude Include="Macros.h" />
+    <ClInclude Include="MaterialHandler.h" />
+    <ClInclude Include="OptixTextureHandler.h" />
     <ClInclude Include="phong.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="Programs.h" />
     <ClInclude Include="OptixTracer.h" />
+    <ClInclude Include="SafeOptix.h" />
     <ClInclude Include="Setting.h" />
-    <ClInclude Include="Settings.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="box.cu" />
+    <CudaCompile Include="material_shaders.cu" />
     <CudaCompile Include="rectangleAA.cu" />
-    <CudaCompile Include="shaders.cu" />
+    <CudaCompile Include="context_shaders.cu" />
     <CudaCompile Include="triangle_mesh.cu" />
   </ItemGroup>
   <ItemGroup>
@@ -141,9 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SAM.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,15 +6,20 @@ namespace utils
 	{
 		return ptxPath + filename + ".ptx";
 	}
-	
-	std::string pathToTextures(const std::string &filename)
+
+	std::string defTexture(const std::string &name)
 	{
-		return texPath + filename;
+		return "../DefaultTextures/" + name;
 	}
 
-	std::string pathToModels(const std::string &filename)
+	std::string resource(const std::string &name)
 	{
-		return modelPath + filename;
+		return "../Resources/" + name;
+	}
+
+	std::string shader(const std::string &name)
+	{
+		return "../Shaders/" + name;
 	}
 
 	bool equals(const float3 &x, const float3 &y)

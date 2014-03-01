@@ -1,12 +1,13 @@
 #include "Labyrinth.h"
 #include <ctime>
-#include "Utils.h"
+#include "MaterialHandler.h"
 
 using namespace std;
 using namespace utils;
 using namespace optix;
 
 Labyrinth::Labyrinth(void)
+	: width(15), height(15)
 {
 	setWallSize(4.3f, 7.5f, 0.15f);
 }
@@ -51,13 +52,15 @@ void Labyrinth::generateLabyrinth(int w, int h)
 	yBox = yBox.translated(offset);
 	float wallHeight = xBox.getHeight();
 	
+	int WALL = MaterialHandler::LabMaterials::WALL;
+
 	//outer walls
 	boxVec.push_back(Box(make_float3(0.0f, 0.0f, -crackDim), make_float3(rw, wallHeight, 0.0f), WALL).translated(offset));
 	boxVec.push_back(Box(make_float3(-crackDim, 0.0f, 0.0f), make_float3(0.0f, wallHeight, rh), WALL).translated(offset));
 	boxVec.push_back(Box(make_float3(0.0f, 0.0f, rh), make_float3(rw, wallHeight, rh + crackDim), WALL).translated(offset));
 	boxVec.push_back(Box(make_float3(rw, 0.0f, 0.0f), make_float3(rw + crackDim, wallHeight, rh), WALL).translated(offset));
 
-	memset(maze, WALL, sizeof(maze));
+	memset(maze, 0, sizeof(maze));
 	primRandomized();
 	generateGeometry();
 
@@ -72,6 +75,7 @@ bool Labyrinth::outOfBounds(int x, int y) const
 
 void Labyrinth::setWallSize(float w, float h, float d)
 {
+	int WALL = MaterialHandler::LabMaterials::WALL;
 	xBox = Box(make_float3(0.0f, 0.0f, 0.0f), make_float3(w, h, d), WALL);
 	yBox = Box(make_float3(0.0f, 0.0f, 0.0f), make_float3(d, h, w), WALL);
 	
@@ -88,6 +92,10 @@ void Labyrinth::primRandomized()
 {
 	typedef pair<int, int> pii;
 	typedef pair<pii, pii> piiii;
+
+	int WALL = MaterialHandler::LabMaterials::WALL;
+	int EMPTY = 0;
+
 
 	pii d[4] = 
 	{
