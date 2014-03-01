@@ -23,13 +23,13 @@ private:
 	GLenum glFormat;
 	GLenum glTextureFormat;
 
+	Setting<int> textureFilter;
+	Setting<int> postProcess;
+
 	reng::Texture tex;
 	reng::BufferObject vertices;
 	reng::BufferObject outBuffer;
 	reng::VertexArrayObject vao;
 	reng::VertexAttribArray vertexAttrib;
 	reng::Program p;
-
-	Setting<int> textureFilter;
-	Setting<int> postProcess;
 };

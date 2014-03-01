@@ -45,7 +45,7 @@ int main()
 	ptr->tracer.addLight(BasicLight(//light0 - point light
 		make_float3(-5.0f, 220.0f, -16.0f), //pos/dir
 		make_float3(1.0f, 1.0f, 1.0f), //color
-		make_float3(1.0f, 0.001f, 0.0f), //attenuation
+		make_float3(1.0f, 0.005f, 0.0f), //attenuation
 		make_float3(1.0f, 0.0f, 0.0f), //spot_direction
 		360.0f, //spot_cutoff
 		0.0f, //spot_exponent

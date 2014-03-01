@@ -11,8 +11,13 @@ using namespace glm;
 using namespace std;
 
 OptixTracer::OptixTracer(void) :
-	SETTING(useInternalReflections), SETTING(castsShadows),
-	SETTING(useSchlick), SETTING(maxRayDepth), matHandler(ctx)
+	SETTING(useInternalReflections),
+	SETTING(castsShadows),
+	SETTING(useSchlick),
+	SETTING(maxRayDepth),
+	SETTING(MSAA),
+	matHandler(ctx)
+
 {
 }
 
@@ -67,8 +72,13 @@ void OptixTracer::initialize(unsigned int GLBO)
 	lightBuffer->setElementSize(sizeof(BasicLight));
 	ctx["lights"]->setBuffer(lightBuffer);
 
-
-	ctx->setRayGenerationProgram(0, Programs::rayGeneration);
+	if(MSAA > 1)
+	{
+		ctx->setRayGenerationProgram(0, Programs::rayGenerationAA);
+		ctx["AAlevel"]->setInt(MSAA);
+	}
+	else
+		ctx->setRayGenerationProgram(0, Programs::rayGeneration);
 
 	ctx->setExceptionProgram(0, Programs::exception);
 	ctx["bad_color"]->setFloat(1.0f, 0.0f, 0.0f);
@@ -238,7 +248,7 @@ void OptixTracer::compileSceneGraph()
 
 	geometrygroup->setAcceleration(ctx->createAcceleration("Sbvh", "Bvh"));
 
-	accelHandler.setMesh(resource("crytek-sponza/crytek-sponza.obj"));
+	accelHandler.setMesh(resource("accelCaches/accel.accelcache"));
 	accelHandler.loadAccelCache(geometrygroup);
 
 	if(!accelHandler.accel_cache_loaded)

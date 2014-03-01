@@ -31,6 +31,37 @@ RT_PROGRAM void pinhole_camera()
 }
 
 //
+// Pinhole camera implementation with SSAA
+//
+
+rtDeclareVariable(int, AAlevel, , );
+
+RT_PROGRAM void pinhole_camera_AA()
+{
+	float2 screen = make_float2(output_buffer.size() * AAlevel);
+	float4 result = make_float4(0.0f);
+
+	for(int i = 0; i < AAlevel; ++i)
+		for(int j = 0; j < AAlevel; ++j)
+		{
+			float2 d = make_float2(AAlevel * launch_index.x + i, AAlevel * launch_index.y + j) / screen * 2.f - 1.f;
+			float3 ray_origin = eye;
+			float3 ray_direction = normalize(d.x * U + d.y * V + W);
+
+			optix::Ray ray(ray_origin, ray_direction, radiance_ray_type, scene_epsilon);
+
+			PerRayData_radiance prd;
+			prd.importance = 1.f;
+			prd.depth = 0;
+
+			rtTrace(top_object, ray, prd);
+			result += make_float4(prd.result);
+		}
+
+	output_buffer[launch_index] = result / (AAlevel * AAlevel);
+}
+
+//
 // Enviormement map
 //
 rtTextureSampler<float4, 2> envmap;

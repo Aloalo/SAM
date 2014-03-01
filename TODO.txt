@@ -1,12 +1,12 @@
 Opcenito:
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
+-stack size handleing
 -render to image
 -graphics settings / presets
 -GUI
 
 Grafika:
--AA
 -normal/displacement/parallax mapping?
 -specular(gloss) mapping
 -textured glass mesh

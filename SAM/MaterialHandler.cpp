@@ -48,9 +48,9 @@ Material MaterialHandler::createMaterial(const string &path, const aiMaterial *m
 	mat->Get(AI_MATKEY_SHININESS, phongexp);
 	material["phong_exp"]->setFloat(phongexp);
 
-	material["ambient_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_AMBIENT), defTexture("ambDefault.png"), 16.0f));
-	material["diffuse_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_DIFFUSE), defTexture("diffDefault.png"), 16.0f));
-	material["specular_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_SPECULAR), defTexture("specDefault.png"), 16.0f));
+	material["ambient_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_AMBIENT), defTexture("ambDefault.png")));
+	material["diffuse_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_DIFFUSE), defTexture("diffDefault.png")));
+	material["specular_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_SPECULAR), defTexture("specDefault.png")));
 
 	return material;
 }

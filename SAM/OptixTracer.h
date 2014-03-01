@@ -50,5 +50,6 @@ private:
 	Setting<int> castsShadows;
 	Setting<int> useSchlick;
 	Setting<int> useInternalReflections;
+	Setting<int> MSAA;
 };
 
