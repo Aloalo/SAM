@@ -12,8 +12,9 @@ using namespace utils;
 
 BufferDrawer::BufferDrawer(void)
 	: tex(TextureHandler::genTexture("buffer", GL_TEXTURE_2D)), SETTING(textureFilter),
-	vertices(GL_ARRAY_BUFFER, GL_STATIC_DRAW), outBuffer(GL_ARRAY_BUFFER, GL_STREAM_DRAW), SETTING(postProcess),
-	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p(VertexShader(shader("passthrough").c_str()), FragmentShader(shader(postProcess ? "fxaa" : "passthrough").c_str()))
+	vertices(GL_ARRAY_BUFFER, GL_STATIC_DRAW), outBuffer(GL_ARRAY_BUFFER, GL_STREAM_DRAW),
+	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p(VertexShader(shader("passthrough").c_str()), FragmentShader(shader(postProcess ? "fxaa" : "passthrough").c_str())),
+	SETTING(postProcess)
 {
 	glDataType = GL_FLOAT;
 	glFormat = GL_RGBA;
@@ -65,7 +66,6 @@ void BufferDrawer::init(const Buffer &buffer)
 
 	p.use();
 	glActiveTexture(GL_TEXTURE0);
-	p.setUniform("renderedTexture", 0);
 
 	vao.bind();
 	vertices.setData(quad, sizeof(quad));
@@ -78,14 +78,6 @@ void BufferDrawer::init(const Buffer &buffer)
 
 void BufferDrawer::draw(optix::Buffer &buffer) const
 {
-	try
-	{
-		tex.texImage(0, glTextureFormat, vec3(Environment::get().bufferWidth.x, Environment::get().bufferHeight.x, 0), glFormat, glDataType, 0);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-	}
-	catch(Exception ex)
-	{
-		printf("%s\n", ex.what());
-		exit(-1);
-	}
+	tex.texImage(0, glTextureFormat, vec3(Environment::get().bufferWidth.x, Environment::get().bufferHeight.x, 0), glFormat, glDataType, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 }

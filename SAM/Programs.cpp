@@ -10,10 +10,12 @@ Program Programs::closestHitMesh;
 Program Programs::closestHitGlass;
 Program Programs::anyHitGlass;
 Program Programs::meshBoundingBox;
-Program Programs::meshIntersect;
+Program Programs::meshIntersectNormalMap;
+Program Programs::meshIntersectNoNormalMap;
 Program Programs::boxIntersect;
 Program Programs::boxAABB;
 Program Programs::rayGeneration;
+Program Programs::rayGenerationAA;
 Program Programs::exception;
 Program Programs::envmapMiss;
 Program Programs::gradientMiss;
@@ -29,6 +31,7 @@ void Programs::init(Context &ctx)
 	std::string pathBox(pathToPTX("box.cu"));
 
 	rayGeneration = ctx->createProgramFromPTXFile(contextPath, "pinhole_camera");
+	rayGenerationAA = ctx->createProgramFromPTXFile(contextPath, "pinhole_camera_AA");
 	exception = ctx->createProgramFromPTXFile(contextPath, "exception");
 	envmapMiss = ctx->createProgramFromPTXFile(contextPath, "envmap_miss");
 	gradientMiss = ctx->createProgramFromPTXFile(contextPath, "gradient_miss");
@@ -43,7 +46,8 @@ void Programs::init(Context &ctx)
 	closestHitTransparent = ctx->createProgramFromPTXFile(materialPath, "closest_hit_transparent_mesh");
 
 	meshBoundingBox = ctx->createProgramFromPTXFile(meshPath, "mesh_bounds");
-	meshIntersect = ctx->createProgramFromPTXFile(meshPath, "mesh_intersect");
+	meshIntersectNormalMap = ctx->createProgramFromPTXFile(meshPath, "mesh_intersect_normalmap");
+	meshIntersectNoNormalMap = ctx->createProgramFromPTXFile(meshPath, "mesh_intersect_no_normalmap");
 
 	boxIntersect = ctx->createProgramFromPTXFile(pathBox, "box_intersect");
 	boxAABB = ctx->createProgramFromPTXFile(pathBox, "box_bounds");

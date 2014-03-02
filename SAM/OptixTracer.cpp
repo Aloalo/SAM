@@ -4,6 +4,8 @@
 #include "Programs.h"
 #include <TextureHandler.h>
 
+
+
 using namespace optix;
 using namespace reng;
 using namespace utils;
@@ -11,8 +13,14 @@ using namespace glm;
 using namespace std;
 
 OptixTracer::OptixTracer(void) :
-	SETTING(useInternalReflections), SETTING(castsShadows),
-	SETTING(useSchlick), SETTING(maxRayDepth), matHandler(ctx)
+	SETTING(useInternalReflections),
+	SETTING(castsShadows),
+	SETTING(useSchlick),
+	SETTING(maxRayDepth),
+	SETTING(MSAA),
+	SETTING(renderingDivisionLevel),
+	matHandler(ctx)
+
 {
 }
 
@@ -44,12 +52,13 @@ void OptixTracer::initialize(unsigned int GLBO)
 
 	ctx->setRayTypeCount(2);
 	ctx->setEntryPointCount(1);
-	ctx->setStackSize(2048);
+	ctx->setStackSize(512 * maxRayDepth);
 
 	ctx["radiance_ray_type"]->setUint(0);
 	ctx["shadow_ray_type"]->setUint(1);
 	ctx["scene_epsilon"]->setFloat(1.e-2f);
 	ctx["importance_cutoff"]->setFloat(0.01f);
+	ctx["renderingDivisionLevel"]->setInt(renderingDivisionLevel);
 	ctx["ambient_light_color"]->setFloat(0.3f, 0.3f, 0.3f);
 
 	ctx["max_depth"]->setInt(maxRayDepth);
@@ -67,8 +76,13 @@ void OptixTracer::initialize(unsigned int GLBO)
 	lightBuffer->setElementSize(sizeof(BasicLight));
 	ctx["lights"]->setBuffer(lightBuffer);
 
-
-	ctx->setRayGenerationProgram(0, Programs::rayGeneration);
+	if(MSAA > 1)
+	{
+		ctx->setRayGenerationProgram(0, Programs::rayGenerationAA);
+		ctx["AAlevel"]->setInt(MSAA);
+	}
+	else
+		ctx->setRayGenerationProgram(0, Programs::rayGeneration);
 
 	ctx->setExceptionProgram(0, Programs::exception);
 	ctx["bad_color"]->setFloat(1.0f, 0.0f, 0.0f);
@@ -137,12 +151,18 @@ void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMateri
 
 	vector<float3> vertexData;
 	vector<float3> normalData;
+	vector<float3> tangentData;
 	vector<float2> uvData;
+
+	bool hasNormalMap = mat->GetTextureCount(aiTextureType_HEIGHT) || mat->GetTextureCount(aiTextureType_NORMALS);
 
 	for(int i = 0; i < mesh->mNumVertices; ++i)
 	{
 		vertexData.push_back(make_float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
 		normalData.push_back(make_float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
+		if(hasNormalMap)
+			tangentData.push_back(make_float3(mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z));
+
 		if(mesh->HasTextureCoords(0))
 			uvData.push_back(make_float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
 	}
@@ -152,10 +172,18 @@ void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMateri
 	Geometry gMesh = ctx->createGeometry();
 	gMesh->setPrimitiveCount(indices.size());
 	gMesh->setBoundingBoxProgram(Programs::meshBoundingBox);
-	gMesh->setIntersectionProgram(Programs::meshIntersect);
+	if(hasNormalMap)
+		gMesh->setIntersectionProgram(Programs::meshIntersectNormalMap);
+	else
+		gMesh->setIntersectionProgram(Programs::meshIntersectNoNormalMap);
 
 	gMesh["vertex_buffer"]->setBuffer(getBufferFromVector(vertexData, RT_FORMAT_FLOAT3));
 	gMesh["normal_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
+	if(hasNormalMap)
+	{
+		gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
+		gMesh["normal_map"]->setTextureSampler(matHandler.texHandler.get(path + matHandler.getTextureName(mat, aiTextureType_HEIGHT)));
+	}
 	gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
 	gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
 
@@ -192,7 +220,7 @@ void OptixTracer::addMesh(int mat, const aiMesh *mesh)
 	Geometry gMesh = ctx->createGeometry();
 	gMesh->setPrimitiveCount(indices.size());
 	gMesh->setBoundingBoxProgram(Programs::meshBoundingBox);
-	gMesh->setIntersectionProgram(Programs::meshIntersect);
+	gMesh->setIntersectionProgram(Programs::meshIntersectNoNormalMap);
 
 	gMesh["vertex_buffer"]->setBuffer(getBufferFromVector(vertexData, RT_FORMAT_FLOAT3));
 	gMesh["normal_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
@@ -211,6 +239,8 @@ void OptixTracer::addScene(const std::string &path, const aiScene *scene)
 {
 	for(int i = 0; i < scene->mNumMeshes; ++i)
 		addMesh(path, scene->mMeshes[i], scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
+	printf("%d\n", ctx->getAvailableDeviceMemory(0));
+
 }
 
 void OptixTracer::addScene(int mat, const aiScene * scene)
@@ -234,11 +264,16 @@ void OptixTracer::compileSceneGraph()
 	geometrygroup->setChildCount(gis.size());
 	for(int i = 0; i < gis.size(); ++i)
 		geometrygroup->setChild(i, gis[i]);
-	ctx["top_object"]->set(geometrygroup);
+
+	Transform trans = ctx->createTransform();
+	trans->setChild(geometrygroup);
+	float s = 0.05f;
+	trans->setMatrix(false, (float*)&scale(mat4(1.0f), vec3(s)), (float*)&inverse(scale(mat4(1.0f), vec3(s))));
+	ctx["top_object"]->set(trans);
 
 	geometrygroup->setAcceleration(ctx->createAcceleration("Sbvh", "Bvh"));
 
-	accelHandler.setMesh(resource("crytek-sponza/crytek-sponza.obj"));
+	accelHandler.setMesh(resource("accelCaches/accel.accelcache"));
 	accelHandler.loadAccelCache(geometrygroup);
 
 	if(!accelHandler.accel_cache_loaded)
@@ -255,15 +290,6 @@ void OptixTracer::compileSceneGraph()
 	}
 	ctx->validate();
 	ctx->compile();
-	/*Acceleration accel = ctx->createAcceleration("Sbvh", "Bvh");
-
-	accel->setProperty("index_buffer_name", "index_buffer");
-	accel->setProperty("vertex_buffer_name", "vertex_buffer");
-	geometrygroup->setAcceleration(accel);*/
-
-	/*ctx["top_object"]->set(geometrygroup);
-	ctx->validate();
-	ctx->compile();*/
 }
 
 
@@ -274,7 +300,11 @@ void OptixTracer::clearSceneGraph()
 
 void OptixTracer::trace()
 {
-	ctx->launch(0, Environment::get().bufferWidth, Environment::get().bufferHeight);
+	for(int i = 0; i < renderingDivisionLevel; ++i)
+	{
+		ctx["myStripe"]->setInt(i);
+		ctx->launch(0, Environment::get().bufferWidth, Environment::get().bufferHeight / renderingDivisionLevel);
+	}
 }
 
 BasicLight& OptixTracer::getLight(int i)

@@ -27,7 +27,7 @@ optix::TextureSampler OptixTextureHandler::get(const string &path, const string 
 		sampler->setWrapMode(1, wrapMode);
 		sampler->setWrapMode(2, wrapMode);
 		sampler->setIndexingMode(RT_TEXTURE_INDEX_NORMALIZED_COORDINATES);
-		sampler->setReadMode(RT_TEXTURE_READ_NORMALIZED_FLOAT);
+		sampler->setReadMode(RT_TEXTURE_READ_ELEMENT_TYPE);
 		sampler->setMaxAnisotropy(anisotropy);
 		sampler->setFilteringModes(RT_FILTER_LINEAR, RT_FILTER_LINEAR, RT_FILTER_NONE);
 		mp[ret.getID()] = sampler;

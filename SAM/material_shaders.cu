@@ -130,33 +130,27 @@ rtDeclareVariable(float3, texcoord, attribute texcoord, );
 template<bool transparent>
 static __inline__ __device__ void shade_mesh()
 {
-	float3 direction = ray.direction;
 	float3 world_shading_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
 	float3 world_geometric_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
-	float3 ffnormal = faceforward(world_shading_normal, -direction, world_geometric_normal);
-	float3 uv = texcoord;
+	float3 ffnormal = faceforward(world_shading_normal, -ray.direction, world_geometric_normal);
 
-	if(transparent)
+	if(transparent && prd_radiance.depth < max_depth)
 	{
-		float4 opacity = tex2D(opacity_map, uv.x, uv.y);
-		if(opacity.x < importance_cutoff)
+		if(tex2D(opacity_map, texcoord.x, texcoord.y).x < importance_cutoff)
 		{
-			float3 hit_point = ray.origin + t_hit * ray.direction;
-			optix::Ray newray(hit_point, ray.direction, radiance_ray_type, scene_epsilon);
-			PerRayData_radiance prd;
-			prd.depth = prd_radiance.depth;
-			prd.importance = prd_radiance.importance;
+			optix::Ray newray(ray.origin + t_hit * ray.direction, ray.direction, radiance_ray_type, scene_epsilon);
+			prd_radiance.depth++;
+			rtTrace(top_object, newray, prd_radiance);
 
-			rtTrace(top_object, newray, prd);
-			prd_radiance.result = prd.result;
 			return;
 		}
 	}
 
-	float3 pKa = make_float3(tex2D(ambient_map, uv.x, uv.y));
-	float3 pKd = make_float3(tex2D(diffuse_map, uv.x, uv.y));
-	float3 pKs = make_float3(tex2D(specular_map, uv.x, uv.y));
-
+	float3 pKa = make_float3(tex2D(ambient_map, texcoord.x, texcoord.y));
+	float3 pKd = make_float3(tex2D(diffuse_map, texcoord.x, texcoord.y));
+	float3 pKs = make_float3(tex2D(specular_map, texcoord.x, texcoord.y));
+	
+	//phongShade(ffnormal, make_float3(0.0f), make_float3(0.0f), ffnormal, phong_exp, reflectivity);
 	phongShade(pKa, pKd, pKs, ffnormal, phong_exp, reflectivity);
 }
 

@@ -18,11 +18,13 @@ public:
 
 
 	static optix::Program meshBoundingBox;
-	static optix::Program meshIntersect;
+	static optix::Program meshIntersectNormalMap;
+	static optix::Program meshIntersectNoNormalMap;
 	static optix::Program boxIntersect;
 	static optix::Program boxAABB;
 
 	static optix::Program rayGeneration;
+	static optix::Program rayGenerationAA;
 	static optix::Program exception;
 	static optix::Program envmapMiss;
 	static optix::Program gradientMiss;

@@ -113,6 +113,7 @@
     <ClCompile Include="Programs.cpp" />
     <ClCompile Include="SAM.cpp" />
     <ClCompile Include="OptixTracer.cpp" />
+    <ClCompile Include="SceneGraphHandler.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +134,7 @@
     <ClInclude Include="Programs.h" />
     <ClInclude Include="OptixTracer.h" />
     <ClInclude Include="SafeOptix.h" />
+    <ClInclude Include="SceneGraphHandler.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>

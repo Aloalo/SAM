@@ -47,8 +47,10 @@ private:
 	AccelHandler accelHandler;
 
 	Setting<int> maxRayDepth;
+	Setting<int> renderingDivisionLevel;
 	Setting<int> castsShadows;
 	Setting<int> useSchlick;
 	Setting<int> useInternalReflections;
+	Setting<int> MSAA;
 };
 

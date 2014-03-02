@@ -1,4 +1,5 @@
 Opcenito:
+-REZANJE MEMORIJE NA GRAFI!!
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 -render to image
@@ -6,8 +7,7 @@ Opcenito:
 -GUI
 
 Grafika:
--AA
--normal/displacement/parallax mapping?
+-parallax mapping?
 -specular(gloss) mapping
 -textured glass mesh
 
