@@ -19,11 +19,12 @@ public:
 	optix::Material createMaterial(const std::string &path, const aiMaterial *mat);
 	optix::Material& getLabyrinthMaterial(int mat);
 	void createLabMaterials();
-
-private:
+	
 	std::string getTextureName(const aiMaterial *mat, aiTextureType type) const;
-	std::map<int, optix::Material> labmat;
 
 	OptixTextureHandler texHandler;
+private:
+	std::map<int, optix::Material> labmat;
+
 	optix::Context &ctx;
 };

@@ -39,7 +39,7 @@ static __device__ __inline__ void phongShade(float3 p_Ka,
 
 	for(int i = 0; i < lights.size(); ++i)
 	{
-		BasicLight light = lights[i];
+		const BasicLight &light = lights[i];
 		float attenuation;
 		float Ldist;
 		float3 L;

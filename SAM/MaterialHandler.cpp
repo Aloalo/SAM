@@ -102,6 +102,8 @@ void MaterialHandler::createLabMaterials()
 string MaterialHandler::getTextureName(const aiMaterial *mat, aiTextureType type) const
 {
 	aiString name;
+	if(mat->GetTextureCount(type) == 0)
+		return "texture not found";
 	mat->GetTexture(type, 0, &name, NULL, NULL, NULL, NULL, NULL);
 	return string(name.C_Str());
 }

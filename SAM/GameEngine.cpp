@@ -81,11 +81,9 @@ void GameEngine::update(float deltaTime)
 	static float angle = 0.0f;
 	angle += 0.02f;
 
-	tracer.getLight(0).pos.x = sinf(angle) * 200.0f;
-	tracer.getLight(0).pos.y = cosf(angle) * 200.0f + 400.0f;
-
-	tracer.getLight(0).pos.x = sinf(angle) * 200.0f;
-	tracer.getLight(0).pos.z = cosf(angle) * 200.0f;
+	tracer.getLight(0).pos.x = sinf(angle) * 10.0f;
+	tracer.getLight(0).pos.y = cosf(angle) * 10.0f + 20.0f;
+	tracer.getLight(0).pos.z = cosf(angle) * 10.0f;
 
 	tracer.updateLight(0);
 

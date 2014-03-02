@@ -18,7 +18,8 @@ public:
 
 
 	static optix::Program meshBoundingBox;
-	static optix::Program meshIntersect;
+	static optix::Program meshIntersectNormalMap;
+	static optix::Program meshIntersectNoNormalMap;
 	static optix::Program boxIntersect;
 	static optix::Program boxAABB;
 
