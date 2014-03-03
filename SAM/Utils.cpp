@@ -1,39 +1,54 @@
 #include "Utils.h"
 
-namespace utils
+using namespace optix;
+using namespace glm;
+using namespace std;
+
+float utils::eps = 1e-3f;
+float utils::pi = 3.1415926f;
+string utils::ptxPath = "../SAM/ptxfiles/";
+
+string utils::pathToPTX(const string &filename)
 {
-	std::string pathToPTX(const std::string &filename)
-	{
-		return ptxPath + filename + ".ptx";
-	}
+	return ptxPath + filename + ".ptx";
+}
 
-	std::string defTexture(const std::string &name)
-	{
-		return "../DefaultTextures/" + name;
-	}
+string utils::defTexture(const string &name)
+{
+	return "../DefaultTextures/" + name;
+}
 
-	std::string resource(const std::string &name)
-	{
-		return "../Resources/" + name;
-	}
+string utils::resource(const string &name)
+{
+	return "../Resources/" + name;
+}
 
-	std::string shader(const std::string &name)
-	{
-		return "../Shaders/" + name;
-	}
+string utils::shader(const string &name)
+{
+	return "../Shaders/" + name;
+}
 
-	bool equals(const float3 &x, const float3 &y)
-	{
-		return abs(x.x - y.x) < eps && abs(x.y - y.y) < eps && abs(x.z - y.z) < eps;
-	}
+float3 utils::aiToOptix(const aiVector3D &vec)
+{
+	return make_float3(vec.x, vec.y, vec.z);
+}
 
-	bool equals(float x, float y)
-	{
-		return abs(x - y) < eps;
-	}
-	
-	void print(const float3 &x)
-	{
-		printf("%.2f %.2f %.2f\n", x.x, x.y, x.z);
-	}
-};
+float3 utils::glmToOptix(const vec3 &vec)
+{
+	return make_float3(vec.x, vec.y, vec.z);
+}
+
+bool utils::equals(const float3 &x, const float3 &y)
+{
+	return abs(x.x - y.x) < eps && abs(x.y - y.y) < eps && abs(x.z - y.z) < eps;
+}
+
+bool utils::equals(float x, float y)
+{
+	return abs(x - y) < eps;
+}
+
+void utils::print(const float3 &x)
+{
+	printf("%.2f %.2f %.2f\n", x.x, x.y, x.z);
+}

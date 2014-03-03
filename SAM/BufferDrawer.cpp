@@ -8,12 +8,12 @@ using namespace std;
 using namespace optix;
 using namespace glm;
 using namespace reng;
-using namespace utils;
+
 
 BufferDrawer::BufferDrawer(void)
 	: tex(TextureHandler::genTexture("buffer", GL_TEXTURE_2D)), SETTING(textureFilter),
 	vertices(GL_ARRAY_BUFFER, GL_STATIC_DRAW), outBuffer(GL_ARRAY_BUFFER, GL_STREAM_DRAW),
-	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p(VertexShader(shader("passthrough").c_str()), FragmentShader(shader(postProcess ? "fxaa" : "passthrough").c_str())),
+	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p(VertexShader(utils::shader("passthrough").c_str()), FragmentShader(utils::shader(postProcess ? "fxaa" : "passthrough").c_str())),
 	SETTING(postProcess)
 {
 	glDataType = GL_FLOAT;

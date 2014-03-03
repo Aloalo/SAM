@@ -4,7 +4,7 @@ layout (binding=0) uniform sampler2D renderedTexture;
 layout (location = 0) out vec4 fOut;
 
 #define FXAA_REDUCE_MIN (1.0 / 128.0)
-#define FXAA_REDUCE_MUL (1.0 / 8.0)
+#define FXAA_REDUCE_MUL (1.0 / 4.0)
 #define FXAA_SPAN_MAX 8.0
 
 noperspective in vec2 UV;
@@ -37,6 +37,12 @@ void main()
     float dirReduce = max((lumaNW + lumaNE + lumaSW + lumaSE) * (0.25 * FXAA_REDUCE_MUL), FXAA_REDUCE_MIN);
     float rcpDirMin = 1.0 / (min(abs(dir.x), abs(dir.y)) + dirReduce);
     dir = min(vec2(FXAA_SPAN_MAX, FXAA_SPAN_MAX), max(vec2(-FXAA_SPAN_MAX, -FXAA_SPAN_MAX), dir * rcpDirMin)) * texelSize;
+
+	/*if(dot(dir, dir) > 0.00005)
+		fOut = vec4(1.0, 1.0, 1.0, 1.0);
+	else
+		fOut = vec4(0.0, 0.0, 0.0, 1.0);
+	return;*/
 
     vec3 rgbA = 0.5 * (
         texture(renderedTexture, UV + dir * (1.0 / 3.0 - 0.5)).xyz+

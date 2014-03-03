@@ -146,6 +146,9 @@
     <CudaCompile Include="triangle_mesh.cu" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Shaders\fxaa.frag" />
+    <None Include="..\Shaders\passthrough.frag" />
+    <None Include="..\Shaders\passthrough.vert" />
     <None Include="GraphicsSettings.ini" />
   </ItemGroup>
   <ItemGroup>

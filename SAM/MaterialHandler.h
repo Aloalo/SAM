@@ -20,7 +20,7 @@ public:
 	optix::Material& getLabyrinthMaterial(int mat);
 	void createLabMaterials();
 	
-	std::string getTextureName(const aiMaterial *mat, aiTextureType type) const;
+	std::string getTextureName(const aiMaterial *mat, aiTextureType type, const std::string &path, const std::string &def = "error.png") const;
 
 	OptixTextureHandler texHandler;
 private:

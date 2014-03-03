@@ -1,6 +1,4 @@
 Opcenito:
--REZANJE MEMORIJE NA GRAFI!!
-	-opacity texture
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 -render to image
@@ -12,6 +10,7 @@ Grafika:
 -parallax mapping
 -specular(gloss) mapping
 -textured glass/reflective mesh 
+-EDAA
 
 -dof
 -motion blur

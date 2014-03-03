@@ -81,12 +81,11 @@ void GameEngine::update(float deltaTime)
 	static float timepassed = 0.0f;
 	timepassed += deltaTime;
 
-	float3 v = make_float3(cos(timepassed), -sin(timepassed), -sin(timepassed));
-	tracer.getLight(0).pos += v * deltaTime * 5.0f;
+	tracer.getLight(0).pos = make_float3(0.f, 30.f, 0.f) + 5.f * make_float3(cos(timepassed), -sin(timepassed), -sin(timepassed));
 
-	/*float3 v = make_float3(cos(timepassed), 0, -sin(timepassed));
-	tracer.getLight(0).spot_direction += v * deltaTime * 7.0f;
-	tracer.getLight(0).spot_direction = normalize(tracer.getLight(0).spot_direction);*/
+	//float3 v = make_float3(cos(timepassed), 0, -sin(timepassed));
+	//tracer.getLight(0).spot_direction += v * deltaTime * 7.0f;
+	//tracer.getLight(0).spot_direction = normalize(tracer.getLight(0).spot_direction);
 
 	tracer.updateLight(0);
 	player->update(deltaTime);
