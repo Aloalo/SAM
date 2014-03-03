@@ -1,5 +1,6 @@
 Opcenito:
 -REZANJE MEMORIJE NA GRAFI!!
+	-opacity texture
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 -render to image
@@ -7,16 +8,16 @@ Opcenito:
 -GUI
 
 Grafika:
--parallax mapping?
+-blin-phong shadeing?
+-parallax mapping
 -specular(gloss) mapping
--textured glass mesh
+-textured glass/reflective mesh 
 
 -dof
 -motion blur
 -soft shadows
+-diffuse reflections
 -global illumination (path traceing)?
-
-Fizika:
 
 Rendering Engine:
 -input events

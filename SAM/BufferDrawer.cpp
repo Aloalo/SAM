@@ -31,7 +31,7 @@ BufferDrawer::~BufferDrawer(void)
 unsigned int BufferDrawer::createGLBuffer()
 {
 	outBuffer.bind();
-	outBuffer.setData(0, Environment::get().maxBufferWidth * Environment::get().maxBufferHeight * sizeof(float4));
+	outBuffer.setData(0, Environment::get().bufferWidth * Environment::get().bufferHeight * sizeof(float4));
 	return outBuffer.getID();
 }
 

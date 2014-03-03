@@ -11,8 +11,6 @@ public:
 	Setting<int> screenHeight;
 	Setting<int> bufferWidth;
 	Setting<int> bufferHeight;
-	Setting<int> maxBufferWidth;
-	Setting<int> maxBufferHeight;
 
 private:
 	Environment();

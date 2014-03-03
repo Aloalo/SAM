@@ -53,16 +53,16 @@ RT_PROGRAM void closest_hit_glass()
 {
 	const float3 h = ray.origin + t_hit * ray.direction;
 	const float3 n = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal)); // normal
-	const float3 i = ray.direction;// incident direction
+	const float3 &i = ray.direction;// incident direction
 
 	float reflection = 1.0f;
 	float3 result = make_float3(0.0f);
 
 	float3 beer_attenuation;
-	if(dot(n, ray.direction) > 0)
+	if(dot(n, ray.direction) > 0.0f)
 		beer_attenuation = exp(extinction_constant * t_hit);
 	else
-		beer_attenuation = make_float3(1);
+		beer_attenuation = make_float3(1.0f);
 
 	bool inside = false;
 
@@ -146,9 +146,9 @@ static __inline__ __device__ void shade_mesh()
 		}
 	}
 
-	float3 pKa = make_float3(tex2D(ambient_map, texcoord.x, texcoord.y));
-	float3 pKd = make_float3(tex2D(diffuse_map, texcoord.x, texcoord.y));
-	float3 pKs = make_float3(tex2D(specular_map, texcoord.x, texcoord.y));
+	float3 pKa = make_float3(tex2D(ambient_map, texcoord.x, texcoord.y)) * Ka;
+	float3 pKd = make_float3(tex2D(diffuse_map, texcoord.x, texcoord.y)) * Kd;
+	float3 pKs = make_float3(tex2D(specular_map, texcoord.x, texcoord.y)) * Ks;
 	
 	//phongShade(ffnormal, make_float3(0.0f), make_float3(0.0f), ffnormal, phong_exp, reflectivity);
 	phongShade(pKa, pKd, pKs, ffnormal, phong_exp, reflectivity);

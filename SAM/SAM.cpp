@@ -43,26 +43,37 @@ int main()
 	ptr->tracer.addMesh(lab);*/
 
 	ptr->tracer.addLight(BasicLight(//light0 - point light
-		make_float3(-5.0f, 220.0f, -16.0f), //pos/dir
+		make_float3(0.0f, 30.0f, 10.0f), //pos/dir
 		make_float3(1.0f, 1.0f, 1.0f), //color
-		make_float3(1.0f, 0.1f, 0.0f), //attenuation
-		make_float3(1.0f, 0.0f, 0.0f), //spot_direction
+		make_float3(1.0f, 0.01f, 0.0f), //attenuation
+		make_float3(0.0f, 0.0f, 0.0f), //spot_direction
 		360.0f, //spot_cutoff
 		0.0f, //spot_exponent
 		1, //casts_shadows
 		0 //is_directional
 		));
 
-	ptr->tracer.addLight(BasicLight(//light0 - point light
-		make_float3(1, 1, 1), //pos/dir
-		make_float3(0.1f, 0.1f, 0.1f), //color
-		make_float3(1.0f, 0.1f, 0.0f), //attenuation
-		make_float3(1.0f, 0.0f, 0.0f), //spot_direction
-		360.0f, //spot_cutoff
-		0.0f, //spot_exponent
-		0, //casts_shadows
-		1 //is_directional
-		));
+	//ptr->tracer.addLight(BasicLight(//light1 - spot light
+	//	make_float3(0.0f, 30.0f, 0.0f), //pos/dir
+	//	make_float3(1.0f, 1.0f, 1.0f), //color
+	//	make_float3(1.0f, 0.01f, 0.0f), //attenuation
+	//	make_float3(1.0f, 0.0f, 0.0f), //spot_direction
+	//	22.5f, //spot_cutoff
+	//	10.0f, //spot_exponent
+	//	1, //casts_shadows
+	//	0 //is_directional
+	//	));
+
+	//ptr->tracer.addLight(BasicLight(//light2 - directional light
+	//	make_float3(1, 1, 1), //pos/dir
+	//	make_float3(0.1f, 0.1f, 0.1f), //color
+	//	make_float3(1.0f, 0.1f, 0.0f), //attenuation
+	//	make_float3(1.0f, 0.0f, 0.0f), //spot_direction
+	//	360.0f, //spot_cutoff
+	//	0.0f, //spot_exponent
+	//	0, //casts_shadows
+	//	1 //is_directional
+	//	));
 
 	input.addInputObserver(ptr);
 	input.setMouseMoveCallback();

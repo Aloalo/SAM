@@ -20,7 +20,6 @@ OptixTracer::OptixTracer(void) :
 	SETTING(MSAA),
 	SETTING(renderingDivisionLevel),
 	matHandler(ctx)
-
 {
 }
 
@@ -38,10 +37,8 @@ Buffer OptixTracer::getBuffer()
 void OptixTracer::setBufferSize(int w, int h)
 {
 	w = max(1, w);
-	w = min(w, Environment::get().maxBufferWidth);
 
 	h = max(1, h);
-	h = min(h, Environment::get().maxBufferHeight);
 	ctx["output_buffer"]->getBuffer()->setSize(w, h);
 }
 
@@ -52,7 +49,7 @@ void OptixTracer::initialize(unsigned int GLBO)
 
 	ctx->setRayTypeCount(2);
 	ctx->setEntryPointCount(1);
-	ctx->setStackSize(512 * maxRayDepth);
+	ctx->setStackSize(330 * maxRayDepth);
 
 	ctx["radiance_ray_type"]->setUint(0);
 	ctx["shadow_ray_type"]->setUint(1);
@@ -166,8 +163,6 @@ void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMateri
 		if(mesh->HasTextureCoords(0))
 			uvData.push_back(make_float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
 	}
-	if(uvData.empty())
-		uvData = vector<float2>(mesh->mNumVertices, make_float2(0.0f));
 
 	Geometry gMesh = ctx->createGeometry();
 	gMesh->setPrimitiveCount(indices.size());
@@ -205,7 +200,7 @@ void OptixTracer::addMesh(int mat, const aiMesh *mesh)
 
 	vector<float3> vertexData;
 	vector<float3> normalData;
-	vector<float2> uvData;
+	vector<float2> uvData(0);
 
 	for(int i = 0; i < mesh->mNumVertices; ++i)
 	{
@@ -214,8 +209,6 @@ void OptixTracer::addMesh(int mat, const aiMesh *mesh)
 		if(mesh->HasTextureCoords(0))
 			uvData.push_back(make_float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
 	}
-	if(uvData.empty())
-		uvData = vector<float2>(mesh->mNumVertices, make_float2(0.0f));
 
 	Geometry gMesh = ctx->createGeometry();
 	gMesh->setPrimitiveCount(indices.size());
