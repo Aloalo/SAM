@@ -1,13 +1,12 @@
 #pragma once
 
-#include "Macros.h"
+#include "SafeOptix.h"
 #include <string>
 #include <glm/glm.hpp>
-#include <optix_math.h>
 #include <assimp/mesh.h>
 
-//host utils
-class utils
+//host Utils
+class Utils
 {
 public:
 	static float eps;

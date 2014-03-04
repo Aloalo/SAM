@@ -183,12 +183,12 @@ void Labyrinth::addBox(const Box &box)
 		Box b = boxVec[i];
 		if(b.matIdx == box.matIdx)
 		{
-			if(utils::equals(b.getDepth(), box.getDepth()) && utils::equals(box.getDepth(), crackDim))
+			if(Utils::equals(b.getDepth(), box.getDepth()) && Utils::equals(box.getDepth(), crackDim))
 			{
 				Box left = b.boxmin.x > box.boxmin.x ? b : box;
 				Box right = b.boxmin.x < box.boxmin.x ? b : box;
-				if(utils::equals(left.boxmin.x - crackDim, right.boxmax.x) &&
-					utils::equals(left.boxmax.z, right.boxmax.z))
+				if(Utils::equals(left.boxmin.x - crackDim, right.boxmax.x) &&
+					Utils::equals(left.boxmax.z, right.boxmax.z))
 				{
 					boxVec.erase(boxVec.begin() + i);
 					Box newBox(right.boxmin, left.boxmax, left.matIdx);
@@ -197,12 +197,12 @@ void Labyrinth::addBox(const Box &box)
 					break;
 				}
 			}
-			else if(utils::equals(b.getWidth(), box.getWidth()))
+			else if(Utils::equals(b.getWidth(), box.getWidth()))
 			{
 				Box up = b.boxmin.z > box.boxmin.z ? b : box;
 				Box down = b.boxmin.z < box.boxmin.z ? b : box;
-				if(utils::equals(down.boxmax.z + crackDim, up.boxmin.z) &&
-					utils::equals(down.boxmax.x, up.boxmax.x))
+				if(Utils::equals(down.boxmax.z + crackDim, up.boxmin.z) &&
+					Utils::equals(down.boxmax.x, up.boxmax.x))
 				{
 					boxVec.erase(boxVec.begin() + i);
 					Box newBox(down.boxmin, up.boxmax, up.matIdx);

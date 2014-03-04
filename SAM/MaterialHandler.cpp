@@ -95,7 +95,7 @@ string MaterialHandler::getTextureName(const aiMaterial *mat, aiTextureType type
 {
 	aiString name;
 	if(mat->GetTextureCount(type) == 0)
-		return utils::defTexture(def);
+		return Utils::defTexture(def);
 
 	mat->GetTexture(type, 0, &name, NULL, NULL, NULL, NULL, NULL);
 	return path + string(name.C_Str());

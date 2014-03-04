@@ -38,7 +38,7 @@ public:
 private:
 	template<class T>
 	optix::Buffer getBufferFromVector(const std::vector<T> &vec, RTformat type);
-	optix::Geometry getGeometry(const aiMesh *mesh, const aiMaterial *mat = NULL, const std::string &path = utils::defTexture(""));
+	optix::Geometry getGeometry(const aiMesh *mesh, const aiMaterial *mat = NULL, const std::string &path = Utils::defTexture(""));
 	
 	optix::Context ctx;
 	std::vector<optix::GeometryInstance> gis;

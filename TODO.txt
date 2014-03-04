@@ -1,23 +1,28 @@
 Opcenito:
+-output buffer format
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 -render to image
 -graphics settings / presets
--GUI
 
 Grafika:
--blin-phong shadeing?
 -parallax mapping
 -specular(gloss) mapping
 -textured glass/reflective mesh 
 -EDAA
 
--dof
--motion blur
--soft shadows
--diffuse reflections
--global illumination (path traceing)?
+-distributed ray tracing
+	-stochastic MSAA
+	-dof
+	-motion blur
+	-soft shadows
+	-diffuse reflections
+	-fuzzy transparency
+-global illumination
+	-(bidirectional) path tracing
+	-photon mapping
 
 Rendering Engine:
 -input events
 -active input observers
+-GUI

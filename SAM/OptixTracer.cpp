@@ -82,7 +82,7 @@ void OptixTracer::initialize(unsigned int GLBO)
 		ctx->setRayGenerationProgram(0, Programs::rayGeneration);
 
 	ctx->setMissProgram(0, Programs::envmapMiss);
-	ctx["envmap"]->setTextureSampler(matHandler.texHandler.get(utils::defTexture("environment.jpg")));
+	ctx["envmap"]->setTextureSampler(matHandler.texHandler.get(Utils::defTexture("environment.jpg")));
 
 	ctx->setExceptionProgram(0, Programs::exception);
 	ctx["bad_color"]->setFloat(1.0f, 0.0f, 0.0f);
@@ -106,7 +106,7 @@ void OptixTracer::addMesh(const Labyrinth &lab)
 			&matHandler.getLabyrinthMaterial(walls[i].matIdx)+1));
 	}
 
-	std::string pathFloor = utils::pathToPTX("rectangleAA.cu"); //TODO: texture floor
+	std::string pathFloor = Utils::pathToPTX("rectangleAA.cu"); //TODO: texture floor
 	Geometry floor = ctx->createGeometry();
 	floor->setPrimitiveCount(1);
 	floor->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
@@ -151,10 +151,10 @@ Geometry OptixTracer::getGeometry(const aiMesh *mesh, const aiMaterial *mat, con
 
 	for(int i = 0; i < mesh->mNumVertices; ++i)
 	{
-		vertexData.push_back(utils::aiToOptix(mesh->mVertices[i]));
-		normalData.push_back(utils::aiToOptix(mesh->mNormals[i]));
+		vertexData.push_back(Utils::aiToOptix(mesh->mVertices[i]));
+		normalData.push_back(Utils::aiToOptix(mesh->mNormals[i]));
 		if(hasNormalMap)
-			tangentData.push_back(utils::aiToOptix(mesh->mTangents[i]));
+			tangentData.push_back(Utils::aiToOptix(mesh->mTangents[i]));
 
 		if(mesh->HasTextureCoords(0))
 			uvData.push_back(make_float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
@@ -177,6 +177,8 @@ Geometry OptixTracer::getGeometry(const aiMesh *mesh, const aiMaterial *mat, con
 	}
 	gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
 	gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
+
+	return gMesh;
 }
 
 void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMaterial *mat)
@@ -240,7 +242,7 @@ void OptixTracer::compileSceneGraph()
 
 	geometrygroup->setAcceleration(ctx->createAcceleration("Sbvh", "Bvh"));
 
-	accelHandler.setMesh(utils::resource("accelCaches/accel.accelcache"));
+	accelHandler.setMesh(Utils::resource("accelCaches/accel.accelcache"));
 	accelHandler.loadAccelCache(geometrygroup);
 
 	if(!accelHandler.accel_cache_loaded)
@@ -287,10 +289,10 @@ void OptixTracer::updateLight(int idx)
 
 void OptixTracer::setCamera(const Camera &cam)
 {
-	float tanfov = tanf(cam.FoV * utils::pi / 360.0f) * 0.5f;
+	float tanfov = tanf(cam.FoV * Utils::pi / 360.0f) * 0.5f;
 
-	ctx["eye"]->setFloat(utils::glmToOptix(cam.position));
-	ctx["U"]->setFloat(utils::glmToOptix(cam.getRight() * tanfov * cam.aspectRatio));
-	ctx["V"]->setFloat(utils::glmToOptix(cam.getUp() * tanfov));
-	ctx["W"]->setFloat(utils::glmToOptix(cam.getDirection()));
+	ctx["eye"]->setFloat(Utils::glmToOptix(cam.position));
+	ctx["U"]->setFloat(Utils::glmToOptix(cam.getRight() * tanfov * cam.aspectRatio));
+	ctx["V"]->setFloat(Utils::glmToOptix(cam.getUp() * tanfov));
+	ctx["W"]->setFloat(Utils::glmToOptix(cam.getDirection()));
 }

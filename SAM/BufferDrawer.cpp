@@ -13,7 +13,7 @@ using namespace reng;
 BufferDrawer::BufferDrawer(void)
 	: tex(TextureHandler::genTexture("buffer", GL_TEXTURE_2D)), SETTING(textureFilter),
 	vertices(GL_ARRAY_BUFFER, GL_STATIC_DRAW), outBuffer(GL_ARRAY_BUFFER, GL_STREAM_DRAW),
-	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p(VertexShader(utils::shader("passthrough").c_str()), FragmentShader(utils::shader(postProcess ? "fxaa" : "passthrough").c_str())),
+	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p(VertexShader(Utils::shader("passthrough").c_str()), FragmentShader(Utils::shader(postProcess ? "fxaa" : "passthrough").c_str())),
 	SETTING(postProcess)
 {
 	glDataType = GL_FLOAT;
@@ -37,7 +37,7 @@ unsigned int BufferDrawer::createGLBuffer()
 
 void BufferDrawer::init(const Buffer &buffer)
 {
-	GLfloat quad[] = 
+	const GLfloat quad[] = 
 	{ 
 		-1.0f, -1.0f, 0.0f,
 		1.0f, -1.0f, 0.0f,
