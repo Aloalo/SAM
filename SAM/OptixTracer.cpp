@@ -4,11 +4,8 @@
 #include "Programs.h"
 #include <TextureHandler.h>
 
-
-
 using namespace optix;
 using namespace reng;
-using namespace utils;
 using namespace glm;
 using namespace std;
 
@@ -20,10 +17,8 @@ OptixTracer::OptixTracer(void) :
 	SETTING(MSAA),
 	SETTING(renderingDivisionLevel),
 	matHandler(ctx)
-
 {
 }
-
 
 OptixTracer::~OptixTracer(void)
 {
@@ -38,21 +33,23 @@ Buffer OptixTracer::getBuffer()
 void OptixTracer::setBufferSize(int w, int h)
 {
 	w = max(1, w);
-	w = min(w, Environment::get().maxBufferWidth);
 
 	h = max(1, h);
-	h = min(h, Environment::get().maxBufferHeight);
 	ctx["output_buffer"]->getBuffer()->setSize(w, h);
 }
 
 void OptixTracer::initialize(unsigned int GLBO)
 {
 	ctx = Context::create();
+	printf("Available device memory: %d MB\n", ctx->getAvailableDeviceMemory(0) >> 20);
+
+
 	Programs::init(ctx);
 
 	ctx->setRayTypeCount(2);
 	ctx->setEntryPointCount(1);
-	ctx->setStackSize(512 * maxRayDepth);
+	ctx->setCPUNumThreads(4);
+	ctx->setStackSize(768 + 256 * maxRayDepth);
 
 	ctx["radiance_ray_type"]->setUint(0);
 	ctx["shadow_ray_type"]->setUint(1);
@@ -84,20 +81,11 @@ void OptixTracer::initialize(unsigned int GLBO)
 	else
 		ctx->setRayGenerationProgram(0, Programs::rayGeneration);
 
+	ctx->setMissProgram(0, Programs::envmapMiss);
+	ctx["envmap"]->setTextureSampler(matHandler.texHandler.get(Utils::defTexture("environment.jpg")));
+
 	ctx->setExceptionProgram(0, Programs::exception);
 	ctx["bad_color"]->setFloat(1.0f, 0.0f, 0.0f);
-
-	ctx->setMissProgram(0, Programs::envmapMiss);
-	Texture tex = TextureHandler::getTexture(utils::defTexture("environment.jpg"));
-	optix::TextureSampler sampler = ctx->createTextureSamplerFromGLImage(tex.getID(), RT_TARGET_GL_TEXTURE_2D);
-	sampler->setWrapMode(0, RT_WRAP_REPEAT);
-	sampler->setWrapMode(1, RT_WRAP_REPEAT);
-	sampler->setWrapMode(2, RT_WRAP_REPEAT);
-	sampler->setIndexingMode(RT_TEXTURE_INDEX_NORMALIZED_COORDINATES);
-	sampler->setReadMode(RT_TEXTURE_READ_NORMALIZED_FLOAT);
-	sampler->setMaxAnisotropy(1.0f);
-	sampler->setFilteringModes(RT_FILTER_LINEAR, RT_FILTER_LINEAR, RT_FILTER_NONE);
-	ctx["envmap"]->setTextureSampler(sampler);
 
 	matHandler.createLabMaterials();
 }
@@ -118,7 +106,7 @@ void OptixTracer::addMesh(const Labyrinth &lab)
 			&matHandler.getLabyrinthMaterial(walls[i].matIdx)+1));
 	}
 
-	std::string pathFloor = pathToPTX("rectangleAA.cu"); //TODO: texture floor
+	std::string pathFloor = Utils::pathToPTX("rectangleAA.cu"); //TODO: texture floor
 	Geometry floor = ctx->createGeometry();
 	floor->setPrimitiveCount(1);
 	floor->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
@@ -143,31 +131,34 @@ Buffer OptixTracer::getBufferFromVector(const vector<T> &vec, RTformat type)
 	return ret;
 }
 
-void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMaterial *mat)
+Geometry OptixTracer::getGeometry(const aiMesh *mesh, const aiMaterial *mat, const std::string &path)
 {
 	vector<int3> indices;
+	indices.reserve(mesh->mNumFaces);
 	for(int i = 0; i < mesh->mNumFaces; ++i)
 		indices.push_back(make_int3(mesh->mFaces[i].mIndices[0], mesh->mFaces[i].mIndices[1], mesh->mFaces[i].mIndices[2]));
 
 	vector<float3> vertexData;
+	vertexData.reserve(mesh->mNumVertices);
 	vector<float3> normalData;
+	normalData.reserve(mesh->mNumVertices);
 	vector<float3> tangentData;
+	tangentData.reserve(mesh->mNumVertices);
 	vector<float2> uvData;
+	uvData.reserve(mesh->mNumVertices);
 
-	bool hasNormalMap = mat->GetTextureCount(aiTextureType_HEIGHT) || mat->GetTextureCount(aiTextureType_NORMALS);
+	bool hasNormalMap = mat == NULL ? 0 : mat->GetTextureCount(aiTextureType_HEIGHT) || mat->GetTextureCount(aiTextureType_NORMALS);
 
 	for(int i = 0; i < mesh->mNumVertices; ++i)
 	{
-		vertexData.push_back(make_float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
-		normalData.push_back(make_float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
+		vertexData.push_back(Utils::aiToOptix(mesh->mVertices[i]));
+		normalData.push_back(Utils::aiToOptix(mesh->mNormals[i]));
 		if(hasNormalMap)
-			tangentData.push_back(make_float3(mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z));
+			tangentData.push_back(Utils::aiToOptix(mesh->mTangents[i]));
 
 		if(mesh->HasTextureCoords(0))
 			uvData.push_back(make_float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
 	}
-	if(uvData.empty())
-		uvData = vector<float2>(mesh->mNumVertices, make_float2(0.0f));
 
 	Geometry gMesh = ctx->createGeometry();
 	gMesh->setPrimitiveCount(indices.size());
@@ -182,11 +173,18 @@ void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMateri
 	if(hasNormalMap)
 	{
 		gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
-		gMesh["normal_map"]->setTextureSampler(matHandler.texHandler.get(path + matHandler.getTextureName(mat, aiTextureType_HEIGHT)));
+		gMesh["normal_map"]->setTextureSampler(matHandler.texHandler.get(matHandler.getTextureName(mat, aiTextureType_HEIGHT, path), 
+			Utils::defTexture("error.png"), 0.0f, RT_WRAP_REPEAT, GL_RGBA32F_ARB));
 	}
 	gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
 	gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
 
+	return gMesh;
+}
+
+void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMaterial *mat)
+{
+	Geometry gMesh = getGeometry(mesh, mat, path);
 	Material material = matHandler.createMaterial(path, mat);
 	
 	GeometryInstance inst = ctx->createGeometryInstance();
@@ -199,33 +197,7 @@ void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMateri
 
 void OptixTracer::addMesh(int mat, const aiMesh *mesh)
 {
-	vector<int3> indices;
-	for(int i = 0; i < mesh->mNumFaces; ++i)
-		indices.push_back(make_int3(mesh->mFaces[i].mIndices[0], mesh->mFaces[i].mIndices[1], mesh->mFaces[i].mIndices[2]));
-
-	vector<float3> vertexData;
-	vector<float3> normalData;
-	vector<float2> uvData;
-
-	for(int i = 0; i < mesh->mNumVertices; ++i)
-	{
-		vertexData.push_back(make_float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z));
-		normalData.push_back(make_float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
-		if(mesh->HasTextureCoords(0))
-			uvData.push_back(make_float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
-	}
-	if(uvData.empty())
-		uvData = vector<float2>(mesh->mNumVertices, make_float2(0.0f));
-
-	Geometry gMesh = ctx->createGeometry();
-	gMesh->setPrimitiveCount(indices.size());
-	gMesh->setBoundingBoxProgram(Programs::meshBoundingBox);
-	gMesh->setIntersectionProgram(Programs::meshIntersectNoNormalMap);
-
-	gMesh["vertex_buffer"]->setBuffer(getBufferFromVector(vertexData, RT_FORMAT_FLOAT3));
-	gMesh["normal_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
-	gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
-	gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
+	Geometry gMesh = getGeometry(mesh);
 
 	GeometryInstance inst = ctx->createGeometryInstance();
 	inst->setMaterialCount(1);
@@ -239,8 +211,6 @@ void OptixTracer::addScene(const std::string &path, const aiScene *scene)
 {
 	for(int i = 0; i < scene->mNumMeshes; ++i)
 		addMesh(path, scene->mMeshes[i], scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
-	printf("%d\n", ctx->getAvailableDeviceMemory(0));
-
 }
 
 void OptixTracer::addScene(int mat, const aiScene * scene)
@@ -273,7 +243,7 @@ void OptixTracer::compileSceneGraph()
 
 	geometrygroup->setAcceleration(ctx->createAcceleration("Sbvh", "Bvh"));
 
-	accelHandler.setMesh(resource("accelCaches/accel.accelcache"));
+	accelHandler.setMesh(Utils::resource("accelCaches/accel.accelcache"));
 	accelHandler.loadAccelCache(geometrygroup);
 
 	if(!accelHandler.accel_cache_loaded)
@@ -290,6 +260,8 @@ void OptixTracer::compileSceneGraph()
 	}
 	ctx->validate();
 	ctx->compile();
+	
+	printf("Available device memory after compile: %d MB\n", ctx->getAvailableDeviceMemory(0) >> 20);
 }
 
 
@@ -300,6 +272,7 @@ void OptixTracer::clearSceneGraph()
 
 void OptixTracer::trace()
 {
+	//printf("Available device memory: %d MB\n", ctx->getAvailableDeviceMemory(0) >> 20);
 	for(int i = 0; i < renderingDivisionLevel; ++i)
 	{
 		ctx["myStripe"]->setInt(i);
@@ -320,14 +293,10 @@ void OptixTracer::updateLight(int idx)
 
 void OptixTracer::setCamera(const Camera &cam)
 {
-	float tanfov = tanf(cam.FoV * pi / 360.0f) * 0.5f;
-	vec3 eye = cam.position;
-	vec3 U = cam.getRight() * tanfov * cam.aspectRatio;
-	vec3 V = cam.getUp() * tanfov;
-	vec3 W = cam.getDirection();
+	float tanfov = tanf(cam.FoV * Utils::pi / 360.0f) * 0.5f;
 
-	ctx["eye"]->setFloat(make_float3(eye.x, eye.y, eye.z));
-	ctx["U"]->setFloat(make_float3(U.x, U.y, U.z));
-	ctx["V"]->setFloat(make_float3(V.x, V.y, V.z));
-	ctx["W"]->setFloat(make_float3(W.x, W.y, W.z));
+	ctx["eye"]->setFloat(Utils::glmToOptix(cam.position));
+	ctx["U"]->setFloat(Utils::glmToOptix(cam.getRight() * tanfov * cam.aspectRatio));
+	ctx["V"]->setFloat(Utils::glmToOptix(cam.getUp() * tanfov));
+	ctx["W"]->setFloat(Utils::glmToOptix(cam.getDirection()));
 }

@@ -19,10 +19,9 @@ RT_PROGRAM void pinhole_camera()
 	float2 screen = make_float2(output_buffer.size());
 	uint2 newLaunchIndex = make_uint2(launch_index.x, launch_index.y + myStripe * output_buffer.size().y / renderingDivisionLevel);
 	float2 d = make_float2(newLaunchIndex) / screen * 2.f - 1.f;
-	float3 ray_origin = eye;
 	float3 ray_direction = normalize(d.x * U + d.y * V + W);
 
-	optix::Ray ray(ray_origin, ray_direction, radiance_ray_type, scene_epsilon);
+	optix::Ray ray(eye, ray_direction, radiance_ray_type, scene_epsilon);
 
 	PerRayData_radiance prd;
 	prd.importance = 1.f;
@@ -34,7 +33,7 @@ RT_PROGRAM void pinhole_camera()
 }
 
 //
-// Pinhole camera implementation with SSAA
+// Pinhole camera implementation with MSAA
 //
 
 rtDeclareVariable(int, AAlevel, , );
@@ -49,10 +48,9 @@ RT_PROGRAM void pinhole_camera_AA()
 		for(int j = 0; j < AAlevel; ++j)
 		{
 			float2 d = make_float2(AAlevel * newLaunchIndex.x + i, AAlevel * newLaunchIndex.y + j) / screen * 2.f - 1.f;
-			float3 ray_origin = eye;
 			float3 ray_direction = normalize(d.x * U + d.y * V + W);
 
-			optix::Ray ray(ray_origin, ray_direction, radiance_ray_type, scene_epsilon);
+			optix::Ray ray(eye, ray_direction, radiance_ray_type, scene_epsilon);
 
 			PerRayData_radiance prd;
 			prd.importance = 1.f;
@@ -68,7 +66,7 @@ RT_PROGRAM void pinhole_camera_AA()
 //
 // Enviormement map
 //
-rtTextureSampler<float4, 2> envmap;
+rtTextureSampler<uchar4, 2, cudaReadModeNormalizedFloat> envmap;
 RT_PROGRAM void envmap_miss()
 {
 	float theta = atan2f(ray.direction.x, ray.direction.z);

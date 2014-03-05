@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Handlers">
       <UniqueIdentifier>{c2976fd7-460a-4b6f-8bd4-cc5ea426a642}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{5443d6af-c24e-49c8-a3b0-065b25964a99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp">
@@ -157,6 +160,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="GraphicsSettings.ini" />
+    <None Include="..\Shaders\passthrough.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\passthrough.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\fxaa.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\TODO.txt" />

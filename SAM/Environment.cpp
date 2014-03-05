@@ -10,7 +10,9 @@ Environment& Environment::get()
 }
 
 Environment::Environment(void) :
-	SETTING(screenHeight), SETTING(screenWidth), SETTING(bufferHeight),
-	SETTING(bufferWidth), SETTING(maxBufferHeight), SETTING(maxBufferWidth)
+	SETTING(screenHeight),
+	SETTING(screenWidth),
+	SETTING(bufferHeight),
+	SETTING(bufferWidth)
 {
 }

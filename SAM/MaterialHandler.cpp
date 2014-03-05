@@ -4,7 +4,7 @@
 
 using namespace std;
 using namespace optix;
-using namespace utils;
+
 
 MaterialHandler::MaterialHandler(optix::Context &ctx)
 	: ctx(ctx), texHandler(ctx)
@@ -19,17 +19,9 @@ MaterialHandler::~MaterialHandler(void)
 Material MaterialHandler::createMaterial(const string &path, const aiMaterial *mat)
 {
 	Material material = ctx->createMaterial();
-	if(mat->GetTextureCount(aiTextureType_OPACITY) > 0)
-	{
-		material->setClosestHitProgram(0, Programs::closestHitTransparent);
-		material->setAnyHitProgram(1, Programs::anyHitTransparent);
-		material["opacity_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_OPACITY), defTexture("opacityDefault.png")));
-	}
-	else
-	{
-		material->setClosestHitProgram(0, Programs::closestHitMesh);
-		material->setAnyHitProgram(1, Programs::anyHitSolid);
-	}
+	
+	material->setClosestHitProgram(0, Programs::closestHitMesh);
+	material->setAnyHitProgram(1, Programs::anyHitSolid);
 
 	aiColor3D color;
 	mat->Get(AI_MATKEY_COLOR_AMBIENT, color);
@@ -48,9 +40,9 @@ Material MaterialHandler::createMaterial(const string &path, const aiMaterial *m
 	mat->Get(AI_MATKEY_SHININESS, phongexp);
 	material["phong_exp"]->setFloat(phongexp);
 
-	material["ambient_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_AMBIENT), defTexture("ambDefault.png")));
-	material["diffuse_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_DIFFUSE), defTexture("diffDefault.png")));
-	material["specular_map"]->setTextureSampler(texHandler.get(path + getTextureName(mat, aiTextureType_SPECULAR), defTexture("specDefault.png")));
+	material["ambient_map"]->setTextureSampler(texHandler.get(getTextureName(mat, aiTextureType_AMBIENT, path, "ambDefault.png")));
+	material["diffuse_map"]->setTextureSampler(texHandler.get(getTextureName(mat, aiTextureType_DIFFUSE, path, "diffDefault.png")));
+	material["specular_map"]->setTextureSampler(texHandler.get(getTextureName(mat, aiTextureType_SPECULAR, path, "specDefault.png")));
 
 	return material;
 }
@@ -99,11 +91,12 @@ void MaterialHandler::createLabMaterials()
 	labmat[GLASS] = glassMaterial;
 }
 
-string MaterialHandler::getTextureName(const aiMaterial *mat, aiTextureType type) const
+string MaterialHandler::getTextureName(const aiMaterial *mat, aiTextureType type, const string &path, const string &def) const
 {
 	aiString name;
 	if(mat->GetTextureCount(type) == 0)
-		return "texture not found";
+		return Utils::defTexture(def);
+
 	mat->GetTexture(type, 0, &name, NULL, NULL, NULL, NULL, NULL);
-	return string(name.C_Str());
+	return path + string(name.C_Str());
 }

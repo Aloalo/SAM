@@ -8,12 +8,12 @@ using namespace std;
 using namespace optix;
 using namespace glm;
 using namespace reng;
-using namespace utils;
+
 
 BufferDrawer::BufferDrawer(void)
 	: tex(TextureHandler::genTexture("buffer", GL_TEXTURE_2D)), SETTING(textureFilter),
 	vertices(GL_ARRAY_BUFFER, GL_STATIC_DRAW), outBuffer(GL_ARRAY_BUFFER, GL_STREAM_DRAW),
-	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p(VertexShader(shader("passthrough").c_str()), FragmentShader(shader(postProcess ? "fxaa" : "passthrough").c_str())),
+	vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p(VertexShader(Utils::shader("passthrough").c_str()), FragmentShader(Utils::shader(postProcess ? "fxaa" : "passthrough").c_str())),
 	SETTING(postProcess)
 {
 	glDataType = GL_FLOAT;
@@ -31,13 +31,13 @@ BufferDrawer::~BufferDrawer(void)
 unsigned int BufferDrawer::createGLBuffer()
 {
 	outBuffer.bind();
-	outBuffer.setData(0, Environment::get().maxBufferWidth * Environment::get().maxBufferHeight * sizeof(float4));
+	outBuffer.setData(0, Environment::get().bufferWidth * Environment::get().bufferHeight * sizeof(float4));
 	return outBuffer.getID();
 }
 
 void BufferDrawer::init(const Buffer &buffer)
 {
-	GLfloat quad[] = 
+	const GLfloat quad[] = 
 	{ 
 		-1.0f, -1.0f, 0.0f,
 		1.0f, -1.0f, 0.0f,

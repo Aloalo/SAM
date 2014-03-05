@@ -2,7 +2,7 @@
 #include "Utils.h"
 
 using namespace optix;
-using namespace utils;
+
 
 Program Programs::anyHitSolid;
 Program Programs::closestHitSolid;
@@ -20,15 +20,13 @@ Program Programs::exception;
 Program Programs::envmapMiss;
 Program Programs::gradientMiss;
 Program Programs::solidMiss;
-Program Programs::anyHitTransparent;
-Program Programs::closestHitTransparent;
 
 void Programs::init(Context &ctx)
 {
-	std::string materialPath(pathToPTX("material_shaders.cu"));
-	std::string contextPath(pathToPTX("context_shaders.cu"));
-	std::string meshPath(pathToPTX("triangle_mesh.cu"));
-	std::string pathBox(pathToPTX("box.cu"));
+	std::string materialPath(Utils::pathToPTX("material_shaders.cu"));
+	std::string contextPath(Utils::pathToPTX("context_shaders.cu"));
+	std::string meshPath(Utils::pathToPTX("triangle_mesh.cu"));
+	std::string pathBox(Utils::pathToPTX("box.cu"));
 
 	rayGeneration = ctx->createProgramFromPTXFile(contextPath, "pinhole_camera");
 	rayGenerationAA = ctx->createProgramFromPTXFile(contextPath, "pinhole_camera_AA");
@@ -42,8 +40,6 @@ void Programs::init(Context &ctx)
 	closestHitGlass = ctx->createProgramFromPTXFile(materialPath, "closest_hit_glass");
 	anyHitGlass = ctx->createProgramFromPTXFile(materialPath, "any_hit_shadow_glass");
 	closestHitMesh = ctx->createProgramFromPTXFile(materialPath, "closest_hit_mesh");
-	anyHitTransparent = ctx->createProgramFromPTXFile(materialPath, "any_hit_transparent");
-	closestHitTransparent = ctx->createProgramFromPTXFile(materialPath, "closest_hit_transparent_mesh");
 
 	meshBoundingBox = ctx->createProgramFromPTXFile(meshPath, "mesh_bounds");
 	meshIntersectNormalMap = ctx->createProgramFromPTXFile(meshPath, "mesh_intersect_normalmap");

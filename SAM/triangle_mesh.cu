@@ -10,7 +10,7 @@ rtBuffer<float3> normal_buffer;
 rtBuffer<float3> tangent_buffer;
 rtBuffer<float2> texcoord_buffer;
 rtBuffer<int3> index_buffer;
-rtTextureSampler<float4, 2> normal_map;
+rtTextureSampler<float4, 2, cudaReadModeElementType> normal_map;
 
 rtDeclareVariable(float3, texcoord, attribute texcoord, ); 
 rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, ); 

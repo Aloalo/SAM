@@ -88,7 +88,7 @@ static __device__ __inline__ void phongShade(float3 p_Ka,
 
 				float3 H = normalize(L - ray.direction);
 				float nDh = dot(ffnormal, H);
-				if(nDh > 0.0f)
+				if(nDh > 0.0f && p_Ks.x > 0.0f && p_Ks.y > 0.0f && p_Ks.z > 0.0f)
 					color += p_Ks * light_color * powf(nDh, phong_exp);
 			}
 		}

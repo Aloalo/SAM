@@ -1,23 +1,30 @@
 Opcenito:
--REZANJE MEMORIJE NA GRAFI!!
+-output buffer format
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 -render to image
 -graphics settings / presets
--GUI
 
 Grafika:
--parallax mapping?
+-mipmaping
+-parallax mapping
 -specular(gloss) mapping
--textured glass mesh
+-textured glass/reflective mesh 
+-EDAA
 
--dof
--motion blur
--soft shadows
--global illumination (path traceing)?
+-distributed ray tracing
+	-stochastic MSAA
+	-dof
+	-motion blur
+	-soft shadows
+	-diffuse reflections
+	-fuzzy transparency
+-global illumination
+	-(bidirectional) path tracing
+	-photon mapping
 
-Fizika:
 
-Rendering Engine:
--input events
--active input observers
+TextureRules:
+-ambient_map alpha is opacity_map
+-diffuse_map alpha is specular_highlignt_map
+-normal_map alpha is height_map
