@@ -1,5 +1,4 @@
 Opcenito:
--output buffer format
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 -render to image
@@ -9,7 +8,7 @@ Grafika:
 -mipmaping
 -parallax mapping
 -specular(gloss) mapping
--textured glass/reflective mesh 
+-textured glass/reflective mesh
 -EDAA
 
 -distributed ray tracing

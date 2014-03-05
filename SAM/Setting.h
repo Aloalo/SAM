@@ -4,31 +4,34 @@
 
 #define SETTING(s) s(#s)
 
-template<class T>
-struct Setting
+namespace trayc
 {
-	Setting(const std::string &name) :
-		name(name)
+	template<class T>
+	struct Setting
 	{
-		x = InitialSettings::get()[name];
-	}
+		Setting(const std::string &name) :
+			name(name)
+		{
+			x = InitialSettings::get()[name];
+		}
 
 
-	//void set(const map<std::string, T> &mp)
-	//{
-	//	x = mp[name];
-	//}
+		//void set(const map<std::string, T> &mp)
+		//{
+		//	x = mp[name];
+		//}
 
-	operator T&()
-	{
-		return x;
-	}
+		operator T&()
+		{
+			return x;
+		}
 
-	T& operator=(const T &v)
-	{
-		return x = v;
-	}
+		T& operator=(const T &v)
+		{
+			return x = v;
+		}
 
-	T x;
-	std::string name;
-};
+		T x;
+		std::string name;
+	};
+}

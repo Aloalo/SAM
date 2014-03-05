@@ -4,32 +4,35 @@
 #include "SafeOptix.h"
 #include "Setting.h"
 
-/*
-draws the optix::Buffer on the whole screen
-void init(const optix::Buffer &buffer) must be called each time buffer type changes
-*/
-class BufferDrawer
+namespace trayc
 {
-public:
-	BufferDrawer(void);
-	~BufferDrawer(void);
-	
-	unsigned int createGLBuffer();
-	void init(const optix::Buffer &buffer);
-	void draw(optix::Buffer &buffer) const;
+	/*
+	draws the optix::Buffer on the whole screen
+	void init(const optix::Buffer &buffer) must be called each time buffer type changes
+	*/
+	class BufferDrawer
+	{
+	public:
+		BufferDrawer(void);
+		~BufferDrawer(void);
 
-private:
-	GLenum glDataType;
-	GLenum glFormat;
-	GLenum glTextureFormat;
+		unsigned int createGLBuffer();
+		void init(const optix::Buffer &buffer);
+		void draw(optix::Buffer &buffer) const;
 
-	Setting<int> textureFilter;
-	Setting<int> postProcess;
+	private:
+		GLenum glDataType;
+		GLenum glFormat;
+		GLenum glTextureFormat;
 
-	reng::Texture tex;
-	reng::BufferObject vertices;
-	reng::BufferObject outBuffer;
-	reng::VertexArrayObject vao;
-	reng::VertexAttribArray vertexAttrib;
-	reng::Program p;
-};
+		Setting<int> textureFilter;
+		Setting<int> postProcess;
+
+		reng::Texture tex;
+		reng::BufferObject vertices;
+		reng::BufferObject outBuffer;
+		reng::VertexArrayObject vao;
+		reng::VertexAttribArray vertexAttrib;
+		reng::Program p;
+	};
+}

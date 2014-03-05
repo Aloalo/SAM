@@ -3,7 +3,7 @@
 #include <Input.h>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
-#include "Macros.h"
+#include <Macros.h>
 #include <optix_math.h>
 
 #include "GameEngine.h"
@@ -11,6 +11,7 @@
 #include "Utils.h"
 
 using namespace reng;
+using namespace trayc;
 
 int main()
 {
@@ -20,7 +21,7 @@ int main()
 	GameEngine *ptr = new GameEngine();
 
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(Utils::resource("crytek-sponza/sponza.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
+	/*const aiScene* scene = importer.ReadFile(Utils::resource("crytek-sponza/sponza.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
 	if(!scene)
 	{
 		printf("%s\n", importer.GetErrorString());
@@ -29,7 +30,7 @@ int main()
 	ptr->tracer.addScene(Utils::resource("crytek-sponza/"), scene);
 
 
-	/*const aiScene* nissan = importer.ReadFile(Utils::resource("nissan/nissan.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* nissan = importer.ReadFile(Utils::resource("nissan/nissan.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
 	if(!nissan)
 	{
 		printf("%s\n", importer.GetErrorString());
@@ -38,9 +39,9 @@ int main()
 	ptr->tracer.addScene(MaterialHandler::LabMaterials::MIRROR, nissan);*/
 
 
-	/*Labyrinth lab;
-	lab.generateLabyrinth(15, 15);
-	ptr->tracer.addMesh(lab);*/
+	Labyrinth lab;
+	lab.generateLabyrinth(150, 150);
+	ptr->tracer.addMesh(lab);
 
 	ptr->tracer.addLight(BasicLight(//light0 - point light
 		make_float3(0.0f, 30.0f, 10.0f), //pos/dir

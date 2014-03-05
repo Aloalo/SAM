@@ -2,18 +2,21 @@
 
 #include "Setting.h"
 
-class Environment
+namespace trayc
 {
-public:
-	static Environment& get();
-	
-	Setting<int> screenWidth;
-	Setting<int> screenHeight;
-	Setting<int> bufferWidth;
-	Setting<int> bufferHeight;
+	class Environment
+	{
+	public:
+		static Environment& get();
 
-private:
-	Environment();
+		Setting<int> screenWidth;
+		Setting<int> screenHeight;
+		Setting<int> bufferWidth;
+		Setting<int> bufferHeight;
 
-	static Environment *instance;
-};
+	private:
+		Environment();
+
+		static Environment *instance;
+	};
+}

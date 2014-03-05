@@ -7,60 +7,63 @@
 
 using namespace std;
 
-InitialSettings *InitialSettings::instance = 0;
-
-InitialSettings& InitialSettings::get()
+namespace trayc
 {
-	if(instance)
-		return *instance;
-	return *(instance = new InitialSettings("../SAM/GraphicsSettings.ini"));
-}
+	InitialSettings *InitialSettings::instance = 0;
 
-InitialSettings::InitialSettings(const string &path)
-{	
-	format["GL_NEAREST"] = GL_NEAREST;
-	format["GL_LINEAR"] = GL_LINEAR;
-
-	ifstream f(path);
-	if(f.is_open())
+	InitialSettings& InitialSettings::get()
 	{
-		try
+		if(instance)
+			return *instance;
+		return *(instance = new InitialSettings("../SAM/GraphicsSettings.ini"));
+	}
+
+	InitialSettings::InitialSettings(const string &path)
+	{	
+		format["GL_NEAREST"] = GL_NEAREST;
+		format["GL_LINEAR"] = GL_LINEAR;
+
+		ifstream f(path);
+		if(f.is_open())
 		{
-			while(!f.eof())
+			try
 			{
-				string name, value;
-				f >> name;
-				if(name.substr(0, 1) == "#")
+				while(!f.eof())
 				{
-					f >> value;
-					name = name.substr(1);
-					try
+					string name, value;
+					f >> name;
+					if(name.substr(0, 1) == "#")
 					{
-						values[name] = stoi(value);
-					}
-					catch(exception &ex)
-					{
-						values[name] = format[value];
+						f >> value;
+						name = name.substr(1);
+						try
+						{
+							values[name] = stoi(value);
+						}
+						catch(exception &ex)
+						{
+							values[name] = format[value];
+						}
 					}
 				}
 			}
+			catch(std::exception *ex)
+			{
+				printf("%s\n", ex->what());
+				exit(0);
+			}
 		}
-		catch(std::exception *ex)
+		else
 		{
-			printf("%s\n", ex->what());
+			printf("Cannot open graphics settings");
 			exit(0);
 		}
+		f.close();
 	}
-	else
+
+
+	unsigned int& InitialSettings::operator[](const string &variableName)
 	{
-		printf("Cannot open graphics settings");
-		exit(0);
+		return values[variableName];
 	}
-	f.close();
-}
-
-
-unsigned int& InitialSettings::operator[](const string &variableName)
-{
-	return values[variableName];
 }

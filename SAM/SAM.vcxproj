@@ -13,15 +13,16 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7EE11EE3-0661-4BE5-A584-3DAE7F0A4449}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>TRAYC</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
@@ -67,6 +68,9 @@
       <Optimization>Od</Optimization>
       <GPUDebugInfo>false</GPUDebugInfo>
     </CudaCompile>
+    <Lib>
+      <AdditionalDependencies>RenderingEngine.lib;glfw3.lib;opengl32.lib;glew32.lib;DevIL.lib;ILUT.lib;ILU.lib;assimp.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -98,6 +102,9 @@
       <FastMath>true</FastMath>
       <CodeGeneration>compute_10,sm_10</CodeGeneration>
     </CudaCompile>
+    <Lib>
+      <AdditionalDependencies>RenderingEngine.lib;glfw3.lib;opengl32.lib;glew32.lib;DevIL.lib;ILUT.lib;ILU.lib;assimp.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AccelHandler.cpp" />
@@ -111,7 +118,6 @@
     <ClCompile Include="OptixTextureHandler.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Programs.cpp" />
-    <ClCompile Include="SAM.cpp" />
     <ClCompile Include="OptixTracer.cpp" />
     <ClCompile Include="SceneGraphHandler.cpp" />
     <ClCompile Include="Utils.cpp" />
