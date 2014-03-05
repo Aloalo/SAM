@@ -64,16 +64,16 @@ int main()
 	//	0 //is_directional
 	//	));
 
-	//ptr->tracer.addLight(BasicLight(//light2 - directional light
-	//	make_float3(1, 1, 1), //pos/dir
-	//	make_float3(0.1f, 0.1f, 0.1f), //color
-	//	make_float3(1.0f, 0.1f, 0.0f), //attenuation
-	//	make_float3(1.0f, 0.0f, 0.0f), //spot_direction
-	//	360.0f, //spot_cutoff
-	//	0.0f, //spot_exponent
-	//	0, //casts_shadows
-	//	1 //is_directional
-	//	));
+	ptr->tracer.addLight(BasicLight(//light2 - directional light
+		make_float3(1, 1, 1), //pos/dir
+		make_float3(0.1f, 0.1f, 0.1f), //color
+		make_float3(1.0f, 0.1f, 0.0f), //attenuation
+		make_float3(1.0f, 0.0f, 0.0f), //spot_direction
+		360.0f, //spot_cutoff
+		0.0f, //spot_exponent
+		0, //casts_shadows
+		1 //is_directional
+		));
 
 	input.addInputObserver(ptr);
 	input.setMouseMoveCallback();

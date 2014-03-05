@@ -66,7 +66,7 @@ RT_PROGRAM void pinhole_camera_AA()
 //
 // Enviormement map
 //
-rtTextureSampler<float4, 2> envmap;
+rtTextureSampler<uchar4, 2, cudaReadModeNormalizedFloat> envmap;
 RT_PROGRAM void envmap_miss()
 {
 	float theta = atan2f(ray.direction.x, ray.direction.z);

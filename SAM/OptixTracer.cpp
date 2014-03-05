@@ -173,7 +173,8 @@ Geometry OptixTracer::getGeometry(const aiMesh *mesh, const aiMaterial *mat, con
 	if(hasNormalMap)
 	{
 		gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
-		gMesh["normal_map"]->setTextureSampler(matHandler.texHandler.get(matHandler.getTextureName(mat, aiTextureType_HEIGHT, path)));
+		gMesh["normal_map"]->setTextureSampler(matHandler.texHandler.get(matHandler.getTextureName(mat, aiTextureType_HEIGHT, path), 
+			Utils::defTexture("error.png"), 0.0f, RT_WRAP_REPEAT, GL_RGBA32F_ARB));
 	}
 	gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
 	gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
@@ -259,6 +260,8 @@ void OptixTracer::compileSceneGraph()
 	}
 	ctx->validate();
 	ctx->compile();
+	
+	printf("Available device memory after compile: %d MB\n", ctx->getAvailableDeviceMemory(0) >> 20);
 }
 
 
@@ -269,6 +272,7 @@ void OptixTracer::clearSceneGraph()
 
 void OptixTracer::trace()
 {
+	//printf("Available device memory: %d MB\n", ctx->getAvailableDeviceMemory(0) >> 20);
 	for(int i = 0; i < renderingDivisionLevel; ++i)
 	{
 		ctx["myStripe"]->setInt(i);
