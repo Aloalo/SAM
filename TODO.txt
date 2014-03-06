@@ -7,7 +7,6 @@ Opcenito:
 Grafika:
 -mipmaping
 -parallax mapping
--specular(gloss) mapping
 -textured glass/reflective mesh
 -EDAA
 
@@ -21,9 +20,3 @@ Grafika:
 -global illumination
 	-(bidirectional) path tracing
 	-photon mapping
-
-
-TextureRules:
--ambient_map alpha is opacity_map
--diffuse_map alpha is specular_highlignt_map
--normal_map alpha is height_map

@@ -162,6 +162,7 @@
     <None Include="..\Shaders\fxaa.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\TODO.txt" />

@@ -85,9 +85,7 @@ namespace trayc
 
 		tracer.getLight(0).pos = make_float3(0.f, 30.f, 0.f) + 5.f * make_float3(cos(timepassed), -sin(timepassed), -sin(timepassed));
 
-		//float3 v = make_float3(cos(timepassed), 0, -sin(timepassed));
-		//tracer.getLight(0).spot_direction += v * deltaTime * 7.0f;
-		//tracer.getLight(0).spot_direction = normalize(tracer.getLight(0).spot_direction);
+		//tracer.getLight(0).spot_direction = make_float3(cos(timepassed), 0.0f, -sin(timepassed));
 
 		tracer.updateLight(0);
 		player->update(deltaTime);
