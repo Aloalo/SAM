@@ -77,8 +77,9 @@ namespace trayc
 			cerr << "OpenGL error: 0x" << hex << err << endl;
 	}
 
-	void BufferDrawer::draw(optix::Buffer &buffer) const
+	void BufferDrawer::draw(optix::Buffer &buffer)
 	{
+		p.use();
 		tex.texImage(0, glTextureFormat, vec3(Environment::get().bufferWidth.x, Environment::get().bufferHeight.x, 0), glFormat, glDataType, 0);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}

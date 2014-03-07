@@ -14,9 +14,9 @@ namespace trayc
 		GameEngine(void);
 		~GameEngine(void);
 
-		void keyPress(int key, int scancode, int action, int mods);
-		void mouseMove(double x, double y);
-		void windowResize(int width, int height);
+		void keyPress(const reng::KeyPressEvent &e);
+		void mouseMove(const reng::MouseMoveEvent &e);
+		void windowResize(const reng::WindowResizeEvent &e);
 
 		void update(float deltaTime);
 
@@ -25,10 +25,10 @@ namespace trayc
 
 		void generateLabyrinth(int width, int height);
 
+		Player *player;
 		OptixTracer tracer;
 	private:
 		BufferDrawer drawer;
-		Player *player;
 		Labyrinth lab;
 		bool mouseLocked;
 	};

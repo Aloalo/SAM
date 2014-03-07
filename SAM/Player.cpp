@@ -20,27 +20,26 @@ namespace trayc
 
 	Player::~Player(void)
 	{
-		delete &cam;
 	}
 
-	void Player::keyPress(int key, int scancode, int action, int mods)
+	void Player::keyPress(const KeyPressEvent &e)
 	{
-		if(key == GLFW_KEY_9 && action == GLFW_PRESS)
+		if(e.key == GLFW_KEY_9 && e.action == GLFW_PRESS)
 			((StockCameraHandler*)&cam)->speed *= 2.0f;
-		else if(key == GLFW_KEY_0 && action == GLFW_PRESS)
+		else if(e.key == GLFW_KEY_0 && e.action == GLFW_PRESS)
 			((StockCameraHandler*)&cam)->speed /= 2.0f;
 		else
-			cam.keyPress(key, scancode, action, mods);
+			cam.keyPress(e);
 	}
 
-	void Player::mouseMove(double x, double y)
+	void Player::mouseMove(const MouseMoveEvent &e)
 	{
-		cam.mouseMove(x, y);
+		cam.mouseMove(e);
 	}
 
-	void Player::windowResize(int width, int height)
+	void Player::windowResize(const WindowResizeEvent &e)
 	{
-		cam.windowResize(width, height);
+		cam.windowResize(e);
 	}
 
 	const Camera& Player::getCam() const

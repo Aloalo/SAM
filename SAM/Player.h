@@ -14,14 +14,12 @@ namespace trayc
 		Player(const reng::Camera &cam);
 		~Player(void);
 
-		void keyPress(int key, int scancode, int action, int mods);
-		void mouseMove(double x, double y);
-		void windowResize(int width, int height);
+		void keyPress(const reng::KeyPressEvent &e);
+		void mouseMove(const reng::MouseMoveEvent &e);
+		void windowResize(const reng::WindowResizeEvent &e);
 
 		void update(float deltaTime);
 		const reng::Camera& getCam() const;
-
-	private:
 
 		reng::CameraHandler &cam;
 	};

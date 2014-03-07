@@ -33,18 +33,18 @@ namespace trayc
 	}
 
 
-	void GameEngine::mouseMove(double x, double y)
+	void GameEngine::mouseMove(const MouseMoveEvent &e)
 	{
 		if(mouseLocked)
-			player->mouseMove(x, y);
+			player->mouseMove(e);
 	}
 
-	void GameEngine::keyPress(int key, int scancode, int action, int mods)
+	void GameEngine::keyPress(const KeyPressEvent &e)
 	{
-		if(action == GLFW_REPEAT)
+		if(e.action == GLFW_REPEAT)
 			return;
 
-		if(mods == GLFW_MOD_SHIFT && action == GLFW_PRESS)
+		if(e.mods == GLFW_MOD_SHIFT && e.action == GLFW_PRESS)
 		{
 			mouseLocked = false;
 			Engine::hideMouse(false);
@@ -55,10 +55,10 @@ namespace trayc
 			Engine::hideMouse(true);
 		}
 
-		switch(key)
+		switch(e.key)
 		{
 		case 'L':
-			if(action != GLFW_RELEASE)
+			if(e.action != GLFW_RELEASE)
 			{
 				lab.generateLabyrinth(lab.getWidth(), lab.getHeight());
 				tracer.clearSceneGraph();
@@ -68,14 +68,14 @@ namespace trayc
 			break;
 		}
 
-		player->keyPress(key, scancode, action, mods);
+		player->keyPress(e);
 	}
 
-	void GameEngine::windowResize(int width, int height)
+	void GameEngine::windowResize(const WindowResizeEvent &e)
 	{
-		Environment::get().screenHeight = height;
-		Environment::get().screenWidth = width;
-		player->windowResize(width, height);
+		Environment::get().screenHeight = e.size.x;
+		Environment::get().screenWidth = e.size.y;
+		player->windowResize(e);
 	}
 
 	void GameEngine::update(float deltaTime)
