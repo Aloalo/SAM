@@ -39,8 +39,6 @@ int main()
 	Engine e(1. / 60., Environment::get().screenWidth, Environment::get().screenHeight);
 	Engine::disableMode(GL_DEPTH_TEST);
 	Engine::disableMode(GL_CULL_FACE);
-	
-	Engine::enableMode(GL_BLEND);
 	Input input;
 
 	GameEngine *ptr = new GameEngine();

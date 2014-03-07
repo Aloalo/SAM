@@ -5,13 +5,11 @@ Opcenito:
 -graphics settings / presets
 
 Grafika:
--mipmaping
 -parallax mapping
 -textured glass/reflective mesh
 -EDAA
 
 -distributed ray tracing
-	-stochastic MSAA
 	-dof
 	-motion blur
 	-soft shadows
@@ -20,3 +18,6 @@ Grafika:
 -global illumination
 	-(bidirectional) path tracing
 	-photon mapping
+
+Optix release:
+-mipmaping

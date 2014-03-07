@@ -21,6 +21,7 @@ namespace trayc
 	optix::TextureSampler OptixTextureHandler::get(const string &path, const string &def, float anisotropy, RTwrapmode wrapMode, GLenum format)
 	{
 		Texture ret = TextureHandler::getTexture(path, def, format);
+		//ret.generateMipmaps(); //not supported in optix
 
 		if(mp.find(ret.getID()) == mp.end())
 		{
@@ -29,7 +30,6 @@ namespace trayc
 			sampler->setWrapMode(1, wrapMode);
 			sampler->setWrapMode(2, wrapMode);
 			sampler->setIndexingMode(RT_TEXTURE_INDEX_NORMALIZED_COORDINATES);
-			sampler->setMaxAnisotropy(anisotropy);
 			sampler->setFilteringModes(RT_FILTER_LINEAR, RT_FILTER_LINEAR, RT_FILTER_NONE);
 			mp[ret.getID()] = sampler;
 		}
