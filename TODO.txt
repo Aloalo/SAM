@@ -1,19 +1,15 @@
 Opcenito:
--output buffer format
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 -render to image
--graphics settings / presets
+-graphics settings / presets u reng
 
 Grafika:
--mipmaping
 -parallax mapping
--specular(gloss) mapping
--textured glass/reflective mesh 
+-textured glass/reflective mesh
 -EDAA
 
 -distributed ray tracing
-	-stochastic MSAA
 	-dof
 	-motion blur
 	-soft shadows
@@ -23,8 +19,10 @@ Grafika:
 	-(bidirectional) path tracing
 	-photon mapping
 
+Sponza:
+-fix normal mape
+-fix tt portret
+-bake hight u normal
 
-TextureRules:
--ambient_map alpha is opacity_map
--diffuse_map alpha is specular_highlignt_map
--normal_map alpha is height_map
+Optix release:
+-mipmaping

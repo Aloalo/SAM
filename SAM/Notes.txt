@@ -1,0 +1,4 @@
+TextureRules:
+-ambient_map alpha is opacity_map
+-specular_map alpha is gloss_map
+-normal_map alpha is height_map

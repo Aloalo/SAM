@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SAM", "SAM\SAM.vcxproj", "{7EE11EE3-0661-4BE5-A584-3DAE7F0A4449}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tester", "Tester\Tester.vcxproj", "{4F44CE77-652F-4A63-BECF-71755930E97F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7EE11EE3-0661-4BE5-A584-3DAE7F0A4449} = {7EE11EE3-0661-4BE5-A584-3DAE7F0A4449}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +18,10 @@ Global
 		{7EE11EE3-0661-4BE5-A584-3DAE7F0A4449}.Debug|Win32.Build.0 = Debug|Win32
 		{7EE11EE3-0661-4BE5-A584-3DAE7F0A4449}.Release|Win32.ActiveCfg = Release|Win32
 		{7EE11EE3-0661-4BE5-A584-3DAE7F0A4449}.Release|Win32.Build.0 = Release|Win32
+		{4F44CE77-652F-4A63-BECF-71755930E97F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4F44CE77-652F-4A63-BECF-71755930E97F}.Debug|Win32.Build.0 = Debug|Win32
+		{4F44CE77-652F-4A63-BECF-71755930E97F}.Release|Win32.ActiveCfg = Release|Win32
+		{4F44CE77-652F-4A63-BECF-71755930E97F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

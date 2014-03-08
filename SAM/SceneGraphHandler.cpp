@@ -1,11 +1,13 @@
 #include "SceneGraphHandler.h"
 
 
-SceneGraphHandler::SceneGraphHandler(void)
+namespace trayc
 {
-}
+	SceneGraphHandler::SceneGraphHandler(void)
+	{
+	}
 
-
-SceneGraphHandler::~SceneGraphHandler(void)
-{
+	SceneGraphHandler::~SceneGraphHandler(void)
+	{
+	}
 }

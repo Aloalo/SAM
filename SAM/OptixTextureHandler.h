@@ -5,16 +5,19 @@
 #include <map>
 #include "Utils.h"
 
-class OptixTextureHandler
+namespace trayc
 {
-public:
-	OptixTextureHandler(optix::Context &ctx);
-	~OptixTextureHandler(void);
-	
-	optix::TextureSampler get(const std::string &path, const std::string &def = Utils::defTexture("error.png"), 
-		float anisotropy = 0.0f, RTwrapmode wrapMode = RT_WRAP_REPEAT, GLenum format = GL_RGBA8);
+	class OptixTextureHandler
+	{
+	public:
+		OptixTextureHandler(optix::Context &ctx);
+		~OptixTextureHandler(void);
 
-private:
-	std::map<unsigned int,optix::TextureSampler> mp;
-	optix::Context &ctx;
-};
+		optix::TextureSampler get(const std::string &path, const std::string &def = Utils::defTexture("error.png"), 
+			float anisotropy = 0.0f, RTwrapmode wrapMode = RT_WRAP_REPEAT, GLenum format = GL_RGBA8);
+
+	private:
+		std::map<unsigned int,optix::TextureSampler> mp;
+		optix::Context &ctx;
+	};
+}

@@ -1,4 +1,5 @@
 #include "phong.h"
+#include "OptixTextureSampler.cuh"
 
 rtDeclareVariable(float3, shading_normal, attribute shading_normal, ); 
 rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, ); 
@@ -124,6 +125,8 @@ rtTextureSampler<uchar4, 2, cudaReadModeNormalizedFloat> diffuse_map;
 rtTextureSampler<uchar4, 2, cudaReadModeNormalizedFloat> specular_map;
 
 rtDeclareVariable(float3, texcoord, attribute texcoord, ); 
+//rtDeclareVariable(OptixTextureSampler, ambmap, , );
+
 
 //
 //solid mesh with textures and reflectivity
@@ -148,11 +151,9 @@ RT_PROGRAM void closest_hit_mesh()
 	}
 
 	float3 pKd = make_float3(tex2D(diffuse_map, texcoord.x, texcoord.y)) * Kd;
-	float3 pKs = make_float3(tex2D(specular_map, texcoord.x, texcoord.y));
+	float3 pKs = make_float3(tex2D(specular_map, texcoord.x, texcoord.y)) * Ks;
 	
-	//phongShade(ffnormal, make_float3(0.0f), make_float3(0.0f), ffnormal, phong_exp, reflectivity);
-
-	phongShade(make_float3(pKa) * Ka, pKd, make_float3(0.12f), ffnormal, phong_exp, reflectivity);
+	phongShade(make_float3(pKa) * Ka, pKd, pKs, ffnormal, phong_exp, reflectivity);
 }
 
 //
@@ -163,5 +164,11 @@ RT_PROGRAM void any_hit_solid()
 	float opacity = tex2D(ambient_map, texcoord.x, texcoord.y).w;
 	if(opacity < importance_cutoff)
 		rtIgnoreIntersection();
+	phongShadowed();
+}
+
+
+RT_PROGRAM void any_hit()
+{
 	phongShadowed();
 }
