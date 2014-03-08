@@ -133,6 +133,9 @@
     <ClInclude Include="SceneGraphHandler.h">
       <Filter>Header Files\Handlers</Filter>
     </ClInclude>
+    <ClInclude Include="OptixTextureSampler.cuh">
+      <Filter>CUDA Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="box.cu">

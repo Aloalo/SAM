@@ -2,7 +2,7 @@ Opcenito:
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 -render to image
--graphics settings / presets
+-graphics settings / presets u reng
 
 Grafika:
 -parallax mapping
@@ -18,6 +18,11 @@ Grafika:
 -global illumination
 	-(bidirectional) path tracing
 	-photon mapping
+
+Sponza:
+-fix normal mape
+-fix tt portret
+-bake hight u normal
 
 Optix release:
 -mipmaping

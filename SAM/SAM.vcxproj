@@ -147,6 +147,9 @@
   <ItemGroup>
     <CudaCompile Include="box.cu" />
     <CudaCompile Include="material_shaders.cu" />
+    <ClInclude Include="OptixTextureSampler.cuh">
+      <FileType>Document</FileType>
+    </ClInclude>
     <CudaCompile Include="rectangleAA.cu" />
     <CudaCompile Include="context_shaders.cu" />
     <CudaCompile Include="triangle_mesh.cu" />

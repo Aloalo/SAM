@@ -59,8 +59,7 @@ int main()
 		printf("%s\n", importer.GetErrorString());
 		return 0;
 	}
-	ptr->tracer.addScene(MaterialHandler::LabMaterials::MIRROR, nissan);
-	*/
+	ptr->tracer.addScene(MaterialHandler::LabMaterials::MIRROR, nissan);*/
 
 	/*Labyrinth lab;
 	lab.generateLabyrinth(150, 150);

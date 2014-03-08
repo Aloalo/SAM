@@ -1,4 +1,5 @@
 #include "phong.h"
+#include "OptixTextureSampler.cuh"
 
 rtDeclareVariable(float3, shading_normal, attribute shading_normal, ); 
 rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, ); 
@@ -124,6 +125,8 @@ rtTextureSampler<uchar4, 2, cudaReadModeNormalizedFloat> diffuse_map;
 rtTextureSampler<uchar4, 2, cudaReadModeNormalizedFloat> specular_map;
 
 rtDeclareVariable(float3, texcoord, attribute texcoord, ); 
+//rtDeclareVariable(OptixTextureSampler, ambmap, , );
+
 
 //
 //solid mesh with textures and reflectivity
