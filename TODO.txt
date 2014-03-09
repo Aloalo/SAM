@@ -1,10 +1,12 @@
 Opcenito:
+-fix normal mapping
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 -render to image
 -graphics settings / presets u reng
 
 Grafika:
+-mipmaping
 -parallax mapping
 -textured glass/reflective mesh
 -EDAA
@@ -22,7 +24,4 @@ Grafika:
 Sponza:
 -fix normal mape
 -fix tt portret
--bake hight u normal
-
-Optix release:
--mipmaping
+-bake height u normal

@@ -14,6 +14,7 @@ namespace trayc
 		GameEngine(void);
 		~GameEngine(void);
 
+		void mouseClick(const reng::MouseClickEvent &e);
 		void keyPress(const reng::KeyPressEvent &e);
 		void mouseMove(const reng::MouseMoveEvent &e);
 		void windowResize(const reng::WindowResizeEvent &e);

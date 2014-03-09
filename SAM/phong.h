@@ -40,6 +40,9 @@ static __device__ __inline__ void phongShade(float3 p_Ka,
 	for(int i = 0; i < lights.size(); ++i)
 	{
 		const BasicLight &light = lights[i];
+		if(light.color.x < importance_cutoff && light.color.y < importance_cutoff && light.color.z < importance_cutoff)
+			continue;
+
 		float attenuation;
 		float Ldist;
 		float3 L;
