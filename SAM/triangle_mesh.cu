@@ -56,15 +56,23 @@ static __inline__ __device__ void mesh_intersect(int primIdx)
 
 			if(useNormalMap)
 			{
+				/*float3 tangent = tangent_buffer[idx.y];
+				float3 normal = make_float3(tex2D(normal_map, texcoord.x, texcoord.y)) * 2.f - 1.f;
+				float3 transformed_normal;
+				transformed_normal.x = dot(tangent, normal);
+				transformed_normal.y = dot(-cross(tangent, normal_buffer[idx.y]), normal);
+				transformed_normal.z = dot(normal_buffer[idx.y], normal);
+				shading_normal = normalize(transformed_normal + shading_normal);*/
+
+
 				float3 shading_tangent = normalize(tangent_buffer[idx.y] * beta +
 					tangent_buffer[idx.z] * gamma + tangent_buffer[idx.x] * (1.0f - beta - gamma));
 				float3 normal = make_float3(tex2D(normal_map, texcoord.x, texcoord.y)) * 2.f - 1.f;
 				float3 transformed_normal;
 				transformed_normal.x = dot(shading_tangent, normal);
-				transformed_normal.y = dot(cross(shading_tangent, shading_normal), normal);
+				transformed_normal.y = dot(-cross(shading_tangent, shading_normal), normal);
 				transformed_normal.z = dot(shading_normal, normal);
-				shading_normal += transformed_normal;
-				shading_normal = normalize(shading_normal);
+				shading_normal = normalize(transformed_normal + shading_normal);
 			}
 
 			rtReportIntersection(0);

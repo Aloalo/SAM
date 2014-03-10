@@ -13,10 +13,30 @@
 #include "Utils.h"
 
 using namespace reng;
+using namespace std;
 using namespace trayc;
 using namespace glm;
 
-struct TintChanger
+struct Junk;
+
+GameEngine *ptr;
+vector<Junk*> junk;
+
+void cleanUp()
+{
+	for(int i = 0; i < junk.size(); ++i)
+		delete junk[i];
+}
+
+struct Junk
+{
+	Junk()
+	{
+		junk.push_back(this);
+	}
+};
+
+struct TintChanger : public Junk
 {
 	TintChanger(vec4 color) :
 		color(color) {}
@@ -29,10 +49,27 @@ struct TintChanger
 	vec4 color;
 };
 
-void blah()
+struct LightHandler : public Junk
 {
-	puts("trolololo");
-}
+	LightHandler(int idx, int onoff, const float3 &color) :
+		idx(idx), onoff(onoff), color(color) 
+	{
+	}
+
+	void operator()()
+	{
+		if(onoff)
+			ptr->tracer.getLight(idx).color = make_float3(0.0f);
+		else
+			ptr->tracer.getLight(idx).color = color;
+		ptr->tracer.updateLight(idx);
+		onoff = !onoff;
+	}
+
+	int idx;
+	bool onoff;
+	float3 color;
+};
 
 int main()
 {
@@ -41,7 +78,7 @@ int main()
 	Engine::disableMode(GL_CULL_FACE);
 	Input input;
 
-	GameEngine *ptr = new GameEngine();
+	ptr = new GameEngine();
 
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(Utils::resource("crytek-sponza/sponza.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
@@ -67,7 +104,7 @@ int main()
 
 	ptr->tracer.addLight(BasicLight(//light0 - point light
 		make_float3(0.0f, 30.0f, 10.0f), //pos/dir
-		make_float3(1.5f), //color
+		make_float3(2.0f), //color
 		make_float3(1.0f, 0.01f, 0.0005f), //attenuation
 		make_float3(0.0f, 0.0f, 0.0f), //spot_direction
 		360.0f, //spot_cutoff
@@ -76,16 +113,16 @@ int main()
 		0 //is_directional
 		));
 
-	//ptr->tracer.addLight(BasicLight(//light1 - spot light
-	//	make_float3(0.0f, 30.0f, 0.0f), //pos/dir
-	//	make_float3(2.0f), //color
-	//	make_float3(1.0f, 0.0f, 0.01f), //attenuation
-	//	make_float3(1.0f, 0.0f, 0.0f), //spot_direction
-	//	22.5f, //spot_cutoff
-	//	5.0f, //spot_exponent
-	//	1, //casts_shadows
-	//	0 //is_directional
-	//	));
+	ptr->tracer.addLight(BasicLight(//light1 - spot light
+		make_float3(0.0f, 30.0f, 0.0f), //pos/dir
+		make_float3(2.0f), //color
+		make_float3(1.0f, 0.001f, 0.001f), //attenuation
+		make_float3(0.0f, 0.0f, 0.0f), //spot_direction
+		22.5f, //spot_cutoff
+		32.0f, //spot_exponent
+		1, //casts_shadows
+		0 //is_directional
+		));
 
 	ptr->tracer.addLight(BasicLight(//light2 - directional light
 		make_float3(1, 1, 1), //pos/dir
@@ -112,34 +149,27 @@ int main()
 	
 	Button *b1 = new Button;
 	b1->color = vec4(1, 0, 0, 1);
-	b1->setAction(new TintChanger(vec4(1, 0, 0, 0.2)));
+	b1->setAction(new LightHandler(0, false, ptr->tracer.getLight(0).color));
 	cont->add(b1);
 
 	Button *b2 = new Button;
 	b2->color = vec4(0, 1, 0, 1);
-	b2->setAction(new TintChanger(vec4(0, 1, 0, 0.2)));
+	b2->setAction(new LightHandler(1, false, ptr->tracer.getLight(1).color));
 	cont->add(b2);
 
 	Button *b3 = new Button;
 	b3->color = vec4(0, 0, 1, 1);
-	b3->setAction(new TintChanger(vec4(0, 0, 1, 0.2)));
+	b3->setAction(new LightHandler(2, true, ptr->tracer.getLight(2).color));
 	cont->add(b3);
 
-	Button *b4 = new Button;
-	b4->color = vec4(1, 1, 1, 1);
-	b4->setAction(new TintChanger(vec4(1, 1, 1, 0)));
-	cont->add(b4);
-
-	Button *b5 = new Button;
-	b5->d = vec2(150, 150);
-	b5->color = vec4(1, 0, 1, 1);
-	b5->setAction(blah);
-	cont->add(b5);
-
 	cont->pack();
-
 	e.start();
 
 	delete ptr;
+	delete cont;
+	delete b1;
+	delete b2;
+	delete b3;
+	cleanUp();
 	return 0;
 }

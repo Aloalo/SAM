@@ -137,6 +137,7 @@ RT_PROGRAM void closest_hit_mesh()
 	float3 world_geometric_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
 	float3 ffnormal = faceforward(world_shading_normal, -ray.direction, world_geometric_normal);
 
+
 	float4 pKa = tex2D(ambient_map, texcoord.x, texcoord.y);
 	if(prd_radiance.depth < max_depth)
 	{
@@ -153,6 +154,7 @@ RT_PROGRAM void closest_hit_mesh()
 	float3 pKd = make_float3(tex2D(diffuse_map, texcoord.x, texcoord.y)) * Kd;
 	float3 pKs = make_float3(tex2D(specular_map, texcoord.x, texcoord.y)) * Ks;
 	
+	//phongShade(ffnormal, pKd, make_float3(0.0f), make_float3(0.0f), phong_exp, reflectivity);
 	phongShade(make_float3(pKa) * Ka, pKd, pKs, ffnormal, phong_exp, reflectivity);
 }
 
