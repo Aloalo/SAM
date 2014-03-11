@@ -194,17 +194,17 @@ namespace trayc
 		gis.push_back(inst);
 	}
 
-	/*void OptixTracer::addMesh(int mat, const aiMesh *mesh)
+	void OptixTracer::addMesh(const optix::Material &mat, const aiMesh *mesh)
 	{
 		Geometry gMesh = getGeometry(mesh);
 
 		GeometryInstance inst = ctx->createGeometryInstance();
 		inst->setMaterialCount(1);
 		inst->setGeometry(gMesh);
-		inst->setMaterial(0, matHandler.getLabyrinthMaterial(mat));
+		inst->setMaterial(0, mat);
 
 		gis.push_back(inst);
-	}*/
+	}
 
 	void OptixTracer::addScene(const std::string &path, const aiScene *scene)
 	{
@@ -212,11 +212,11 @@ namespace trayc
 			addMesh(path, scene->mMeshes[i], scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
 	}
 
-	/*void OptixTracer::addScene(int mat, const aiScene * scene)
+	void OptixTracer::addScene(const optix::Material &mat, const aiScene * scene)
 	{
 		for(int i = 0; i < scene->mNumMeshes; ++i)
 			addMesh(mat, scene->mMeshes[i]);
-	}*/
+	}
 
 	void OptixTracer::addLight(const BasicLight &light)
 	{

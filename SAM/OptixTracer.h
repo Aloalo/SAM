@@ -19,9 +19,9 @@ namespace trayc
 		void initialize(unsigned int GLBO);
 
 		void addMesh(const std::string &path, const aiMesh *mesh, const aiMaterial *mat);
-		//void addMesh(int mat, const aiMesh *mesh);
+		void addMesh(const optix::Material &mat, const aiMesh *mesh);
 		void addScene(const std::string &path, const aiScene * scene);
-		//void addScene(int mat, const aiScene *scene);
+		void addScene(const optix::Material &mat, const aiScene *scene);
 		void addLight(const BasicLight &light);
 
 		void compileSceneGraph();

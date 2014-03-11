@@ -133,11 +133,6 @@ rtDeclareVariable(float3, texcoord, attribute texcoord, );
 //
 RT_PROGRAM void closest_hit_mesh()
 {
-	float3 world_shading_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
-	float3 world_geometric_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
-	float3 ffnormal = faceforward(world_shading_normal, -ray.direction, world_geometric_normal);
-
-
 	float4 pKa = tex2D(ambient_map, texcoord.x, texcoord.y);
 	if(prd_radiance.depth < max_depth)
 	{
@@ -150,6 +145,10 @@ RT_PROGRAM void closest_hit_mesh()
 			return;
 		}
 	}
+	
+	float3 world_shading_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
+	float3 world_geometric_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
+	float3 ffnormal = faceforward(world_shading_normal, -ray.direction, world_geometric_normal);
 
 	float3 pKd = make_float3(tex2D(diffuse_map, texcoord.x, texcoord.y)) * Kd;
 	float3 pKs = make_float3(tex2D(specular_map, texcoord.x, texcoord.y)) * Ks;

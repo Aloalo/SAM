@@ -136,7 +136,6 @@ int main()
 		));
 
 	input.addInputObserver(ptr);
-	//input.setMouseMoveCallback();
 	e.addToUpdateList(ptr);
 	e.addToDisplayList(ptr);
 

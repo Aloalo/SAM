@@ -31,8 +31,7 @@ namespace trayc
 
 	unsigned int BufferDrawer::createGLBuffer()
 	{
-		outBuffer.bind();
-		outBuffer.setData(0, Environment::get().bufferWidth * Environment::get().bufferHeight * sizeof(float4));
+		allocateBuffer(Environment::get().bufferWidth, Environment::get().bufferHeight);
 		return outBuffer.getID();
 	}
 
@@ -81,15 +80,22 @@ namespace trayc
 	{
 		glBindBuffer(GL_PIXEL_UNPACK_BUFFER, outBuffer.getID());
 		tex.texImage(0, glTextureFormat, vec3(Environment::get().bufferWidth.x, Environment::get().bufferHeight.x, 0), glFormat, glDataType, 0);
-
 		p.use();
 		vao.bind();
 		vertices.bind();
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+			glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 		vao.unBind();
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		tex.unBind();
+	}
+
+	
+	void BufferDrawer::allocateBuffer(int width, int height)
+	{
+		outBuffer.bind();
+		outBuffer.setData(0, width * height * sizeof(float4));
 	}
 }

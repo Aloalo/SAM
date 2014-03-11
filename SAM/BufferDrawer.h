@@ -19,6 +19,7 @@ namespace trayc
 		unsigned int createGLBuffer();
 		void init(const optix::Buffer &buffer);
 		void draw(optix::Buffer &buffer);
+		void allocateBuffer(int width, int height);
 
 	private:
 		GLenum glDataType;
