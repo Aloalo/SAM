@@ -1,22 +1,25 @@
 #pragma once
 
-#include "Setting.h"
+#include <Setting.h>
+#include "MaterialHandler.h"
+#include <Singleton.h>
 
 namespace trayc
 {
-	class Environment
+	class Environment : public Singleton<Environment>
 	{
 	public:
-		static Environment& get();
+		reng::Setting<int> screenWidth;
+		reng::Setting<int> screenHeight;
+		reng::Setting<int> bufferWidth;
+		reng::Setting<int> bufferHeight;
 
-		Setting<int> screenWidth;
-		Setting<int> screenHeight;
-		Setting<int> bufferWidth;
-		Setting<int> bufferHeight;
+		optix::Context ctx;
 
 	private:
-		Environment();
-
-		static Environment *instance;
+		Environment(void);
+		friend Singleton<Environment>;
 	};
+
+	extern optix::Context &ctx;
 }

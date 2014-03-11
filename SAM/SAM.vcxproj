@@ -112,8 +112,6 @@
     <ClCompile Include="BufferDrawer.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="GameEngine.cpp" />
-    <ClCompile Include="InitialSettings.cpp" />
-    <ClCompile Include="Labyrinth.cpp" />
     <ClCompile Include="MaterialHandler.cpp" />
     <ClCompile Include="OptixTextureHandler.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -128,9 +126,7 @@
     <ClInclude Include="BufferDrawer.h" />
     <ClInclude Include="Environment.h" />
     <ClInclude Include="GameEngine.h" />
-    <ClInclude Include="InitialSettings.h" />
     <ClInclude Include="helper.h" />
-    <ClInclude Include="Labyrinth.h" />
     <ClInclude Include="lights.h" />
     <ClInclude Include="Macros.h" />
     <ClInclude Include="MaterialHandler.h" />
@@ -141,7 +137,6 @@
     <ClInclude Include="OptixTracer.h" />
     <ClInclude Include="SafeOptix.h" />
     <ClInclude Include="SceneGraphHandler.h" />
-    <ClInclude Include="Setting.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -158,8 +153,8 @@
     <None Include="..\Shaders\fxaa.frag" />
     <None Include="..\Shaders\passthrough.frag" />
     <None Include="..\Shaders\passthrough.vert" />
-    <None Include="GraphicsSettings.ini" />
     <None Include="Notes.txt" />
+    <None Include="Settings.ini" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\TODO.txt" />

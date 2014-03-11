@@ -2,7 +2,7 @@
 
 #include <OGLobjects.h>
 #include "SafeOptix.h"
-#include "Setting.h"
+#include <Setting.h>
 
 namespace trayc
 {
@@ -25,8 +25,8 @@ namespace trayc
 		GLenum glFormat;
 		GLenum glTextureFormat;
 
-		Setting<int> textureFilter;
-		Setting<int> postProcess;
+		reng::Setting<int> textureFilter;
+		reng::Setting<int> postProcess;
 
 		reng::Texture tex;
 		reng::BufferObject vertices;

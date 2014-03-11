@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SAM", "SAM\SAM.vcxproj", "{7EE11EE3-0661-4BE5-A584-3DAE7F0A4449}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TRAYC", "SAM\SAM.vcxproj", "{7EE11EE3-0661-4BE5-A584-3DAE7F0A4449}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tester", "Tester\Tester.vcxproj", "{4F44CE77-652F-4A63-BECF-71755930E97F}"
 	ProjectSection(ProjectDependencies) = postProject

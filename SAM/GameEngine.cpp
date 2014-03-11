@@ -15,6 +15,7 @@ namespace trayc
 		: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Environment::get().screenWidth.x / Environment::get().screenHeight.x, 60.0f))),
 		mouseLocked(true)
 	{
+		Environment::get().ctx = Context::create();
 		tracer.initialize(drawer.createGLBuffer());
 		Engine::hideMouse(true);
 		//Input::addInputObserver(player);
@@ -24,12 +25,6 @@ namespace trayc
 	GameEngine::~GameEngine(void)
 	{
 		delete player;
-	}
-
-
-	void GameEngine::generateLabyrinth(int width, int height)
-	{
-		lab.generateLabyrinth(width, height);
 	}
 
 	void GameEngine::mouseClick(const reng::MouseClickEvent &e)
@@ -65,19 +60,6 @@ namespace trayc
 		{
 			mouseLocked = true;
 			Engine::hideMouse(true);
-		}
-
-		switch(e.key)
-		{
-		case 'L':
-			if(e.action != GLFW_RELEASE)
-			{
-				lab.generateLabyrinth(lab.getWidth(), lab.getHeight());
-				tracer.clearSceneGraph();
-				tracer.addMesh(lab);
-				tracer.compileSceneGraph();
-			}
-			break;
 		}
 
 		player->keyPress(e);

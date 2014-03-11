@@ -1,6 +1,7 @@
 #include "OptixTextureHandler.h"
 
 #include <TextureHandler.h>
+#include "Environment.h"
 
 using namespace std;
 using namespace optix;
@@ -8,13 +9,7 @@ using namespace reng;
 
 namespace trayc
 {
-	OptixTextureHandler::OptixTextureHandler(optix::Context &ctx) :
-		ctx(ctx)
-	{
-	}
-
-
-	OptixTextureHandler::~OptixTextureHandler(void)
+	OptixTextureHandler::OptixTextureHandler()
 	{
 	}
 

@@ -2,7 +2,7 @@
 #include "Utils.h"
 #include "Environment.h"
 #include "Programs.h"
-#include <TextureHandler.h>
+#include "OptixTextureHandler.h"
 
 using namespace optix;
 using namespace reng;
@@ -17,8 +17,7 @@ namespace trayc
 		SETTING(useSchlick),
 		SETTING(maxRayDepth),
 		SETTING(MSAA),
-		SETTING(renderingDivisionLevel),
-		matHandler(ctx)
+		SETTING(renderingDivisionLevel)
 	{
 	}
 
@@ -29,7 +28,7 @@ namespace trayc
 
 	Buffer OptixTracer::getBuffer()
 	{
-		return ctx["output_buffer"]->getBuffer();
+		return Environment::get().ctx["output_buffer"]->getBuffer();
 	}
 
 	void OptixTracer::setBufferSize(int w, int h)
@@ -84,43 +83,41 @@ namespace trayc
 			ctx->setRayGenerationProgram(0, Programs::rayGeneration);
 
 		ctx->setMissProgram(0, Programs::envmapMiss);
-		ctx["envmap"]->setTextureSampler(matHandler.texHandler.get(Utils::defTexture("environment.jpg")));
+		ctx["envmap"]->setTextureSampler(OptixTextureHandler::get().get(Utils::defTexture("environment.jpg")));
 
 		ctx->setExceptionProgram(0, Programs::exception);
 		ctx["bad_color"]->setFloat(1.0f, 0.0f, 0.0f);
-
-		matHandler.createLabMaterials();
 	}
 
-	void OptixTracer::addMesh(const Labyrinth &lab)
-	{
-		const vector<Box> &walls = lab.getWalls();
-		int n = walls.size();
-		for(int i = 0; i < n; ++i)
-		{
-			Geometry box = ctx->createGeometry();
-			box->setPrimitiveCount(1);
-			box->setBoundingBoxProgram(Programs::boxAABB);
-			box->setIntersectionProgram(Programs::boxIntersect);
-			box["boxmin"]->setFloat(walls[i].boxmin);
-			box["boxmax"]->setFloat(walls[i].boxmax);
-			gis.push_back(ctx->createGeometryInstance(box, &matHandler.getLabyrinthMaterial(walls[i].matIdx), 
-				&matHandler.getLabyrinthMaterial(walls[i].matIdx)+1));
-		}
+	//void OptixTracer::addMesh(const Labyrinth &lab)
+	//{
+	//	const vector<Box> &walls = lab.getWalls();
+	//	int n = walls.size();
+	//	for(int i = 0; i < n; ++i)
+	//	{
+	//		Geometry box = ctx->createGeometry();
+	//		box->setPrimitiveCount(1);
+	//		box->setBoundingBoxProgram(Programs::boxAABB);
+	//		box->setIntersectionProgram(Programs::boxIntersect);
+	//		box["boxmin"]->setFloat(walls[i].boxmin);
+	//		box["boxmax"]->setFloat(walls[i].boxmax);
+	//		gis.push_back(ctx->createGeometryInstance(box, &matHandler.getLabyrinthMaterial(walls[i].matIdx), 
+	//			&matHandler.getLabyrinthMaterial(walls[i].matIdx)+1));
+	//	}
 
-		std::string pathFloor = Utils::pathToPTX("rectangleAA.cu"); //TODO: texture floor
-		Geometry floor = ctx->createGeometry();
-		floor->setPrimitiveCount(1);
-		floor->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
-		floor->setIntersectionProgram(ctx->createProgramFromPTXFile(pathFloor, "intersect"));
+	//	std::string pathFloor = Utils::pathToPTX("rectangleAA.cu"); //TODO: texture floor
+	//	Geometry floor = ctx->createGeometry();
+	//	floor->setPrimitiveCount(1);
+	//	floor->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
+	//	floor->setIntersectionProgram(ctx->createProgramFromPTXFile(pathFloor, "intersect"));
 
-		float rw = lab.getRealWidth(), rh = lab.getRealHeight();
-		floor["plane_normal"]->setFloat(0.0f, 1.0f, 0.0f);
-		floor["recmin"]->setFloat(-rw / 2.0f, 0.0f, -rh / 2.0f);
-		floor["recmax"]->setFloat(rw / 2.0f, 0.0f, rh / 2.0f);
+	//	float rw = lab.getRealWidth(), rh = lab.getRealHeight();
+	//	floor["plane_normal"]->setFloat(0.0f, 1.0f, 0.0f);
+	//	floor["recmin"]->setFloat(-rw / 2.0f, 0.0f, -rh / 2.0f);
+	//	floor["recmax"]->setFloat(rw / 2.0f, 0.0f, rh / 2.0f);
 
-		gis.push_back(ctx->createGeometryInstance(floor, &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL), &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL)+1));
-	}
+	//	gis.push_back(ctx->createGeometryInstance(floor, &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL), &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL)+1));
+	//}
 
 	template<class T>
 	Buffer OptixTracer::getBufferFromVector(const vector<T> &vec, RTformat type)
@@ -175,7 +172,7 @@ namespace trayc
 		if(hasNormalMap)
 		{
 			gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(tangentData, RT_FORMAT_FLOAT3));
-			gMesh["normal_map"]->setTextureSampler(matHandler.texHandler.get(matHandler.getTextureName(mat, aiTextureType_HEIGHT, path), 
+			gMesh["normal_map"]->setTextureSampler(OptixTextureHandler::get().get(MaterialHandler::get().getTextureName(mat, aiTextureType_HEIGHT, path), 
 				Utils::defTexture("error.png"), 0.0f, RT_WRAP_REPEAT));
 		}
 		gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
@@ -187,7 +184,7 @@ namespace trayc
 	void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMaterial *mat)
 	{
 		Geometry gMesh = getGeometry(mesh, mat, path);
-		Material material = matHandler.createMaterial(path, mat);
+		Material material = MaterialHandler::get().createMaterial(path, mat);
 
 		GeometryInstance inst = ctx->createGeometryInstance();
 		inst->setMaterialCount(1);
@@ -197,7 +194,7 @@ namespace trayc
 		gis.push_back(inst);
 	}
 
-	void OptixTracer::addMesh(int mat, const aiMesh *mesh)
+	/*void OptixTracer::addMesh(int mat, const aiMesh *mesh)
 	{
 		Geometry gMesh = getGeometry(mesh);
 
@@ -207,7 +204,7 @@ namespace trayc
 		inst->setMaterial(0, matHandler.getLabyrinthMaterial(mat));
 
 		gis.push_back(inst);
-	}
+	}*/
 
 	void OptixTracer::addScene(const std::string &path, const aiScene *scene)
 	{
@@ -215,11 +212,11 @@ namespace trayc
 			addMesh(path, scene->mMeshes[i], scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
 	}
 
-	void OptixTracer::addScene(int mat, const aiScene * scene)
+	/*void OptixTracer::addScene(int mat, const aiScene * scene)
 	{
 		for(int i = 0; i < scene->mNumMeshes; ++i)
 			addMesh(mat, scene->mMeshes[i]);
-	}
+	}*/
 
 	void OptixTracer::addLight(const BasicLight &light)
 	{

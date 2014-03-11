@@ -154,7 +154,8 @@ RT_PROGRAM void closest_hit_mesh()
 	float3 pKd = make_float3(tex2D(diffuse_map, texcoord.x, texcoord.y)) * Kd;
 	float3 pKs = make_float3(tex2D(specular_map, texcoord.x, texcoord.y)) * Ks;
 	
-	//phongShade(make_float3(abs(ffnormal.x), abs(ffnormal.y), abs(ffnormal.z)), pKd, make_float3(0.0f), make_float3(0.0f), phong_exp, reflectivity);
+	//phongShade(ffnormal, make_float3(0.0f), make_float3(0.0f), make_float3(0.0f), phong_exp, reflectivity);
+	//phongShade(make_float3(abs(ffnormal.x), abs(ffnormal.y), abs(ffnormal.z)), make_float3(0.0f), make_float3(0.0f), make_float3(0.0f), phong_exp, reflectivity);
 	phongShade(make_float3(pKa) * Ka, pKd, pKs, ffnormal, phong_exp, reflectivity);
 }
 

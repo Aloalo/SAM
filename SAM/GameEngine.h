@@ -24,13 +24,10 @@ namespace trayc
 		void initDrawing();
 		void draw(const glm::mat4 &View, const glm::mat4 &Projection);
 
-		void generateLabyrinth(int width, int height);
-
 		Player *player;
 		OptixTracer tracer;
 	private:
 		BufferDrawer drawer;
-		Labyrinth lab;
 		bool mouseLocked;
 	};
 }
