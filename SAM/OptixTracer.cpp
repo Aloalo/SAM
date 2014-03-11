@@ -174,7 +174,7 @@ namespace trayc
 		gMesh["normal_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
 		if(hasNormalMap)
 		{
-			gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
+			gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(tangentData, RT_FORMAT_FLOAT3));
 			gMesh["normal_map"]->setTextureSampler(matHandler.texHandler.get(matHandler.getTextureName(mat, aiTextureType_HEIGHT, path), 
 				Utils::defTexture("error.png"), 0.0f, RT_WRAP_REPEAT));
 		}
