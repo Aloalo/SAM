@@ -63,6 +63,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>optix.1.lib;optixu.1.lib;RenderingEngine.lib;TRAYC.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <CudaCompile>
+      <FastMath>true</FastMath>
+      <Optimization>Od</Optimization>
+      <NvccCompilation>ptx</NvccCompilation>
+      <CompileOut>..\SAM\ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
+    </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -81,6 +87,12 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>optix.1.lib;optixu.1.lib;RenderingEngine.lib;TRAYC.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <CudaCompile>
+      <FastMath>true</FastMath>
+      <Optimization>O3</Optimization>
+      <NvccCompilation>ptx</NvccCompilation>
+      <CompileOut>..\SAM\ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
+    </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -93,6 +105,9 @@
   <ItemGroup>
     <ClInclude Include="LabMaterials.h" />
     <ClInclude Include="Labyrinth.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Settings.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

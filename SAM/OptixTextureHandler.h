@@ -14,7 +14,7 @@ namespace trayc
 		using Singleton<OptixTextureHandler>::get;
 
 		optix::TextureSampler get(const std::string &path, const std::string &def = Utils::defTexture("error.png"), 
-			float anisotropy = 0.0f, RTwrapmode wrapMode = RT_WRAP_REPEAT, GLenum format = GL_RGBA8);
+			float anisotropy = 16.0f, RTwrapmode wrapMode = RT_WRAP_REPEAT, GLenum format = GL_RGBA8);
 
 	private:
 		OptixTextureHandler(void);

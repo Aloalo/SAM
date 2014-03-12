@@ -3,6 +3,7 @@
 #include "Environment.h"
 #include "Programs.h"
 #include "OptixTextureHandler.h"
+#include <fstream>
 
 using namespace optix;
 using namespace reng;
@@ -23,7 +24,6 @@ namespace trayc
 
 	OptixTracer::~OptixTracer(void)
 	{
-		//ctx->destroy();
 	}
 
 	Buffer OptixTracer::getBuffer()
@@ -34,7 +34,6 @@ namespace trayc
 	void OptixTracer::setBufferSize(int w, int h)
 	{
 		w = max(1, w);
-
 		h = max(1, h);
 		ctx["output_buffer"]->getBuffer()->setSize(w, h);
 	}
@@ -43,7 +42,6 @@ namespace trayc
 	{
 		ctx = Context::create();
 		printf("Available device memory: %d MB\n", ctx->getAvailableDeviceMemory(0) >> 20);
-
 
 		Programs::init(ctx);
 
@@ -89,35 +87,7 @@ namespace trayc
 		ctx["bad_color"]->setFloat(1.0f, 0.0f, 0.0f);
 	}
 
-	//void OptixTracer::addMesh(const Labyrinth &lab)
-	//{
-	//	const vector<Box> &walls = lab.getWalls();
-	//	int n = walls.size();
-	//	for(int i = 0; i < n; ++i)
-	//	{
-	//		Geometry box = ctx->createGeometry();
-	//		box->setPrimitiveCount(1);
-	//		box->setBoundingBoxProgram(Programs::boxAABB);
-	//		box->setIntersectionProgram(Programs::boxIntersect);
-	//		box["boxmin"]->setFloat(walls[i].boxmin);
-	//		box["boxmax"]->setFloat(walls[i].boxmax);
-	//		gis.push_back(ctx->createGeometryInstance(box, &matHandler.getLabyrinthMaterial(walls[i].matIdx), 
-	//			&matHandler.getLabyrinthMaterial(walls[i].matIdx)+1));
-	//	}
-
-	//	std::string pathFloor = Utils::pathToPTX("rectangleAA.cu"); //TODO: texture floor
-	//	Geometry floor = ctx->createGeometry();
-	//	floor->setPrimitiveCount(1);
-	//	floor->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
-	//	floor->setIntersectionProgram(ctx->createProgramFromPTXFile(pathFloor, "intersect"));
-
-	//	float rw = lab.getRealWidth(), rh = lab.getRealHeight();
-	//	floor["plane_normal"]->setFloat(0.0f, 1.0f, 0.0f);
-	//	floor["recmin"]->setFloat(-rw / 2.0f, 0.0f, -rh / 2.0f);
-	//	floor["recmax"]->setFloat(rw / 2.0f, 0.0f, rh / 2.0f);
-
-	//	gis.push_back(ctx->createGeometryInstance(floor, &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL), &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL)+1));
-	//}
+	
 
 	template<class T>
 	Buffer OptixTracer::getBufferFromVector(const vector<T> &vec, RTformat type)
@@ -271,7 +241,6 @@ namespace trayc
 
 	void OptixTracer::trace()
 	{
-		//printf("Available device memory: %d MB\n", ctx->getAvailableDeviceMemory(0) >> 20);
 		for(int i = 0; i < renderingDivisionLevel; ++i)
 		{
 			ctx["myStripe"]->setInt(i);
@@ -298,5 +267,30 @@ namespace trayc
 		ctx["U"]->setFloat(Utils::glmToOptix(cam.getRight() * tanfov * cam.aspectRatio));
 		ctx["V"]->setFloat(Utils::glmToOptix(cam.getUp() * tanfov));
 		ctx["W"]->setFloat(Utils::glmToOptix(cam.getDirection()));
+	}
+
+	void OptixTracer::renderToPPM(const std::string &name)
+	{
+		trace();
+
+		Buffer buff = getBuffer();
+		RTsize w, h;
+		buff->getSize(w, h);
+		int k = 4;
+
+		float *out = (float*)buff->map();
+		{
+			std::ofstream ofs(name, std::ios::out | std::ios::binary);
+			ofs << "P6\n" << w << " " << h << "\n255\n";
+			for(int i = h-1; i >= 0; --i)
+				for(int j = 0; j < w; ++j)
+				{
+					ofs << (unsigned char)(std::min(1.0f, out[(i*w+j)*k + 0]) * 255) << 
+						   (unsigned char)(std::min(1.0f, out[(i*w+j)*k + 1]) * 255) <<
+						   (unsigned char)(std::min(1.0f, out[(i*w+j)*k + 2]) * 255); 
+				}
+				ofs.close();
+		}
+		buff->unmap();
 	}
 }

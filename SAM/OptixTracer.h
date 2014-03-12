@@ -34,6 +34,7 @@ namespace trayc
 		optix::Buffer getBuffer();
 		void setBufferSize(int w, int h);
 		void setCamera(const reng::Camera &cam);
+		void renderToPPM(const std::string &name);
 
 	private:
 		template<class T>

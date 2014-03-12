@@ -20,11 +20,11 @@ rtDeclareVariable(optix::Ray, ray, rtCurrentRay, );
 template<bool useNormalMap>
 static __inline__ __device__ void mesh_intersect(int primIdx)
 {
-	int3 idx = index_buffer[primIdx];
+	const int3 &idx = index_buffer[primIdx];
 
-	float3 p0 = vertex_buffer[idx.x];
-	float3 p1 = vertex_buffer[idx.y];
-	float3 p2 = vertex_buffer[idx.z];
+	const float3 &p0 = vertex_buffer[idx.x];
+	const float3 &p1 = vertex_buffer[idx.y];
+	const float3 &p2 = vertex_buffer[idx.z];
 
 	float3 n;
 	float t, beta, gamma;
@@ -36,9 +36,9 @@ static __inline__ __device__ void mesh_intersect(int primIdx)
 				texcoord = make_float3(0.0f, 0.0f, 0.0f);
 			else 
 			{
-				float2 t0 = texcoord_buffer[idx.x];
-				float2 t1 = texcoord_buffer[idx.y];
-				float2 t2 = texcoord_buffer[idx.z];
+				const float2 &t0 = texcoord_buffer[idx.x];
+				const float2 &t1 = texcoord_buffer[idx.y];
+				const float2 &t2 = texcoord_buffer[idx.z];
 				texcoord = make_float3(t1 * beta + t2 * gamma + t0 * (1.0f - beta - gamma));
 			}
 			
@@ -48,9 +48,9 @@ static __inline__ __device__ void mesh_intersect(int primIdx)
 				shading_normal = normalize(n);
 			else
 			{
-				float3 n0 = normal_buffer[idx.x];
-				float3 n1 = normal_buffer[idx.y];
-				float3 n2 = normal_buffer[idx.z];
+				const float3 &n0 = normal_buffer[idx.x];
+				const float3 &n1 = normal_buffer[idx.y];
+				const float3 &n2 = normal_buffer[idx.z];
 				shading_normal = normalize(n1 * beta + n2 * gamma + n0 * (1.0f - beta - gamma));
 			}
 
@@ -82,11 +82,11 @@ RT_PROGRAM void mesh_intersect_no_normalmap(int primIdx)
 
 RT_PROGRAM void mesh_bounds(int primIdx, float result[6])
 {  
-	const int3 idx = index_buffer[primIdx];
+	const int3 &idx = index_buffer[primIdx];
 
-	const float3 v0 = vertex_buffer[idx.x];
-	const float3 v1 = vertex_buffer[idx.y];
-	const float3 v2 = vertex_buffer[idx.z];
+	const float3 &v0 = vertex_buffer[idx.x];
+	const float3 &v1 = vertex_buffer[idx.y];
+	const float3 &v2 = vertex_buffer[idx.z];
 	const float area = length(cross(v1 - v0, v2 - v0));
 
 	optix::Aabb *aabb = (optix::Aabb*)result;

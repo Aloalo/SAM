@@ -154,7 +154,6 @@
     <None Include="..\Shaders\passthrough.frag" />
     <None Include="..\Shaders\passthrough.vert" />
     <None Include="Notes.txt" />
-    <None Include="Settings.ini" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\TODO.txt" />

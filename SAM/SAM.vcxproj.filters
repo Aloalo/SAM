@@ -144,7 +144,6 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Notes.txt" />
-    <None Include="Settings.ini" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\TODO.txt" />

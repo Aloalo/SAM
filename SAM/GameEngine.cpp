@@ -62,6 +62,9 @@ namespace trayc
 			Engine::hideMouse(true);
 		}
 
+		if(e.action == GLFW_PRESS && e.key == GLFW_KEY_O)
+			tracer.renderToPPM("screen.ppm");
+
 		player->keyPress(e);
 	}
 
