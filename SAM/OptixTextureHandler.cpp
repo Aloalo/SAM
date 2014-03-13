@@ -16,8 +16,7 @@ namespace trayc
 	optix::TextureSampler OptixTextureHandler::get(const string &path, const string &def, float anisotropy, RTwrapmode wrapMode, GLenum format)
 	{
 		Texture ret = TextureHandler::getTexture(path, def, format);
-		//ret.generateMipmaps(); //not supported in optix
-
+		
 		if(mp.find(ret.getID()) == mp.end())
 		{
 			optix::TextureSampler sampler = ctx->createTextureSamplerFromGLImage(ret.getID(), RT_TARGET_GL_TEXTURE_2D);

@@ -135,9 +135,15 @@ int main()
 		1 //is_directional
 		));
 
+	FontFace *ff = new FontFace(Utils::defTexture("font.png"), 10, 10, ' ', 0.8);
+
 	input.addInputObserver(ptr);
 	e.addToUpdateList(ptr);
 	e.addToDisplayList(ptr);
+
+	Font *f = new Font(ff, 12);
+	f->halign = Font::HAlignment::Center;
+	f->valign = Font::VAlignment::Middle;
 
 	UIManager::get().lm = new VerticalLayoutManager;
 
@@ -149,16 +155,22 @@ int main()
 	Button *b1 = new Button;
 	b1->color = vec4(1, 0, 0, 1);
 	b1->setAction(new LightHandler(0, false, ptr->tracer.getLight(0).color));
+	b1->text = "Point";
+	b1->font = f;
 	cont->add(b1);
 
 	Button *b2 = new Button;
 	b2->color = vec4(0, 1, 0, 1);
 	b2->setAction(new LightHandler(1, false, ptr->tracer.getLight(1).color));
+	b2->text = "Spot";
+	b2->font = f;
 	cont->add(b2);
 
 	Button *b3 = new Button;
 	b3->color = vec4(0, 0, 1, 1);
 	b3->setAction(new LightHandler(2, true, ptr->tracer.getLight(2).color));
+	b3->text = "Dir";
+	b3->font = f;
 	cont->add(b3);
 
 	cont->pack();
@@ -169,6 +181,8 @@ int main()
 	delete b1;
 	delete b2;
 	delete b3;
+	delete ff;
+	delete f;
 	cleanUp();
 	return 0;
 }
