@@ -19,16 +19,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(ProgramFiles)\MSBuild\Microsoft.Cpp\v4.0\BuildCustomizations\CUDA 5.0.props" />
+    <Import Project="$(ProgramFiles)\MSBuild\Microsoft.Cpp\v4.0\BuildCustomizations\CUDA 5.5.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -67,6 +67,7 @@
       <FastMath>true</FastMath>
       <Optimization>Od</Optimization>
       <GPUDebugInfo>false</GPUDebugInfo>
+      <AdditionalOptions>--use_fast_math %(AdditionalOptions)</AdditionalOptions>
     </CudaCompile>
     <Lib>
       <AdditionalDependencies>RenderingEngine.lib;glfw3.lib;opengl32.lib;glew32.lib;DevIL.lib;ILUT.lib;ILU.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -101,6 +102,7 @@
       <Optimization>O3</Optimization>
       <FastMath>true</FastMath>
       <CodeGeneration>compute_10,sm_10</CodeGeneration>
+      <AdditionalOptions>--use_fast_math --optimize 2 %(AdditionalOptions)</AdditionalOptions>
     </CudaCompile>
     <Lib>
       <AdditionalDependencies>RenderingEngine.lib;glfw3.lib;opengl32.lib;glew32.lib;DevIL.lib;ILUT.lib;ILU.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -153,6 +155,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(ProgramFiles)\MSBuild\Microsoft.Cpp\v4.0\BuildCustomizations\CUDA 5.0.targets" />
+    <Import Project="$(ProgramFiles)\MSBuild\Microsoft.Cpp\v4.0\BuildCustomizations\CUDA 5.5.targets" />
   </ImportGroup>
 </Project>
