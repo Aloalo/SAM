@@ -1,5 +1,6 @@
 #include <optix_world.h>
 #include <optixu/optixu_math_namespace.h>
+#include <optixu/optixu_math.h>
 #include "helper.h"
 #include "lights.h"
 

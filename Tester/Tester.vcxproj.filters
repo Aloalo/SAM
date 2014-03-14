@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="CUDAfiles">
+      <UniqueIdentifier>{249630dc-ff43-4995-99ca-fbef8a258424}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -27,6 +30,9 @@
     <ClCompile Include="LabMaterials.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Labyrinth.h">
@@ -35,8 +41,22 @@
     <ClInclude Include="LabMaterials.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Settings.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="shaders.cu">
+      <Filter>CUDAfiles</Filter>
+    </CudaCompile>
+    <CudaCompile Include="box.cu">
+      <Filter>CUDAfiles</Filter>
+    </CudaCompile>
+    <CudaCompile Include="rectangleAA.cu">
+      <Filter>CUDAfiles</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

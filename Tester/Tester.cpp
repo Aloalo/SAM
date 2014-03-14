@@ -8,10 +8,12 @@
 #include <VerticalLayoutManager.h>
 #include <Button.h>
 
-#include "GameEngine.h"
-#include "Environment.h"
-#include "Utils.h"
+#include <GameEngine.h>
+#include <Environment.h>
+#include <Utils.h>
 
+#include "Labyrinth.h"
+ 
 using namespace reng;
 using namespace std;
 using namespace trayc;
@@ -51,7 +53,7 @@ struct TintChanger : public Junk
 
 struct LightHandler : public Junk
 {
-	LightHandler(int idx, int onoff, const float3 &color) :
+	LightHandler(int idx, bool onoff, const float3 &color) :
 		idx(idx), onoff(onoff), color(color) 
 	{
 	}
@@ -70,6 +72,10 @@ struct LightHandler : public Junk
 	bool onoff;
 	float3 color;
 };
+
+void addLabyrinth(const Labyrinth &lab)
+{
+}
 
 int main()
 {
@@ -140,7 +146,7 @@ int main()
 	input.addInputObserver(ptr);
 	e.addToUpdateList(ptr);
 	e.addToDisplayList(ptr);
-
+	
 	Font *f = new Font(ff, 12);
 	f->halign = Font::HAlignment::Center;
 	f->valign = Font::VAlignment::Middle;

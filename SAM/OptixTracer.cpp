@@ -85,9 +85,22 @@ namespace trayc
 
 		ctx->setExceptionProgram(0, Programs::exception);
 		ctx["bad_color"]->setFloat(1.0f, 0.0f, 0.0f);
-	}
 
-	
+		/*try
+		{
+			ctx["lights"]->getBuffer()->setSize(lights.size());
+			GeometryGroup g = ctx->createGeometryGroup();
+			g->setAcceleration(ctx->createAcceleration("NoAccel", "NoAccel"));
+			ctx["top_object"]->set(g);
+
+			ctx->compile();
+		}
+		catch(Exception &ex)
+		{
+			printf("test:: %s\n", ex.what());
+			exit(-1);
+		}*/
+	}
 
 	template<class T>
 	Buffer OptixTracer::getBufferFromVector(const vector<T> &vec, RTformat type)
@@ -191,6 +204,11 @@ namespace trayc
 	void OptixTracer::addLight(const BasicLight &light)
 	{
 		lights.push_back(light);
+	}
+
+	void OptixTracer::addGeometryInstance(const GeometryInstance &gi)
+	{
+		gis.push_back(gi);
 	}
 
 	void OptixTracer::compileSceneGraph()

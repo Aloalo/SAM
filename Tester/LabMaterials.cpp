@@ -21,37 +21,40 @@ Material& LabMaterials::getLabyrinthMaterial(int mat)
 }
 
 //void OptixTracer::addMesh(const Labyrinth &lab)
-	//{
-	//	const vector<Box> &walls = lab.getWalls();
-	//	int n = walls.size();
-	//	for(int i = 0; i < n; ++i)
-	//	{
-	//		Geometry box = ctx->createGeometry();
-	//		box->setPrimitiveCount(1);
-	//		box->setBoundingBoxProgram(Programs::boxAABB);
-	//		box->setIntersectionProgram(Programs::boxIntersect);
-	//		box["boxmin"]->setFloat(walls[i].boxmin);
-	//		box["boxmax"]->setFloat(walls[i].boxmax);
-	//		gis.push_back(ctx->createGeometryInstance(box, &matHandler.getLabyrinthMaterial(walls[i].matIdx), 
-	//			&matHandler.getLabyrinthMaterial(walls[i].matIdx)+1));
-	//	}
-
-	//	std::string pathFloor = Utils::pathToPTX("rectangleAA.cu"); //TODO: texture floor
-	//	Geometry floor = ctx->createGeometry();
-	//	floor->setPrimitiveCount(1);
-	//	floor->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
-	//	floor->setIntersectionProgram(ctx->createProgramFromPTXFile(pathFloor, "intersect"));
-
-	//	float rw = lab.getRealWidth(), rh = lab.getRealHeight();
-	//	floor["plane_normal"]->setFloat(0.0f, 1.0f, 0.0f);
-	//	floor["recmin"]->setFloat(-rw / 2.0f, 0.0f, -rh / 2.0f);
-	//	floor["recmax"]->setFloat(rw / 2.0f, 0.0f, rh / 2.0f);
-
-	//	gis.push_back(ctx->createGeometryInstance(floor, &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL), &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL)+1));
-	//}
+//	{
+//		const vector<Box> &walls = lab.getWalls();
+//		int n = walls.size();
+//		for(int i = 0; i < n; ++i)
+//		{
+//			Geometry box = ctx->createGeometry();
+//			box->setPrimitiveCount(1);
+//			box->setBoundingBoxProgram(Programs::boxAABB);
+//			box->setIntersectionProgram(Programs::boxIntersect);
+//			box["boxmin"]->setFloat(walls[i].boxmin);
+//			box["boxmax"]->setFloat(walls[i].boxmax);
+//			gis.push_back(ctx->createGeometryInstance(box, &matHandler.getLabyrinthMaterial(walls[i].matIdx), 
+//				&matHandler.getLabyrinthMaterial(walls[i].matIdx)+1));
+//		}
+//
+//		std::string pathFloor = Utils::pathToPTX("rectangleAA.cu"); //TODO: texture floor
+//		Geometry floor = ctx->createGeometry();
+//		floor->setPrimitiveCount(1);
+//		floor->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
+//		floor->setIntersectionProgram(ctx->createProgramFromPTXFile(pathFloor, "intersect"));
+//
+//		float rw = lab.getRealWidth(), rh = lab.getRealHeight();
+//		floor["plane_normal"]->setFloat(0.0f, 1.0f, 0.0f);
+//		floor["recmin"]->setFloat(-rw / 2.0f, 0.0f, -rh / 2.0f);
+//		floor["recmax"]->setFloat(rw / 2.0f, 0.0f, rh / 2.0f);
+//
+//		gis.push_back(ctx->createGeometryInstance(floor, &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL), &matHandler.getLabyrinthMaterial(MaterialHandler::LabMaterials::WALL)+1));
+//	}
 
 void LabMaterials::createLabMaterials()
 {
+	/*string pathbox = "ptxfiles/";
+
+
 	Material wallMaterial = ctx->createMaterial();
 	wallMaterial->setClosestHitProgram(0, Programs::closestHitSolid);
 	wallMaterial->setAnyHitProgram(1, Programs::anyHit);
@@ -87,5 +90,5 @@ void LabMaterials::createLabMaterials()
 	float3 extinction = make_float3(.80f, .80f, .80f);
 	glassMaterial["extinction_constant"]->setFloat(log(extinction.x), log(extinction.y), log(extinction.z));
 	glassMaterial["shadow_attenuation"]->setFloat(0.4f, 0.4f, 0.4f);
-	labmat[GLASS] = glassMaterial;
+	labmat[GLASS] = glassMaterial;*/
 }

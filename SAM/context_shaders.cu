@@ -35,7 +35,6 @@ RT_PROGRAM void pinhole_camera()
 //
 // Pinhole camera implementation with MSAA
 //
-
 rtDeclareVariable(int, AAlevel, , );
 
 RT_PROGRAM void pinhole_camera_AA()

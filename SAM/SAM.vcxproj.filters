@@ -23,9 +23,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Box.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BufferDrawer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -61,9 +58,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Box.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BufferDrawer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -109,20 +103,11 @@
     <ClInclude Include="SceneGraphHandler.h">
       <Filter>Header Files\Handlers</Filter>
     </ClInclude>
-    <ClInclude Include="OptixTextureSampler.cuh">
-      <Filter>CUDA Files</Filter>
-    </ClInclude>
     <ClInclude Include="Environment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="box.cu">
-      <Filter>CUDA Files</Filter>
-    </CudaCompile>
-    <CudaCompile Include="rectangleAA.cu">
-      <Filter>CUDA Files</Filter>
-    </CudaCompile>
     <CudaCompile Include="triangle_mesh.cu">
       <Filter>CUDA Files</Filter>
     </CudaCompile>

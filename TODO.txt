@@ -1,12 +1,13 @@
 Opcenito:
 -fix normal mapping
+-warnings
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 
 Grafika:
 -mipmaping (optix release)
+-glass/reflective mesh
 -parallax mapping
--textured glass/reflective mesh
 -EDAA
 
 -distributed ray tracing

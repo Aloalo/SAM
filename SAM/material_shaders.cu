@@ -1,26 +1,7 @@
 #include "phong.h"
-#include "OptixTextureSampler.cuh"
 
 rtDeclareVariable(float3, shading_normal, attribute shading_normal, ); 
 rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, ); 
-
-//
-//ADS phong shader with shadows and reflections, no textures
-//
-rtDeclareVariable(float3, Ka, , );
-rtDeclareVariable(float3, Kd, , );
-rtDeclareVariable(float3, Ks, , );
-rtDeclareVariable(float, phong_exp, , );
-rtDeclareVariable(float3, reflectivity, , );
-
-RT_PROGRAM void closest_hit_phong()
-{
-	float3 world_geo_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
-	float3 world_shade_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
-	float3 ffnormal = faceforward(world_shade_normal, -ray.direction, world_geo_normal);
-
-	phongShade(Ka, Kd, Ks, ffnormal, phong_exp, reflectivity);
-}
 
 //
 // Transparent object shadows, no textures
@@ -120,13 +101,15 @@ RT_PROGRAM void closest_hit_glass()
 	prd_radiance.result = result;
 }
 
+rtDeclareVariable(float3, Ka, , );
+rtDeclareVariable(float3, Kd, , );
+rtDeclareVariable(float3, Ks, , );
+rtDeclareVariable(float3, reflectivity, , );
 rtTextureSampler<uchar4, 2, cudaReadModeNormalizedFloat> ambient_map;        
 rtTextureSampler<uchar4, 2, cudaReadModeNormalizedFloat> diffuse_map;
 rtTextureSampler<uchar4, 2, cudaReadModeNormalizedFloat> specular_map;
 
 rtDeclareVariable(float3, texcoord, attribute texcoord, ); 
-//rtDeclareVariable(OptixTextureSampler, ambmap, , );
-
 
 //
 //solid mesh with textures and reflectivity
@@ -150,12 +133,12 @@ RT_PROGRAM void closest_hit_mesh()
 	float3 world_geometric_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
 	float3 ffnormal = faceforward(world_shading_normal, -ray.direction, world_geometric_normal);
 
-	float3 pKd = make_float3(tex2D(diffuse_map, texcoord.x, texcoord.y)) * Kd;
-	float3 pKs = make_float3(tex2D(specular_map, texcoord.x, texcoord.y)) * Ks;
+	float4 pKd = tex2D(diffuse_map, texcoord.x, texcoord.y);
+	float4 pKs = tex2D(specular_map, texcoord.x, texcoord.y);
 	
 	//phongShade(ffnormal, make_float3(0.0f), make_float3(0.0f), make_float3(0.0f), phong_exp, reflectivity);
 	//phongShade(make_float3(abs(ffnormal.x), abs(ffnormal.y), abs(ffnormal.z)), make_float3(0.0f), make_float3(0.0f), make_float3(0.0f), phong_exp, reflectivity);
-	phongShade(make_float3(pKa) * Ka, pKd, pKs, ffnormal, phong_exp, reflectivity);
+	phongShade(make_float3(pKa) * Ka, make_float3(pKd) * Kd, make_float3(pKs) * Ks, ffnormal, pKs.w * 255.0f, reflectivity);
 }
 
 //
@@ -166,11 +149,5 @@ RT_PROGRAM void any_hit_solid()
 	float opacity = tex2D(ambient_map, texcoord.x, texcoord.y).w;
 	if(opacity < importance_cutoff)
 		rtIgnoreIntersection();
-	phongShadowed();
-}
-
-
-RT_PROGRAM void any_hit()
-{
 	phongShadowed();
 }

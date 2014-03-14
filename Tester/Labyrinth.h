@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <Box.h>
+#include "Box.h"
 
 class Labyrinth
 {

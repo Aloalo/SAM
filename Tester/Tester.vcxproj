@@ -67,7 +67,7 @@
       <FastMath>true</FastMath>
       <Optimization>Od</Optimization>
       <NvccCompilation>ptx</NvccCompilation>
-      <CompileOut>..\SAM\ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
+      <CompileOut>ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -91,23 +91,30 @@
       <FastMath>true</FastMath>
       <Optimization>O3</Optimization>
       <NvccCompilation>ptx</NvccCompilation>
-      <CompileOut>..\SAM\ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
+      <CompileOut>ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="LabMaterials.cpp" />
     <ClCompile Include="Labyrinth.cpp" />
     <ClCompile Include="Tester.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Box.h" />
     <ClInclude Include="LabMaterials.h" />
     <ClInclude Include="Labyrinth.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Settings.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="box.cu" />
+    <CudaCompile Include="rectangleAA.cu" />
+    <CudaCompile Include="shaders.cu" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
