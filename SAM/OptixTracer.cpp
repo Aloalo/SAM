@@ -85,21 +85,6 @@ namespace trayc
 
 		ctx->setExceptionProgram(0, Programs::exception);
 		ctx["bad_color"]->setFloat(1.0f, 0.0f, 0.0f);
-
-		/*try
-		{
-			ctx["lights"]->getBuffer()->setSize(lights.size());
-			GeometryGroup g = ctx->createGeometryGroup();
-			g->setAcceleration(ctx->createAcceleration("NoAccel", "NoAccel"));
-			ctx["top_object"]->set(g);
-
-			ctx->compile();
-		}
-		catch(Exception &ex)
-		{
-			printf("test:: %s\n", ex.what());
-			exit(-1);
-		}*/
 	}
 
 	template<class T>
@@ -129,7 +114,7 @@ namespace trayc
 		vector<float2> uvData;
 		uvData.reserve(mesh->mNumVertices);
 
-		bool hasNormalMap = mat == NULL ? 0 : mat->GetTextureCount(aiTextureType_HEIGHT) || mat->GetTextureCount(aiTextureType_NORMALS);
+		bool hasNormalMap = true;//mat == NULL ? 0 : mat->GetTextureCount(aiTextureType_HEIGHT) || mat->GetTextureCount(aiTextureType_NORMALS);
 
 		for(int i = 0; i < mesh->mNumVertices; ++i)
 		{
@@ -156,7 +141,7 @@ namespace trayc
 		{
 			gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(tangentData, RT_FORMAT_FLOAT3));
 			gMesh["normal_map"]->setTextureSampler(OptixTextureHandler::get().get(MaterialHandler::get().getTextureName(mat, aiTextureType_HEIGHT, path), 
-				Utils::defTexture("error.png"), 0.0f, RT_WRAP_REPEAT));
+				Utils::defTexture("bumpDefault.png"), 0.0f, RT_WRAP_REPEAT));
 		}
 		gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
 		gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));

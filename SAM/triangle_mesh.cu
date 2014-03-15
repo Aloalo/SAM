@@ -77,7 +77,7 @@ RT_PROGRAM void mesh_intersect_normalmap(int primIdx)
 
 RT_PROGRAM void mesh_intersect_no_normalmap(int primIdx)
 {
-	mesh_intersect<false>(primIdx);
+	mesh_intersect<true>(primIdx);
 }
 
 RT_PROGRAM void mesh_bounds(int primIdx, float result[6])

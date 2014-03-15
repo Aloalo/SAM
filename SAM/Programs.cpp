@@ -3,7 +3,6 @@
 
 using namespace optix;
 
-
 namespace trayc
 {
 	Program Programs::anyHitSolid;

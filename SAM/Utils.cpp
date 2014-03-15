@@ -8,7 +8,7 @@ namespace trayc
 {
 	float Utils::eps = 1e-3f;
 	float Utils::pi = 3.1415926f;
-	string Utils::ptxPath = "../SAM/ptxfiles/";
+	string Utils::ptxPath = "../Resources/ptxfiles/";
 
 	string Utils::pathToPTX(const string &filename)
 	{

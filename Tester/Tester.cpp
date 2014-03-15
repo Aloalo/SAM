@@ -13,8 +13,10 @@
 #include <Utils.h>
 
 #include "Labyrinth.h"
- 
+#include "LabMaterials.h"
+
 using namespace reng;
+using namespace optix;
 using namespace std;
 using namespace trayc;
 using namespace glm;
@@ -23,6 +25,7 @@ struct Junk;
 
 GameEngine *ptr;
 vector<Junk*> junk;
+LabMaterials mat;
 
 void cleanUp()
 {
@@ -75,6 +78,38 @@ struct LightHandler : public Junk
 
 void addLabyrinth(const Labyrinth &lab)
 {
+	string pathFloor = Utils::pathToPTX("rectangleAA.cu");
+	string pathBox = Utils::pathToPTX("box.cu");
+
+	optix::Program boxAABB = ctx->createProgramFromPTXFile(pathBox, "box_bounds");
+	optix::Program boxIntersect = ctx->createProgramFromPTXFile(pathBox, "box_intersect");
+
+	const vector<Box> &walls = lab.getWalls();
+	int n = walls.size();
+	for(int i = 0; i < n; ++i)
+	{
+		Geometry box = ctx->createGeometry();
+		box->setPrimitiveCount(1);
+		box->setBoundingBoxProgram(boxAABB);
+		box->setIntersectionProgram(boxIntersect);
+		box["boxmin"]->setFloat(walls[i].boxmin);
+		box["boxmax"]->setFloat(walls[i].boxmax);
+		ptr->tracer.addGeometryInstance(ctx->createGeometryInstance(box, &mat.getLabyrinthMaterial(walls[i].matIdx), 
+			&mat.getLabyrinthMaterial(walls[i].matIdx)+1));
+	}
+
+	Geometry floor = ctx->createGeometry();
+	floor->setPrimitiveCount(1);
+	floor->setBoundingBoxProgram(ctx->createProgramFromPTXFile(pathFloor, "bounds"));
+	floor->setIntersectionProgram(ctx->createProgramFromPTXFile(pathFloor, "intersect"));
+
+	float rw = lab.getRealWidth(), rh = lab.getRealHeight();
+	floor["plane_normal"]->setFloat(0.0f, 1.0f, 0.0f);
+	floor["recmin"]->setFloat(-rw / 2.0f, 0.0f, -rh / 2.0f);
+	floor["recmax"]->setFloat(rw / 2.0f, 0.0f, rh / 2.0f);
+
+	ptr->tracer.addGeometryInstance(ctx->createGeometryInstance(floor, &mat.getLabyrinthMaterial(LabMaterials::WALL), 
+		&mat.getLabyrinthMaterial(LabMaterials::WALL)+1));
 }
 
 int main()
@@ -90,23 +125,25 @@ int main()
 	const aiScene* scene = importer.ReadFile(Utils::resource("crytek-sponza/sponza.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
 	if(!scene)
 	{
-		printf("%s\n", importer.GetErrorString());
-		return 0;
+	printf("%s\n", importer.GetErrorString());
+	return 0;
 	}
 	ptr->tracer.addScene(Utils::resource("crytek-sponza/"), scene);
-	e.setCamera(&ptr->player->cam);
 
 	/*const aiScene* nissan = importer.ReadFile(Utils::resource("nissan/nissan.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
 	if(!nissan)
 	{
-		printf("%s\n", importer.GetErrorString());
-		return 0;
+	printf("%s\n", importer.GetErrorString());
+	return 0;
 	}
 	ptr->tracer.addScene(MaterialHandler::LabMaterials::MIRROR, nissan);*/
 
 	/*Labyrinth lab;
-	lab.generateLabyrinth(150, 150);
-	ptr->tracer.addMesh(lab);*/
+	lab.generateLabyrinth(15, 15);
+	mat.createLabMaterials();
+	addLabyrinth(lab);*/
+
+	e.setCamera(&ptr->player->cam);
 
 	ptr->tracer.addLight(BasicLight(//light0 - point light
 		make_float3(0.0f, 30.0f, 10.0f), //pos/dir
@@ -146,7 +183,7 @@ int main()
 	input.addInputObserver(ptr);
 	e.addToUpdateList(ptr);
 	e.addToDisplayList(ptr);
-	
+
 	Font *f = new Font(ff, 12);
 	f->halign = Font::HAlignment::Center;
 	f->valign = Font::VAlignment::Middle;
@@ -157,7 +194,7 @@ int main()
 	cont->lm = new VerticalLayoutManager;
 	cont->color = vec4(.4, .4, .4, 0.7);
 	UIManager::get().add(cont);
-	
+
 	Button *b1 = new Button;
 	b1->color = vec4(1, 0, 0, 1);
 	b1->setAction(new LightHandler(0, false, ptr->tracer.getLight(0).color));

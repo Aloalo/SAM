@@ -67,8 +67,9 @@
       <FastMath>true</FastMath>
       <Optimization>Od</Optimization>
       <NvccCompilation>ptx</NvccCompilation>
-      <CompileOut>ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
+      <CompileOut>..\Resources\ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
       <AdditionalOptions>--use_fast_math %(AdditionalOptions)</AdditionalOptions>
+      <GPUDebugInfo>false</GPUDebugInfo>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -92,8 +93,8 @@
       <FastMath>true</FastMath>
       <Optimization>O3</Optimization>
       <NvccCompilation>ptx</NvccCompilation>
-      <CompileOut>ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
-      <AdditionalOptions>--use_fast_math %(AdditionalOptions)</AdditionalOptions>
+      <CompileOut>..\Resources\ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
+      <AdditionalOptions>--use_fast_math --optimize 2 %(AdditionalOptions)</AdditionalOptions>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
