@@ -114,7 +114,7 @@ namespace trayc
 		vector<float2> uvData;
 		uvData.reserve(mesh->mNumVertices);
 
-		bool hasNormalMap = true;//mat == NULL ? 0 : mat->GetTextureCount(aiTextureType_HEIGHT) || mat->GetTextureCount(aiTextureType_NORMALS);
+		bool hasNormalMap = mat->GetTextureCount(aiTextureType_NORMALS) || mat->GetTextureCount(aiTextureType_HEIGHT);
 
 		for(int i = 0; i < mesh->mNumVertices; ++i)
 		{
@@ -130,19 +130,14 @@ namespace trayc
 		Geometry gMesh = ctx->createGeometry();
 		gMesh->setPrimitiveCount(indices.size());
 		gMesh->setBoundingBoxProgram(Programs::meshBoundingBox);
-		if(hasNormalMap)
-			gMesh->setIntersectionProgram(Programs::meshIntersectNormalMap);
-		else
-			gMesh->setIntersectionProgram(Programs::meshIntersectNoNormalMap);
+		gMesh->setIntersectionProgram(Programs::meshIntersect);
 
 		gMesh["vertex_buffer"]->setBuffer(getBufferFromVector(vertexData, RT_FORMAT_FLOAT3));
 		gMesh["normal_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
-		if(hasNormalMap)
-		{
-			gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(tangentData, RT_FORMAT_FLOAT3));
-			gMesh["normal_map"]->setTextureSampler(OptixTextureHandler::get().get(MaterialHandler::get().getTextureName(mat, aiTextureType_HEIGHT, path), 
-				Utils::defTexture("bumpDefault.png"), 0.0f, RT_WRAP_REPEAT));
-		}
+		gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(tangentData, RT_FORMAT_FLOAT3));
+		gMesh["normal_map"]->setTextureSampler(OptixTextureHandler::get().get(
+			MaterialHandler::get().getTextureName(mat, aiTextureType_HEIGHT, path, Utils::defTexture("bumpDefault.png"))));
+
 		gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
 		gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
 

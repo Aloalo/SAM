@@ -68,6 +68,7 @@
       <Optimization>Od</Optimization>
       <GPUDebugInfo>false</GPUDebugInfo>
       <AdditionalOptions>--use_fast_math %(AdditionalOptions)</AdditionalOptions>
+      <Warning>InheritFromHost</Warning>
     </CudaCompile>
     <Lib>
       <AdditionalDependencies>RenderingEngine.lib;glfw3.lib;opengl32.lib;glew32.lib;DevIL.lib;ILUT.lib;ILU.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -103,6 +104,7 @@
       <FastMath>true</FastMath>
       <CodeGeneration>compute_10,sm_10</CodeGeneration>
       <AdditionalOptions>--use_fast_math --optimize 2 %(AdditionalOptions)</AdditionalOptions>
+      <Warning>InheritFromHost</Warning>
     </CudaCompile>
     <Lib>
       <AdditionalDependencies>RenderingEngine.lib;glfw3.lib;opengl32.lib;glew32.lib;DevIL.lib;ILUT.lib;ILU.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>

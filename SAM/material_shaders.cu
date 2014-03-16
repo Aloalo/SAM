@@ -8,7 +8,7 @@ rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, );
 //
 rtDeclareVariable(float3, shadow_attenuation, , );
 
-RT_PROGRAM void any_hit_shadow_glass()
+RT_PROGRAM void any_hit_glass()
 {
 	float3 world_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
 	float nDi = fabs(dot(world_normal, ray.direction));

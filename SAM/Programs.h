@@ -16,8 +16,7 @@ namespace trayc
 		static optix::Program anyHitGlass;
 
 		static optix::Program meshBoundingBox;
-		static optix::Program meshIntersectNormalMap;
-		static optix::Program meshIntersectNoNormalMap;
+		static optix::Program meshIntersect;
 
 		static optix::Program rayGeneration;
 		static optix::Program rayGenerationAA;

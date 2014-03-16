@@ -13,7 +13,7 @@ namespace trayc
 	{
 	}
 
-	optix::TextureSampler OptixTextureHandler::get(const string &path, const string &def, float anisotropy, RTwrapmode wrapMode, GLenum format)
+	optix::TextureSampler OptixTextureHandler::get(const string &path, float anisotropy, RTwrapmode wrapMode, const string &def, GLenum format)
 	{
 		Texture ret = TextureHandler::getTexture(path, def, format);
 		

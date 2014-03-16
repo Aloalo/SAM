@@ -70,6 +70,7 @@
       <CompileOut>..\Resources\ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
       <AdditionalOptions>--use_fast_math %(AdditionalOptions)</AdditionalOptions>
       <GPUDebugInfo>false</GPUDebugInfo>
+      <Warning>InheritFromHost</Warning>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -95,6 +96,7 @@
       <NvccCompilation>ptx</NvccCompilation>
       <CompileOut>..\Resources\ptxfiles\%(Filename)%(Extension).ptx</CompileOut>
       <AdditionalOptions>--use_fast_math --optimize 2 %(AdditionalOptions)</AdditionalOptions>
+      <Warning>InheritFromHost</Warning>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

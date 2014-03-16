@@ -10,8 +10,7 @@ namespace trayc
 	Program Programs::closestHitGlass;
 	Program Programs::anyHitGlass;
 	Program Programs::meshBoundingBox;
-	Program Programs::meshIntersectNormalMap;
-	Program Programs::meshIntersectNoNormalMap;
+	Program Programs::meshIntersect;
 	Program Programs::rayGeneration;
 	Program Programs::rayGenerationAA;
 	Program Programs::exception;
@@ -36,11 +35,10 @@ namespace trayc
 
 		anyHitSolid = ctx->createProgramFromPTXFile(materialPath, "any_hit_solid");
 		closestHitGlass = ctx->createProgramFromPTXFile(materialPath, "closest_hit_glass");
-		anyHitGlass = ctx->createProgramFromPTXFile(materialPath, "any_hit_shadow_glass");
+		anyHitGlass = ctx->createProgramFromPTXFile(materialPath, "any_hit_glass");
 		closestHitMesh = ctx->createProgramFromPTXFile(materialPath, "closest_hit_mesh");
 
 		meshBoundingBox = ctx->createProgramFromPTXFile(meshPath, "mesh_bounds");
-		meshIntersectNormalMap = ctx->createProgramFromPTXFile(meshPath, "mesh_intersect_normalmap");
-		meshIntersectNoNormalMap = ctx->createProgramFromPTXFile(meshPath, "mesh_intersect_no_normalmap");
+		meshIntersect = ctx->createProgramFromPTXFile(meshPath, "mesh_intersect");
 	}
 }

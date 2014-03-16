@@ -17,8 +17,7 @@ rtDeclareVariable(float3, geometric_normal, attribute geometric_normal, );
 rtDeclareVariable(float3, shading_normal, attribute shading_normal, ); 
 rtDeclareVariable(optix::Ray, ray, rtCurrentRay, );
 
-template<bool useNormalMap>
-static __inline__ __device__ void mesh_intersect(int primIdx)
+RT_PROGRAM void mesh_intersect(int primIdx)
 {
 	const int3 &idx = index_buffer[primIdx];
 
@@ -45,39 +44,27 @@ static __inline__ __device__ void mesh_intersect(int primIdx)
 			geometric_normal = normalize(n);
 
 			if(normal_buffer.size() == 0 || idx.x < 0 || idx.y < 0 || idx.z < 0)
-				shading_normal = normalize(n);
+				shading_normal = geometric_normal;
 			else
 			{
-				const float3 &n0 = normal_buffer[idx.x];
-				const float3 &n1 = normal_buffer[idx.y];
-				const float3 &n2 = normal_buffer[idx.z];
-				shading_normal = normalize(n1 * beta + n2 * gamma + n0 * (1.0f - beta - gamma));
-			}
-
-			if(useNormalMap)
-			{
-				float3 shading_tangent = normalize(tangent_buffer[idx.y] * beta +
-					tangent_buffer[idx.z] * gamma + tangent_buffer[idx.x] * (1.0f - beta - gamma));
-				Matrix3x3 tbni;
-				tbni.setCol(0, shading_tangent);
-				tbni.setCol(1, cross(shading_tangent, shading_normal));
-				tbni.setCol(2, shading_normal);
-				shading_normal = tbni * normalize(make_float3(tex2D(normal_map, texcoord.x, texcoord.y)) * 2.f - 1.f);
+				shading_normal = normalize(normal_buffer[idx.y] * beta + 
+					normal_buffer[idx.z] * gamma + normal_buffer[idx.x] * (1.0f - beta - gamma));
+		
+				if(tangent_buffer.size() > 0)
+				{
+					float3 shading_tangent = normalize(tangent_buffer[idx.y] * beta +
+						tangent_buffer[idx.z] * gamma + tangent_buffer[idx.x] * (1.0f - beta - gamma));
+					Matrix3x3 tbni;
+					tbni.setCol(0, shading_tangent);
+					tbni.setCol(1, -cross(shading_tangent, shading_normal));
+					tbni.setCol(2, shading_normal);
+					shading_normal = tbni * normalize(make_float3(tex2D(normal_map, texcoord.x, texcoord.y)) * 2.f - 1.f);
+				}
 			}
 
 			rtReportIntersection(0);
 		}
 	}
-}
-
-RT_PROGRAM void mesh_intersect_normalmap(int primIdx)
-{
-	mesh_intersect<true>(primIdx);
-}
-
-RT_PROGRAM void mesh_intersect_no_normalmap(int primIdx)
-{
-	mesh_intersect<true>(primIdx);
 }
 
 RT_PROGRAM void mesh_bounds(int primIdx, float result[6])
