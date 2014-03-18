@@ -13,7 +13,7 @@ RT_PROGRAM void any_hit_glass()
 	float3 world_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
 	float nDi = fabs(dot(world_normal, ray.direction));
 
-	prd_shadow.attenuation *= 1 - fresnel_schlick(nDi, 5.0f, 1.0f - shadow_attenuation, make_float3(1.0f));
+	prd_shadow.attenuation *= 1.0f - optix::fresnel_schlick(nDi, 5.0f, 1.0f - shadow_attenuation, make_float3(1.0f)).x;
 
 	rtIgnoreIntersection();
 }

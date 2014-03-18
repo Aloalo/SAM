@@ -62,6 +62,6 @@ struct PerRayData_radiance
 
 struct PerRayData_shadow
 {
-	float3 attenuation;
+	float attenuation;
 };
 

@@ -14,7 +14,7 @@ namespace trayc
 {
 	OptixTracer::OptixTracer(void) :
 		SETTING(useInternalReflections),
-		SETTING(castsShadows),
+		SETTING(shadowSamples),
 		SETTING(useSchlick),
 		SETTING(maxRayDepth),
 		SETTING(MSAA),
@@ -58,7 +58,7 @@ namespace trayc
 		ctx["ambient_light_color"]->setFloat(0.3f, 0.3f, 0.3f);
 
 		ctx["max_depth"]->setInt(maxRayDepth);
-		ctx["cast_shadows"]->setInt(castsShadows);
+		ctx["shadow_samples"]->setInt(shadowSamples);
 		ctx["use_schlick"]->setInt(useSchlick);
 		ctx["use_internal_reflections"]->setInt(useInternalReflections);
 
@@ -265,10 +265,12 @@ namespace trayc
 
 	void OptixTracer::renderToPPM(const std::string &name)
 	{
-		ctx["AAlevel"]->setInt(5);
+		ctx["AAlevel"]->setInt(1);
+		ctx["shadow_samples"]->setInt(128);
 		trace(1);
+		ctx["shadow_samples"]->setInt(shadowSamples);
 		ctx["AAlevel"]->setInt(MSAA);
-
+		
 		Buffer buff = getBuffer();
 		RTsize w, h;
 		buff->getSize(w, h);
@@ -288,5 +290,8 @@ namespace trayc
 				ofs.close();
 		}
 		buff->unmap();
+
+		
+		buff->setSize(Environment::get().bufferWidth, Environment::get().bufferHeight);
 	}
 }

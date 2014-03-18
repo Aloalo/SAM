@@ -51,7 +51,7 @@ namespace trayc
 
 		reng::Setting<int> maxRayDepth;
 		reng::Setting<int> renderingDivisionLevel;
-		reng::Setting<int> castsShadows;
+		reng::Setting<int> shadowSamples;
 		reng::Setting<int> useSchlick;
 		reng::Setting<int> useInternalReflections;
 		reng::Setting<int> MSAA;

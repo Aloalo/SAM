@@ -3,6 +3,7 @@
 #include <optixu/optixu_math.h>
 #include "helper.h"
 #include "lights.h"
+#include "random.h"
 
 rtDeclareVariable(rtObject, top_object, , );
 
@@ -13,9 +14,10 @@ rtDeclareVariable(PerRayData_shadow,   prd_shadow, rtPayload, );
 
 rtDeclareVariable(int, max_depth, , );
 rtDeclareVariable(int, use_schlick, , );
-rtDeclareVariable(int, cast_shadows, , );
+rtDeclareVariable(int, shadow_samples, , );
 
 rtBuffer<BasicLight> lights;
+rtBuffer<float> lightRadius;
 rtDeclareVariable(float3, ambient_light_color, , );
 rtDeclareVariable(unsigned int, radiance_ray_type, , );
 rtDeclareVariable(unsigned int, shadow_ray_type, , );
@@ -24,7 +26,7 @@ rtDeclareVariable(float, scene_epsilon, , );
 
 static __device__ __inline__ void phongShadowed()
 {
-	prd_shadow.attenuation = optix::make_float3(0);
+	prd_shadow.attenuation = 0.0f;
 	rtTerminateRay();
 }
 
@@ -74,18 +76,27 @@ static __device__ __inline__ void phongShade(float3 p_Ka,
 
 		float nDl = dot(ffnormal, L);
 
-		if(nDl > 0.0f)
+		if(nDl > 0.0f && attenuation > 0.0f)
 		{
 			PerRayData_shadow shadow_prd;
-			shadow_prd.attenuation = make_float3(1.0f);
+			shadow_prd.attenuation = 1.0f;
 
-			if(cast_shadows && light.casts_shadows)
+			if(shadow_samples > 0 && light.casts_shadows)
 			{
-				optix::Ray shadow_ray(hit_point, L, shadow_ray_type, scene_epsilon, Ldist);
-				rtTrace(top_object, shadow_ray, shadow_prd);
+				int lighthit = 0;
+				unsigned int prev = 1337;
+
+				for(int k = 0; k < shadow_samples; ++k)
+				{
+					optix::Ray shadow_ray(hit_point, L, shadow_ray_type, scene_epsilon, Ldist); // TODO: light jitter
+					rtTrace(top_object, shadow_ray, shadow_prd);
+					if(shadow_prd.attenuation > 0.0f)
+						lighthit++;
+				}
+				shadow_prd.attenuation = (float) lighthit / shadow_samples;
 			}
 
-			if(fmaxf(shadow_prd.attenuation) > 0.0f)
+			if(shadow_prd.attenuation > 0.0f)
 			{
 				float3 light_color = light.color * attenuation * shadow_prd.attenuation;
 				color += p_Kd * nDl * light_color;

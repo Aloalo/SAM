@@ -137,6 +137,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Programs.h" />
     <ClInclude Include="OptixTracer.h" />
+    <ClInclude Include="random.h" />
     <ClInclude Include="SafeOptix.h" />
     <ClInclude Include="SceneGraphHandler.h" />
     <ClInclude Include="Utils.h" />
