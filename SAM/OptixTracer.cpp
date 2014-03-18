@@ -46,7 +46,7 @@ namespace trayc
 		Programs::init(ctx);
 
 		ctx->setRayTypeCount(2);
-		ctx->setEntryPointCount(1);
+		ctx->setEntryPointCount(2);
 		ctx->setCPUNumThreads(4);
 		ctx->setStackSize(768 + 256 * maxRayDepth);
 
@@ -72,13 +72,9 @@ namespace trayc
 		lightBuffer->setElementSize(sizeof(BasicLight));
 		ctx["lights"]->setBuffer(lightBuffer);
 
-		if(MSAA > 1)
-		{
-			ctx->setRayGenerationProgram(0, Programs::rayGenerationAA);
-			ctx["AAlevel"]->setInt(MSAA);
-		}
-		else
-			ctx->setRayGenerationProgram(0, Programs::rayGeneration);
+		ctx->setRayGenerationProgram(1, Programs::rayGenerationAA);
+		ctx["AAlevel"]->setInt(MSAA);
+		ctx->setRayGenerationProgram(0, Programs::rayGeneration);
 
 		ctx->setMissProgram(0, Programs::envmapMiss);
 		ctx["envmap"]->setTextureSampler(OptixTextureHandler::get().get(Utils::defTexture("environment.jpg")));
@@ -237,12 +233,12 @@ namespace trayc
 		gis.clear();
 	}
 
-	void OptixTracer::trace()
+	void OptixTracer::trace(int entryPoint)
 	{
 		for(int i = 0; i < renderingDivisionLevel; ++i)
 		{
 			ctx["myStripe"]->setInt(i);
-			ctx->launch(0, Environment::get().bufferWidth, Environment::get().bufferHeight / renderingDivisionLevel);
+			ctx->launch(entryPoint, Environment::get().bufferWidth, Environment::get().bufferHeight / renderingDivisionLevel);
 		}
 	}
 
@@ -269,7 +265,9 @@ namespace trayc
 
 	void OptixTracer::renderToPPM(const std::string &name)
 	{
-		trace();
+		ctx["AAlevel"]->setInt(5);
+		trace(1);
+		ctx["AAlevel"]->setInt(MSAA);
 
 		Buffer buff = getBuffer();
 		RTsize w, h;

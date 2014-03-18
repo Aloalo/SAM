@@ -106,7 +106,7 @@ namespace trayc
 	{
 		try
 		{
-			tracer.trace();
+			tracer.trace(0);
 			drawer.draw(tracer.getBuffer());
 		}
 		catch(exception &ex)

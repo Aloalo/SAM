@@ -29,7 +29,7 @@ namespace trayc
 
 		void compileSceneGraph();
 		void clearSceneGraph();
-		void trace();
+		void trace(int entryPoint);
 
 		BasicLight& getLight(int i);
 		void updateLight(int idx);
