@@ -3,6 +3,7 @@
 #include "Environment.h"
 #include "Programs.h"
 #include "OptixTextureHandler.h"
+#include <ctime>
 #include <fstream>
 
 using namespace optix;
@@ -67,10 +68,21 @@ namespace trayc
 		buff->setSize(Environment::get().bufferWidth, Environment::get().bufferHeight);
 		ctx["output_buffer"]->setBuffer(buff);
 
-		Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT_OUTPUT);
+		Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT);
 		lightBuffer->setFormat(RT_FORMAT_USER);
 		lightBuffer->setElementSize(sizeof(BasicLight));
 		ctx["lights"]->setBuffer(lightBuffer);
+
+		srand(time(0));
+		vector<float3> random;
+		random.push_back(make_float3(0.0f));
+		for(int i = 0; i < 1024; ++i)
+		{
+			float lambda = (float)rand() / RAND_MAX * 2.0f * Utils::pi - Utils::pi;
+			float phi = acos(2.0f * (float)rand() / RAND_MAX - 1.0f);
+			random.push_back(make_float3(sinf(lambda) * cosf(phi), sinf(lambda) * sinf(phi), cosf(lambda)));
+		}
+		ctx["random"]->setBuffer(getBufferFromVector(random, RT_FORMAT_FLOAT3));
 
 		ctx->setRayGenerationProgram(1, Programs::rayGenerationAA);
 		ctx["AAlevel"]->setInt(MSAA);
@@ -235,6 +247,9 @@ namespace trayc
 
 	void OptixTracer::trace(int entryPoint)
 	{
+		static int frame = 1;
+		frame++;
+		ctx["frame"]->setInt(frame);
 		for(int i = 0; i < renderingDivisionLevel; ++i)
 		{
 			ctx["myStripe"]->setInt(i);
@@ -265,10 +280,16 @@ namespace trayc
 
 	void OptixTracer::renderToPPM(const std::string &name)
 	{
+		int rdl = 100;
+		int tmp = renderingDivisionLevel;
+		renderingDivisionLevel = rdl;
 		ctx["AAlevel"]->setInt(1);
+		ctx["renderingDivisionLevel"]->setInt(rdl);
 		ctx["shadow_samples"]->setInt(128);
 		trace(1);
 		ctx["shadow_samples"]->setInt(shadowSamples);
+		renderingDivisionLevel = tmp;
+		ctx["renderingDivisionLevel"]->setInt(renderingDivisionLevel);
 		ctx["AAlevel"]->setInt(MSAA);
 		
 		Buffer buff = getBuffer();
@@ -290,8 +311,5 @@ namespace trayc
 				ofs.close();
 		}
 		buff->unmap();
-
-		
-		buff->setSize(Environment::get().bufferWidth, Environment::get().bufferHeight);
 	}
 }

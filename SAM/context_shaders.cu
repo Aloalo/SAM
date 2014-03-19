@@ -3,7 +3,7 @@
 //
 // Pinhole camera implementation
 //
-rtDeclareVariable(uint2, launch_index, rtLaunchIndex, );
+//rtDeclareVariable(uint2, launch_index, rtLaunchIndex, );
 rtDeclareVariable(float3, eye, , );
 rtDeclareVariable(float3, U, , );
 rtDeclareVariable(float3, V, , );

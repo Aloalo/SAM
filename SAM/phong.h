@@ -6,6 +6,7 @@
 #include "random.h"
 
 rtDeclareVariable(rtObject, top_object, , );
+rtDeclareVariable(uint2, launch_index, rtLaunchIndex, );
 
 rtDeclareVariable(optix::Ray, ray, rtCurrentRay, );
 rtDeclareVariable(float, t_hit, rtIntersectionDistance, );
@@ -15,9 +16,12 @@ rtDeclareVariable(PerRayData_shadow,   prd_shadow, rtPayload, );
 rtDeclareVariable(int, max_depth, , );
 rtDeclareVariable(int, use_schlick, , );
 rtDeclareVariable(int, shadow_samples, , );
+rtDeclareVariable(int, frame, , );
 
 rtBuffer<BasicLight> lights;
 rtBuffer<float> lightRadius;
+rtBuffer<float3> random;
+
 rtDeclareVariable(float3, ambient_light_color, , );
 rtDeclareVariable(unsigned int, radiance_ray_type, , );
 rtDeclareVariable(unsigned int, shadow_ray_type, , );
@@ -83,22 +87,32 @@ static __device__ __inline__ void phongShade(float3 p_Ka,
 
 			if(shadow_samples > 0 && light.casts_shadows)
 			{
-				int lighthit = 0;
-				unsigned int prev = 1337;
+				float lighthit = 0.0f, radius = 2.0f;
 
-				for(int k = 0; k < shadow_samples; ++k)
+				optix::Ray sray(hit_point, L, shadow_ray_type, scene_epsilon, Ldist);
+				rtTrace(top_object, sray, shadow_prd);
+				lighthit += shadow_prd.attenuation;
+
+				unsigned int seed = (launch_index.x + 1) * (launch_index.y + 1) * frame;
+				for(int k = 1; k < shadow_samples; ++k)
 				{
-					optix::Ray shadow_ray(hit_point, L, shadow_ray_type, scene_epsilon, Ldist); // TODO: light jitter
+					float lambda = rnd(seed) * 2.0f * pi - pi;
+					float phi = acos(2.0f * rnd(seed) - 1.0f);
+
+					float3 spherepoint = make_float3(sinf(lambda) * cosf(phi), sinf(lambda) * sinf(phi), cosf(lambda));
+					float3 lightpoint = spherepoint * radius + light.pos;
+					float3 Ldir = lightpoint - hit_point;
+
+					optix::Ray shadow_ray(hit_point, normalize(Ldir), shadow_ray_type, scene_epsilon, length(Ldir));
 					rtTrace(top_object, shadow_ray, shadow_prd);
-					if(shadow_prd.attenuation > 0.0f)
-						lighthit++;
+					lighthit += shadow_prd.attenuation;
 				}
-				shadow_prd.attenuation = (float) lighthit / shadow_samples;
+				attenuation *= lighthit / (float)shadow_samples;
 			}
 
-			if(shadow_prd.attenuation > 0.0f)
+			if(attenuation > 0.0f)
 			{
-				float3 light_color = light.color * attenuation * shadow_prd.attenuation;
+				float3 light_color = light.color * attenuation;
 				color += p_Kd * nDl * light_color;
 
 				float3 H = normalize(L - ray.direction);
