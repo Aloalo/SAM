@@ -54,7 +54,7 @@ namespace trayc
 		accel_large_mesh = f;
 	}
 
-	void AccelHandler::loadAccelCache(GeometryGroup &geometry_group)
+	void AccelHandler::loadAccelCache(GeometryGroup geometry_group)
 	{
 		if(accel_caching_on)
 		{
@@ -106,7 +106,7 @@ namespace trayc
 		}
 	}
 
-	void AccelHandler::saveAccelCache(GeometryGroup &geometry_group)
+	void AccelHandler::saveAccelCache(GeometryGroup geometry_group)
 	{
 		// If accel caching on, marshallize the accel 
 		if(accel_caching_on && !accel_cache_loaded)

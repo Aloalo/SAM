@@ -19,7 +19,9 @@ namespace trayc
 		SETTING(useSchlick),
 		SETTING(maxRayDepth),
 		SETTING(MSAA),
-		SETTING(renderingDivisionLevel)
+		SETTING(renderingDivisionLevel),
+		SETTING(SSbufferWidth),
+		SETTING(SSbufferHeight)
 	{
 	}
 
@@ -27,16 +29,11 @@ namespace trayc
 	{
 	}
 
-	Buffer OptixTracer::getBuffer()
-	{
-		return Environment::get().ctx["output_buffer"]->getBuffer();
-	}
-
 	void OptixTracer::setBufferSize(int w, int h)
 	{
 		w = max(1, w);
 		h = max(1, h);
-		ctx["output_buffer"]->getBuffer()->setSize(w, h);
+		outBuffer->setSize(w, h);
 	}
 
 	void OptixTracer::initialize(unsigned int GLBO)
@@ -63,10 +60,14 @@ namespace trayc
 		ctx["use_schlick"]->setInt(useSchlick);
 		ctx["use_internal_reflections"]->setInt(useInternalReflections);
 
-		Buffer buff = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
-		buff->setFormat(RT_FORMAT_FLOAT4);
-		buff->setSize(Environment::get().bufferWidth, Environment::get().bufferHeight);
-		ctx["output_buffer"]->setBuffer(buff);
+		outBuffer = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
+		outBuffer->setFormat(RT_FORMAT_FLOAT4);
+		outBuffer->setSize(Environment::get().bufferWidth, Environment::get().bufferHeight);
+		ctx["output_buffer"]->setBuffer(outBuffer);
+
+		SSbuffer = ctx->createBuffer(RT_BUFFER_OUTPUT);
+		SSbuffer->setFormat(RT_FORMAT_FLOAT4);
+		SSbuffer->setSize(SSbufferWidth, SSbufferHeight);
 
 		Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT);
 		lightBuffer->setFormat(RT_FORMAT_USER);
@@ -245,7 +246,7 @@ namespace trayc
 		gis.clear();
 	}
 
-	void OptixTracer::trace(int entryPoint)
+	void OptixTracer::trace(unsigned int entryPoint, RTsize width, RTsize height)
 	{
 		static int frame = 1;
 		frame++;
@@ -253,7 +254,7 @@ namespace trayc
 		for(int i = 0; i < renderingDivisionLevel; ++i)
 		{
 			ctx["myStripe"]->setInt(i);
-			ctx->launch(entryPoint, Environment::get().bufferWidth, Environment::get().bufferHeight / renderingDivisionLevel);
+			ctx->launch(entryPoint, width, height / renderingDivisionLevel);
 		}
 	}
 
@@ -280,24 +281,26 @@ namespace trayc
 
 	void OptixTracer::renderToPPM(const std::string &name)
 	{
-		int rdl = 100;
+		RTsize w, h;
+		SSbuffer->getSize(w, h);
+
+		int rdl = 27;
 		int tmp = renderingDivisionLevel;
 		renderingDivisionLevel = rdl;
-		ctx["AAlevel"]->setInt(1);
+		ctx["AAlevel"]->setInt(4);
 		ctx["renderingDivisionLevel"]->setInt(rdl);
 		ctx["shadow_samples"]->setInt(128);
-		trace(1);
+		ctx["output_buffer"]->setBuffer(SSbuffer);
+		trace(1, w, h);
+		ctx["output_buffer"]->setBuffer(outBuffer);
 		ctx["shadow_samples"]->setInt(shadowSamples);
 		renderingDivisionLevel = tmp;
 		ctx["renderingDivisionLevel"]->setInt(renderingDivisionLevel);
 		ctx["AAlevel"]->setInt(MSAA);
 		
-		Buffer buff = getBuffer();
-		RTsize w, h;
-		buff->getSize(w, h);
 		int k = 4;
 
-		float *out = (float*)buff->map();
+		float *out = (float*)SSbuffer->map();
 		{
 			std::ofstream ofs(name, std::ios::out | std::ios::binary);
 			ofs << "P6\n" << w << " " << h << "\n255\n";
@@ -310,6 +313,6 @@ namespace trayc
 				}
 				ofs.close();
 		}
-		buff->unmap();
+		SSbuffer->unmap();
 	}
 }

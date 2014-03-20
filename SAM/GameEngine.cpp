@@ -93,7 +93,7 @@ namespace trayc
 		{
 			tracer.compileSceneGraph();
 			tracer.setCamera(player->getCam());
-			drawer.init(tracer.getBuffer());
+			drawer.init(tracer.outBuffer);
 		}
 		catch(exception &ex)
 		{
@@ -106,8 +106,8 @@ namespace trayc
 	{
 		try
 		{
-			tracer.trace(0);
-			drawer.draw(tracer.getBuffer());
+			tracer.trace(0, Environment::get().bufferWidth, Environment::get().bufferHeight);
+			drawer.draw(tracer.outBuffer);
 		}
 		catch(exception &ex)
 		{

@@ -29,21 +29,22 @@ namespace trayc
 
 		void compileSceneGraph();
 		void clearSceneGraph();
-		void trace(int entryPoint);
+		void trace(unsigned int entryPoint, RTsize width, RTsize height);
 
 		BasicLight& getLight(int i);
 		void updateLight(int idx);
-
-		optix::Buffer getBuffer();
+		
 		void setBufferSize(int w, int h);
 		void setCamera(const reng::Camera &cam);
 		void renderToPPM(const std::string &name);
 
+		optix::Buffer outBuffer;
 	private:
 		template<class T>
 		optix::Buffer getBufferFromVector(const std::vector<T> &vec, RTformat type);
 		optix::Geometry getGeometry(const aiMesh *mesh, const aiMaterial *mat = NULL, const std::string &path = Utils::defTexture(""));
 
+		optix::Buffer SSbuffer;
 		AccelHandler accelHandler;
 
 		std::vector<optix::GeometryInstance> gis;
@@ -55,5 +56,7 @@ namespace trayc
 		reng::Setting<int> useSchlick;
 		reng::Setting<int> useInternalReflections;
 		reng::Setting<int> MSAA;
+		reng::Setting<int> SSbufferWidth;
+		reng::Setting<int> SSbufferHeight;
 	};
 };

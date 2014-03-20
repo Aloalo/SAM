@@ -12,7 +12,6 @@ Grafika:
 -distributed ray tracing
 	-dof
 	-motion blur
-	-soft shadows
 	-diffuse reflections
 	-fuzzy transparency
 -global illumination

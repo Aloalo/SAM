@@ -125,8 +125,8 @@ int main()
 	const aiScene* scene = importer.ReadFile(Utils::resource("crytek-sponza/sponza.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
 	if(!scene)
 	{
-	printf("%s\n", importer.GetErrorString());
-	return 0;
+		printf("%s\n", importer.GetErrorString());
+		return 0;
 	}
 	ptr->tracer.addScene(Utils::resource("crytek-sponza/"), scene);
 
@@ -152,6 +152,7 @@ int main()
 		make_float3(0.0f, 0.0f, 0.0f), //spot_direction
 		360.0f, //spot_cutoff
 		0.0f, //spot_exponent
+		0.5f, //radius
 		1, //casts_shadows
 		0 //is_directional
 		));
@@ -163,6 +164,7 @@ int main()
 		make_float3(0.0f, 0.0f, 0.0f), //spot_direction
 		22.5f, //spot_cutoff
 		32.0f, //spot_exponent
+		1.0f, //radius
 		1, //casts_shadows
 		0 //is_directional
 		));
@@ -174,6 +176,7 @@ int main()
 		make_float3(0.0f), //spot_direction
 		360.0f, //spot_cutoff
 		0.0f, //spot_exponent
+		0.0f, //radius
 		0, //casts_shadows
 		1 //is_directional
 		));
@@ -197,7 +200,7 @@ int main()
 
 	Button *b1 = new Button;
 	b1->color = vec4(1, 0, 0, 1);
-	b1->setAction(new LightHandler(0, false, ptr->tracer.getLight(0).color));
+	b1->setAction(new LightHandler(0, true, ptr->tracer.getLight(0).color));
 	b1->text = "Point";
 	b1->font = f;
 	cont->add(b1);

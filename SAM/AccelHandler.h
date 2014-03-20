@@ -13,12 +13,12 @@ namespace trayc
 
 		void setMesh(const std::string &name);
 		void setAccelCaching(bool onoff);
-		void setTraverser(const char* traverser);
-		void setBuilder(const char* builder);
-		void setRefine(const char* ref);
+		void setTraverser(const char *traverser);
+		void setBuilder(const char *builder);
+		void setRefine(const char *ref);
 		void setLargeMesh(bool f);
-		void loadAccelCache(optix::GeometryGroup &geometry_group);
-		void saveAccelCache(optix::GeometryGroup &geometry_group);
+		void loadAccelCache(optix::GeometryGroup geometry_group);
+		void saveAccelCache(optix::GeometryGroup geometry_group);
 
 		bool accel_cache_loaded;
 	private:

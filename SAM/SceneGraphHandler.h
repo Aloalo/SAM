@@ -11,9 +11,10 @@ namespace trayc
 		SceneGraphHandler(void);
 		~SceneGraphHandler(void);
 
+		void add(optix::GeometryGroup gg, const std::vector<optix::Transform> &trans);
+
 	private:
-		optix::Group topObject;
-		optix::Group dynamicGeometry;
+		optix::Group topObject, topShadower;
 		optix::GeometryGroup staticGeometry;
 
 		std::vector<optix::Transform> transforms;

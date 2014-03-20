@@ -16,11 +16,8 @@ rtDeclareVariable(PerRayData_shadow,   prd_shadow, rtPayload, );
 rtDeclareVariable(int, max_depth, , );
 rtDeclareVariable(int, use_schlick, , );
 rtDeclareVariable(int, shadow_samples, , );
-rtDeclareVariable(int, frame, , );
 
 rtBuffer<BasicLight> lights;
-rtBuffer<float> lightRadius;
-rtBuffer<float3> random;
 
 rtDeclareVariable(float3, ambient_light_color, , );
 rtDeclareVariable(unsigned int, radiance_ray_type, , );
@@ -87,27 +84,33 @@ static __device__ __inline__ void phongShade(float3 p_Ka,
 
 			if(shadow_samples > 0 && light.casts_shadows)
 			{
-				float lighthit = 0.0f, radius = 2.0f;
-
-				optix::Ray sray(hit_point, L, shadow_ray_type, scene_epsilon, Ldist);
-				rtTrace(top_object, sray, shadow_prd);
-				lighthit += shadow_prd.attenuation;
-
-				unsigned int seed = (launch_index.x + 1) * (launch_index.y + 1) * frame;
-				for(int k = 1; k < shadow_samples; ++k)
+				if(shadow_samples == 1 || light.radius < scene_epsilon)
 				{
-					float lambda = rnd(seed) * 2.0f * pi - pi;
-					float phi = acos(2.0f * rnd(seed) - 1.0f);
-
-					float3 spherepoint = make_float3(sinf(lambda) * cosf(phi), sinf(lambda) * sinf(phi), cosf(lambda));
-					float3 lightpoint = spherepoint * radius + light.pos;
-					float3 Ldir = lightpoint - hit_point;
-
-					optix::Ray shadow_ray(hit_point, normalize(Ldir), shadow_ray_type, scene_epsilon, length(Ldir));
-					rtTrace(top_object, shadow_ray, shadow_prd);
-					lighthit += shadow_prd.attenuation;
+					optix::Ray sray(hit_point, L, shadow_ray_type, scene_epsilon, Ldist);
+					rtTrace(top_object, sray, shadow_prd);
+					attenuation *= shadow_prd.attenuation;
 				}
-				attenuation *= lighthit / (float)shadow_samples;
+				else
+				{
+					float lighthit = 0.0f;
+					unsigned int seed = (launch_index.x * 1920 + launch_index.y) * launch_index.x * launch_index.y;
+					for(int k = 0; k < shadow_samples; ++k)
+					{
+						float lambda = rnd(seed) * 2.0f * pi - pi;
+						float phi = acosf(2.0f * rnd(seed) - 1.0f);
+
+						float3 spherepoint = make_float3(sinf(lambda) * cosf(phi), sinf(lambda) * sinf(phi), cosf(lambda));
+						float3 lightpoint = spherepoint * light.radius + light.pos;
+						float3 Ldir = lightpoint - hit_point;
+
+						shadow_prd.attenuation = 1.0f;
+						optix::Ray shadow_ray(hit_point, normalize(Ldir), shadow_ray_type, scene_epsilon, length(Ldir));
+						rtTrace(top_object, shadow_ray, shadow_prd);
+						lighthit += shadow_prd.attenuation;
+					}
+					
+					attenuation *= (lighthit / (float)shadow_samples);
+				}
 			}
 
 			if(attenuation > 0.0f)
