@@ -20,10 +20,8 @@ namespace trayc
 		
 		void addScene(const std::string &path, const aiScene *scene);
 		void addMesh(const std::string &path, const aiMesh *mesh, const aiMaterial *mat);
-		
 		void addScene(const optix::Material &mat, const aiScene *scene);
 		void addMesh(const optix::Material &mat, const aiMesh *mesh);
-
 		void addGeometryInstance(const optix::GeometryInstance &gi);
 		void addLight(const BasicLight &light);
 
@@ -34,6 +32,8 @@ namespace trayc
 		BasicLight& getLight(int i);
 		void updateLight(int idx);
 		
+		template<class T>
+		void setVariable(const std::string &name, T var);
 		void setBufferSize(int w, int h);
 		void setCamera(const reng::Camera &cam);
 		void renderToPPM(const std::string &name);
@@ -53,6 +53,7 @@ namespace trayc
 		reng::Setting<int> maxRayDepth;
 		reng::Setting<int> renderingDivisionLevel;
 		reng::Setting<int> shadowSamples;
+		reng::Setting<int> dofSamples;
 		reng::Setting<int> useSchlick;
 		reng::Setting<int> useInternalReflections;
 		reng::Setting<int> MSAA;

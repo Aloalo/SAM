@@ -19,7 +19,6 @@ namespace trayc
 		static optix::Program meshIntersect;
 
 		static optix::Program rayGeneration;
-		static optix::Program rayGenerationAA;
 		static optix::Program exception;
 		static optix::Program envmapMiss;
 		static optix::Program gradientMiss;

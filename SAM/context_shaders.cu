@@ -1,47 +1,30 @@
 #include "phong.h"
 
 //
-// Pinhole camera implementation
+// Pinhole/DOF camera implementation
 //
-//rtDeclareVariable(uint2, launch_index, rtLaunchIndex, );
 rtDeclareVariable(float3, eye, , );
 rtDeclareVariable(float3, U, , );
 rtDeclareVariable(float3, V, , );
 rtDeclareVariable(float3, W, , );
 
-rtDeclareVariable(int, renderingDivisionLevel, , );
-rtDeclareVariable(int, myStripe, , );
+rtDeclareVariable(int, renderingDivisionLevel, , "Number of horizontal stripes");
+rtDeclareVariable(int, myStripe, , "Current stripe");
 
 rtBuffer<float4, 2> output_buffer;
 
-RT_PROGRAM void pinhole_camera()
-{
-	float2 screen = make_float2(output_buffer.size());
-	uint2 newLaunchIndex = make_uint2(launch_index.x, launch_index.y + myStripe * output_buffer.size().y / renderingDivisionLevel);
-	float2 d = make_float2(newLaunchIndex) / screen * 2.f - 1.f;
-	float3 ray_direction = normalize(d.x * U + d.y * V + W);
-
-	optix::Ray ray(eye, ray_direction, radiance_ray_type, scene_epsilon);
-
-	PerRayData_radiance prd;
-	prd.importance = 1.f;
-	prd.depth = 0;
-
-	rtTrace(top_object, ray, prd);
-
-	output_buffer[newLaunchIndex] = make_float4(prd.result);
-}
-
-//
-// Pinhole camera implementation with MSAA
-//
 rtDeclareVariable(int, AAlevel, , );
+rtDeclareVariable(float, aperture_radius, , );
+rtDeclareVariable(float, focal_length, , );
+rtDeclareVariable(int, dof_samples, , );
 
-RT_PROGRAM void pinhole_camera_AA()
+RT_PROGRAM void dof_camera()
 {
 	float2 screen = make_float2(output_buffer.size() * AAlevel);
-	float4 result = make_float4(0.0f);
+	float3 result = make_float3(0.0f);
 	uint2 newLaunchIndex = make_uint2(launch_index.x, launch_index.y + myStripe * output_buffer.size().y / renderingDivisionLevel);
+	unsigned int seed = (launch_index.x * 1920 + launch_index.y) * launch_index.x * launch_index.y;
+	int count = 0;
 
 	for(int i = 0; i < AAlevel; ++i)
 		for(int j = 0; j < AAlevel; ++j)
@@ -56,10 +39,37 @@ RT_PROGRAM void pinhole_camera_AA()
 			prd.depth = 0;
 
 			rtTrace(top_object, ray, prd);
-			result += make_float4(prd.result);
+			result += prd.result;
+			count++;
+
+			for(int k = 1; k < dof_samples; ++k)
+			{
+				float2 d = make_float2(AAlevel * newLaunchIndex.x + i, AAlevel * newLaunchIndex.y + j) / screen * 2.f - 1.f;
+				float3 ray_direction = normalize(d.x * U + d.y * V + W);
+
+				optix::Ray ray(eye, ray_direction, radiance_ray_type, scene_epsilon);
+
+				float2 circPoint = make_float2(rnd(seed) * 2.0f - 1.0f, rnd(seed) * 2.0f - 1.0f);
+				float3 apertureOffset = make_float3(circPoint.x * aperture_radius, circPoint.y * aperture_radius, 0.0f);
+				ray.origin += apertureOffset;
+				ray.direction *= focal_length;
+				ray.direction -= apertureOffset;
+				ray.direction = normalize(ray.direction);
+
+				PerRayData_radiance prd;
+				prd.importance = 1.f;
+				prd.depth = 0;
+
+				rtTrace(top_object, ray, prd);
+				
+				if(fabs(fmaxf((result + prd.result) / (count + 1) - result / count)) < EPS)
+					break;
+				count++;
+				result += prd.result;
+			}
 		}
 
-	output_buffer[newLaunchIndex] = result / (AAlevel * AAlevel);
+	output_buffer[newLaunchIndex] = make_float4(result) / count;//(AAlevel * AAlevel * dof_samples);
 }
 
 //

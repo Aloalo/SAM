@@ -21,7 +21,8 @@ namespace trayc
 		SETTING(MSAA),
 		SETTING(renderingDivisionLevel),
 		SETTING(SSbufferWidth),
-		SETTING(SSbufferHeight)
+		SETTING(SSbufferHeight),
+		SETTING(dofSamples)
 	{
 	}
 
@@ -44,7 +45,7 @@ namespace trayc
 		Programs::init(ctx);
 
 		ctx->setRayTypeCount(2);
-		ctx->setEntryPointCount(2);
+		ctx->setEntryPointCount(1);
 		ctx->setCPUNumThreads(4);
 		ctx->setStackSize(768 + 256 * maxRayDepth);
 
@@ -74,26 +75,25 @@ namespace trayc
 		lightBuffer->setElementSize(sizeof(BasicLight));
 		ctx["lights"]->setBuffer(lightBuffer);
 
-		srand(time(0));
-		vector<float3> random;
-		random.push_back(make_float3(0.0f));
-		for(int i = 0; i < 1024; ++i)
-		{
-			float lambda = (float)rand() / RAND_MAX * 2.0f * Utils::pi - Utils::pi;
-			float phi = acos(2.0f * (float)rand() / RAND_MAX - 1.0f);
-			random.push_back(make_float3(sinf(lambda) * cosf(phi), sinf(lambda) * sinf(phi), cosf(lambda)));
-		}
-		ctx["random"]->setBuffer(getBufferFromVector(random, RT_FORMAT_FLOAT3));
-
-		ctx->setRayGenerationProgram(1, Programs::rayGenerationAA);
-		ctx["AAlevel"]->setInt(MSAA);
 		ctx->setRayGenerationProgram(0, Programs::rayGeneration);
+		ctx["AAlevel"]->setInt(MSAA);
+		ctx["focal_length"]->setFloat(10.0f);
+		ctx["aperture_radius"]->setFloat(0.05f);
+		ctx["dof_samples"]->setInt(dofSamples);
+		ctx["AAlevel"]->setInt(MSAA);
 
 		ctx->setMissProgram(0, Programs::envmapMiss);
 		ctx["envmap"]->setTextureSampler(OptixTextureHandler::get().get(Utils::defTexture("environment.jpg")));
 
 		ctx->setExceptionProgram(0, Programs::exception);
 		ctx["bad_color"]->setFloat(1.0f, 0.0f, 0.0f);
+	}
+
+	
+	template<class T>
+	void OptixTracer::setVariable(const std::string &name, T var)
+	{
+		ctx[name]->set(T);
 	}
 
 	template<class T>
@@ -284,17 +284,19 @@ namespace trayc
 		RTsize w, h;
 		SSbuffer->getSize(w, h);
 
-		int rdl = 27;
+		int rdl = 15;
 		int tmp = renderingDivisionLevel;
 		renderingDivisionLevel = rdl;
 		ctx["AAlevel"]->setInt(4);
 		ctx["renderingDivisionLevel"]->setInt(rdl);
-		ctx["shadow_samples"]->setInt(128);
+		ctx["dof_samples"]->setInt(1);
+		ctx["shadow_samples"]->setInt(64);
 		ctx["output_buffer"]->setBuffer(SSbuffer);
-		trace(1, w, h);
+		trace(0, w, h);
 		ctx["output_buffer"]->setBuffer(outBuffer);
 		ctx["shadow_samples"]->setInt(shadowSamples);
 		renderingDivisionLevel = tmp;
+		ctx["dof_samples"]->setInt(dofSamples);
 		ctx["renderingDivisionLevel"]->setInt(renderingDivisionLevel);
 		ctx["AAlevel"]->setInt(MSAA);
 		

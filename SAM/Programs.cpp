@@ -12,7 +12,7 @@ namespace trayc
 	Program Programs::meshBoundingBox;
 	Program Programs::meshIntersect;
 	Program Programs::rayGeneration;
-	Program Programs::rayGenerationAA;
+
 	Program Programs::exception;
 	Program Programs::envmapMiss;
 	Program Programs::gradientMiss;
@@ -26,8 +26,7 @@ namespace trayc
 		std::string meshPath(Utils::pathToPTX("triangle_mesh.cu"));
 		std::string pathBox(Utils::pathToPTX("box.cu"));
 
-		rayGeneration = ctx->createProgramFromPTXFile(contextPath, "pinhole_camera");
-		rayGenerationAA = ctx->createProgramFromPTXFile(contextPath, "pinhole_camera_AA");
+		rayGeneration = ctx->createProgramFromPTXFile(contextPath, "dof_camera");
 		exception = ctx->createProgramFromPTXFile(contextPath, "exception");
 		envmapMiss = ctx->createProgramFromPTXFile(contextPath, "envmap_miss");
 		gradientMiss = ctx->createProgramFromPTXFile(contextPath, "gradient_miss");

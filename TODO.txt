@@ -10,7 +10,6 @@ Grafika:
 -EDAA
 
 -distributed ray tracing
-	-dof
 	-motion blur
 	-diffuse reflections
 	-fuzzy transparency
