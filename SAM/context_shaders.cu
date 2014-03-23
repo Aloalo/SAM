@@ -11,7 +11,7 @@ rtDeclareVariable(float3, W, , );
 rtDeclareVariable(int, renderingDivisionLevel, , "Number of horizontal stripes");
 rtDeclareVariable(int, myStripe, , "Current stripe");
 
-rtBuffer<float4, 2> output_buffer;
+rtBuffer<uchar4, 2> output_buffer;
 
 rtDeclareVariable(int, AAlevel, , );
 rtDeclareVariable(float, aperture_radius, , );
@@ -24,7 +24,7 @@ RT_PROGRAM void dof_camera()
 	float3 result = make_float3(0.0f);
 	uint2 newLaunchIndex = make_uint2(launch_index.x, launch_index.y + myStripe * output_buffer.size().y / renderingDivisionLevel);
 	unsigned int seed = (launch_index.x * 1920 + launch_index.y) * launch_index.x * launch_index.y;
-	int count = 0;
+	float count = 0.0f;
 
 	for(int i = 0; i < AAlevel; ++i)
 		for(int j = 0; j < AAlevel; ++j)
@@ -40,7 +40,7 @@ RT_PROGRAM void dof_camera()
 
 			rtTrace(top_object, ray, prd);
 			result += prd.result;
-			count++;
+			count += 1.0f;
 
 			for(int k = 1; k < dof_samples; ++k)
 			{
@@ -62,14 +62,14 @@ RT_PROGRAM void dof_camera()
 
 				rtTrace(top_object, ray, prd);
 				
-				if(fabs(fmaxf((result + prd.result) / (count + 1) - result / count)) < EPS)
+				if(fabs(fmaxf((result + prd.result) / (count + 1.0f) - result / count)) < EPS)
 					break;
-				count++;
+				count += 1.0f;
 				result += prd.result;
 			}
 		}
 
-	output_buffer[newLaunchIndex] = make_float4(result) / count;//(AAlevel * AAlevel * dof_samples);
+	output_buffer[newLaunchIndex] = make_color(result / count);
 }
 
 //
@@ -113,7 +113,7 @@ rtDeclareVariable(float3, bad_color, , );
 RT_PROGRAM void exception()
 {
 	uint2 newLaunchIndex = make_uint2(launch_index.x, launch_index.y + myStripe * output_buffer.size().y / renderingDivisionLevel);
-	output_buffer[newLaunchIndex] = make_float4(bad_color, 1.0f);
+	output_buffer[newLaunchIndex] = make_color(bad_color);
 }
 
 

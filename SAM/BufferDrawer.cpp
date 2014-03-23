@@ -17,9 +17,9 @@ namespace trayc
 		vertexAttrib(0, 3, GL_FLOAT, GL_FALSE), p(VertexShader(Utils::shader("passthrough").c_str()), FragmentShader(Utils::shader(postProcess ? "fxaa" : "passthrough").c_str())),
 		SETTING(postProcess)
 	{
-		glDataType = GL_FLOAT;
-		glFormat = GL_RGBA;
-		glTextureFormat = GL_RGBA32F_ARB;
+		glDataType = GL_UNSIGNED_BYTE;
+		glFormat = GL_BGRA;
+		glTextureFormat = GL_RGBA8;
 	}
 
 
@@ -96,6 +96,6 @@ namespace trayc
 	void BufferDrawer::allocateBuffer(int width, int height)
 	{
 		outBuffer.bind();
-		outBuffer.setData(0, width * height * sizeof(float4));
+		outBuffer.setData(0, width * height * sizeof(uchar4));
 	}
 }

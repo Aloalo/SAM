@@ -62,12 +62,12 @@ namespace trayc
 		ctx["use_internal_reflections"]->setInt(useInternalReflections);
 
 		outBuffer = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
-		outBuffer->setFormat(RT_FORMAT_FLOAT4);
+		outBuffer->setFormat(RT_FORMAT_UNSIGNED_BYTE4);
 		outBuffer->setSize(Environment::get().bufferWidth, Environment::get().bufferHeight);
 		ctx["output_buffer"]->setBuffer(outBuffer);
 
 		SSbuffer = ctx->createBuffer(RT_BUFFER_OUTPUT);
-		SSbuffer->setFormat(RT_FORMAT_FLOAT4);
+		SSbuffer->setFormat(RT_FORMAT_UNSIGNED_BYTE4);
 		SSbuffer->setSize(SSbufferWidth, SSbufferHeight);
 
 		Buffer lightBuffer = ctx->createBuffer(RT_BUFFER_INPUT);
@@ -290,12 +290,12 @@ namespace trayc
 		RTsize w, h;
 		SSbuffer->getSize(w, h);
 
-		int rdl = 72 * 5;
+		int rdl = 15;
 		int tmp = renderingDivisionLevel;
 		renderingDivisionLevel = rdl;
-		ctx["AAlevel"]->setInt(2);
+		ctx["AAlevel"]->setInt(4);
 		ctx["renderingDivisionLevel"]->setInt(rdl);
-		ctx["dof_samples"]->setInt(32);
+		ctx["dof_samples"]->setInt(1);
 		ctx["shadow_samples"]->setInt(64);
 		ctx["output_buffer"]->setBuffer(SSbuffer);
 		trace(0, w, h);
@@ -308,17 +308,13 @@ namespace trayc
 		
 		int k = 4;
 
-		float *out = (float*)SSbuffer->map();
+		unsigned char *out = (unsigned char*)SSbuffer->map();
 		{
 			std::ofstream ofs(name, std::ios::out | std::ios::binary);
 			ofs << "P6\n" << w << " " << h << "\n255\n";
 			for(int i = h-1; i >= 0; --i)
 				for(int j = 0; j < w; ++j)
-				{
-					ofs << (unsigned char)(std::min(1.0f, out[(i*w+j)*k + 0]) * 255) << 
-						   (unsigned char)(std::min(1.0f, out[(i*w+j)*k + 1]) * 255) <<
-						   (unsigned char)(std::min(1.0f, out[(i*w+j)*k + 2]) * 255); 
-				}
+					ofs << out[(i*w+j)*k + 2] << out[(i*w+j)*k + 1] << out[(i*w+j)*k + 0];
 				ofs.close();
 		}
 		SSbuffer->unmap();
