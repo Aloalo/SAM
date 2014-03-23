@@ -113,6 +113,7 @@
   <ItemGroup>
     <ClCompile Include="AccelHandler.cpp" />
     <ClCompile Include="BufferDrawer.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="MaterialHandler.cpp" />
@@ -126,6 +127,7 @@
   <ItemGroup>
     <ClInclude Include="AccelHandler.h" />
     <ClInclude Include="BufferDrawer.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Environment.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="helper.h" />

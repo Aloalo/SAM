@@ -8,6 +8,7 @@ using namespace optix;
 rtBuffer<float3> vertex_buffer;     
 rtBuffer<float3> normal_buffer;
 rtBuffer<float3> tangent_buffer;
+rtBuffer<float3> bitangent_buffer;
 rtBuffer<float2> texcoord_buffer;
 rtBuffer<int3> index_buffer;
 rtTextureSampler<uchar4, 2, cudaReadModeNormalizedFloat> normal_map;
@@ -54,9 +55,11 @@ RT_PROGRAM void mesh_intersect(int primIdx)
 				{
 					float3 shading_tangent = normalize(tangent_buffer[idx.y] * beta +
 						tangent_buffer[idx.z] * gamma + tangent_buffer[idx.x] * (1.0f - beta - gamma));
+					float3 shading_bitangent = normalize(bitangent_buffer[idx.y] * beta +
+						bitangent_buffer[idx.z] * gamma + bitangent_buffer[idx.x] * (1.0f - beta - gamma));
 					Matrix3x3 tbni;
 					tbni.setCol(0, shading_tangent);
-					tbni.setCol(1, -cross(shading_tangent, shading_normal));
+					tbni.setCol(1, shading_bitangent);
 					tbni.setCol(2, shading_normal);
 					shading_normal = tbni * normalize(make_float3(tex2D(normal_map, texcoord.x, texcoord.y)) * 2.f - 1.f);
 				}

@@ -1,5 +1,4 @@
 Opcenito:
--fix normal mapping
 -EPIC REFACTOR (napraviti lako rukovanje klasama)
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 

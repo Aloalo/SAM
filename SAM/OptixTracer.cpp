@@ -120,6 +120,8 @@ namespace trayc
 		normalData.reserve(mesh->mNumVertices);
 		vector<float3> tangentData;
 		tangentData.reserve(mesh->mNumVertices);
+		vector<float3> bitangentData;
+		bitangentData.reserve(mesh->mNumVertices);
 		vector<float2> uvData;
 		uvData.reserve(mesh->mNumVertices);
 
@@ -130,7 +132,10 @@ namespace trayc
 			vertexData.push_back(Utils::aiToOptix(mesh->mVertices[i]));
 			normalData.push_back(Utils::aiToOptix(mesh->mNormals[i]));
 			if(hasNormalMap)
+			{
 				tangentData.push_back(Utils::aiToOptix(mesh->mTangents[i]));
+				bitangentData.push_back(Utils::aiToOptix(mesh->mBitangents[i]));
+			}
 
 			if(mesh->HasTextureCoords(0))
 				uvData.push_back(make_float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y));
@@ -144,6 +149,7 @@ namespace trayc
 		gMesh["vertex_buffer"]->setBuffer(getBufferFromVector(vertexData, RT_FORMAT_FLOAT3));
 		gMesh["normal_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
 		gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(tangentData, RT_FORMAT_FLOAT3));
+		gMesh["bitangent_buffer"]->setBuffer(getBufferFromVector(bitangentData, RT_FORMAT_FLOAT3));
 		gMesh["normal_map"]->setTextureSampler(OptixTextureHandler::get().get(
 			MaterialHandler::get().getTextureName(mat, aiTextureType_HEIGHT, path, Utils::defTexture("bumpDefault.png"))));
 
@@ -284,12 +290,12 @@ namespace trayc
 		RTsize w, h;
 		SSbuffer->getSize(w, h);
 
-		int rdl = 15;
+		int rdl = 72 * 5;
 		int tmp = renderingDivisionLevel;
 		renderingDivisionLevel = rdl;
-		ctx["AAlevel"]->setInt(4);
+		ctx["AAlevel"]->setInt(2);
 		ctx["renderingDivisionLevel"]->setInt(rdl);
-		ctx["dof_samples"]->setInt(1);
+		ctx["dof_samples"]->setInt(32);
 		ctx["shadow_samples"]->setInt(64);
 		ctx["output_buffer"]->setBuffer(SSbuffer);
 		trace(0, w, h);
