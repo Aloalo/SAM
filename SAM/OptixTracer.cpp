@@ -125,7 +125,7 @@ namespace trayc
 		vector<float2> uvData;
 		uvData.reserve(mesh->mNumVertices);
 
-		bool hasNormalMap = mat->GetTextureCount(aiTextureType_NORMALS) || mat->GetTextureCount(aiTextureType_HEIGHT);
+		bool hasNormalMap = mat == NULL ? false : mat->GetTextureCount(aiTextureType_NORMALS) || mat->GetTextureCount(aiTextureType_HEIGHT);
 
 		for(int i = 0; i < mesh->mNumVertices; ++i)
 		{
@@ -172,7 +172,7 @@ namespace trayc
 		gis.push_back(inst);
 	}
 
-	void OptixTracer::addMesh(const optix::Material &mat, const aiMesh *mesh)
+	void OptixTracer::addMesh(const optix::Material mat, const aiMesh *mesh)
 	{
 		Geometry gMesh = getGeometry(mesh);
 
@@ -190,7 +190,7 @@ namespace trayc
 			addMesh(path, scene->mMeshes[i], scene->mMaterials[scene->mMeshes[i]->mMaterialIndex]);
 	}
 
-	void OptixTracer::addScene(const optix::Material &mat, const aiScene * scene)
+	void OptixTracer::addScene(const optix::Material mat, const aiScene * scene)
 	{
 		for(int i = 0; i < scene->mNumMeshes; ++i)
 			addMesh(mat, scene->mMeshes[i]);
@@ -201,7 +201,7 @@ namespace trayc
 		lights.push_back(light);
 	}
 
-	void OptixTracer::addGeometryInstance(const GeometryInstance &gi)
+	void OptixTracer::addGeometryInstance(const GeometryInstance gi)
 	{
 		gis.push_back(gi);
 	}
@@ -290,7 +290,7 @@ namespace trayc
 		RTsize w, h;
 		SSbuffer->getSize(w, h);
 
-		int rdl = 15;
+		int rdl = 45;
 		int tmp = renderingDivisionLevel;
 		renderingDivisionLevel = rdl;
 		ctx["AAlevel"]->setInt(4);

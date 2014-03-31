@@ -20,9 +20,9 @@ namespace trayc
 		
 		void addScene(const std::string &path, const aiScene *scene);
 		void addMesh(const std::string &path, const aiMesh *mesh, const aiMaterial *mat);
-		void addScene(const optix::Material &mat, const aiScene *scene);
-		void addMesh(const optix::Material &mat, const aiMesh *mesh);
-		void addGeometryInstance(const optix::GeometryInstance &gi);
+		void addScene(const optix::Material mat, const aiScene *scene);
+		void addMesh(const optix::Material mat, const aiMesh *mesh);
+		void addGeometryInstance(const optix::GeometryInstance gi);
 		void addLight(const BasicLight &light);
 
 		void compileSceneGraph();

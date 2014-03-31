@@ -42,7 +42,7 @@ namespace trayc
 	string MaterialHandler::getTextureName(const aiMaterial *mat, aiTextureType type, const string &path, const string &def) const
 	{
 		aiString name;
-		if(mat->GetTextureCount(type) == 0)
+		if(mat == NULL || mat->GetTextureCount(type) == 0)
 			return Utils::defTexture(def);
 
 		mat->GetTexture(type, 0, &name, NULL, NULL, NULL, NULL, NULL);
