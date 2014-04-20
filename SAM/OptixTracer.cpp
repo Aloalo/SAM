@@ -151,7 +151,7 @@ namespace trayc
 		gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(tangentData, RT_FORMAT_FLOAT3));
 		gMesh["bitangent_buffer"]->setBuffer(getBufferFromVector(bitangentData, RT_FORMAT_FLOAT3));
 		gMesh["normal_map"]->setTextureSampler(OptixTextureHandler::get().get(
-			MaterialHandler::get().getTextureName(mat, aiTextureType_HEIGHT, path, Utils::defTexture("bumpDefault.png"))));
+			MaterialHandler::get().getTextureName(mat, aiTextureType_HEIGHT, path, "bumpDefault.png")));
 
 		gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
 		gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
@@ -290,13 +290,13 @@ namespace trayc
 		RTsize w, h;
 		SSbuffer->getSize(w, h);
 
-		int rdl = 45;
+		int rdl = 20;
 		int tmp = renderingDivisionLevel;
 		renderingDivisionLevel = rdl;
 		ctx["AAlevel"]->setInt(4);
 		ctx["renderingDivisionLevel"]->setInt(rdl);
 		ctx["dof_samples"]->setInt(1);
-		ctx["shadow_samples"]->setInt(64);
+		ctx["shadow_samples"]->setInt(128);
 		ctx["output_buffer"]->setBuffer(SSbuffer);
 		trace(0, w, h);
 		ctx["output_buffer"]->setBuffer(outBuffer);

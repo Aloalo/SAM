@@ -3,6 +3,7 @@ Opcenito:
 	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
 
 Grafika:
+-area lights
 -mipmaping (optix release)
 -glass/reflective mesh
 -parallax mapping

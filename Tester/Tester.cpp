@@ -132,7 +132,7 @@ int main()
 		return 0;
 		}
 		ptr->tracer.addScene(Utils::resource("crytek-sponza/"), scene);
-
+		
 		/*const aiScene* nissan = importer.ReadFile(Utils::resource("nissan/nissan.obj"), aiProcessPreset_TargetRealtime_MaxQuality);
 		if(!nissan)
 		{
@@ -159,7 +159,7 @@ int main()
 		make_float3(0.0f, 0.0f, 0.0f), //spot_direction
 		360.0f, //spot_cutoff
 		0.0f, //spot_exponent
-		0.5f, //radius
+		1.0f, //radius
 		1, //casts_shadows
 		0 //is_directional
 		));
@@ -187,6 +187,8 @@ int main()
 		0, //casts_shadows
 		1 //is_directional
 		));
+	ctx->setExceptionEnabled(RT_EXCEPTION_ALL, true);
+
 
 	FontFace *ff = new FontFace(Utils::defTexture("font.png"), 10, 10, ' ', 0.8);
 
