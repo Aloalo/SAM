@@ -159,7 +159,7 @@ int main()
 		make_float3(0.0f, 0.0f, 0.0f), //spot_direction
 		360.0f, //spot_cutoff
 		0.0f, //spot_exponent
-		1.0f, //radius
+		0.25f, //radius
 		1, //casts_shadows
 		0 //is_directional
 		));
@@ -171,7 +171,7 @@ int main()
 		make_float3(0.0f, 0.0f, 0.0f), //spot_direction
 		22.5f, //spot_cutoff
 		32.0f, //spot_exponent
-		1.0f, //radius
+		0.25f, //radius
 		1, //casts_shadows
 		0 //is_directional
 		));

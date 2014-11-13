@@ -78,7 +78,7 @@ namespace trayc
 		ctx->setRayGenerationProgram(0, Programs::rayGeneration);
 		ctx["AAlevel"]->setInt(MSAA);
 		ctx["focal_length"]->setFloat(10.0f);
-		ctx["aperture_radius"]->setFloat(0.05f);
+		ctx["aperture_radius"]->setFloat(0.025f);
 		ctx["dof_samples"]->setInt(dofSamples);
 		ctx["AAlevel"]->setInt(MSAA);
 
@@ -261,6 +261,8 @@ namespace trayc
 		{
 			ctx["myStripe"]->setInt(i);
 			ctx->launch(entryPoint, width, height / renderingDivisionLevel);
+            if(renderingDivisionLevel > 1)
+                printf("DONE %d / %d\n", i + 1, renderingDivisionLevel);
 		}
 	}
 
@@ -271,7 +273,7 @@ namespace trayc
 
 	void OptixTracer::updateLight(int idx)
 	{
-		memcpy((void*)(((BasicLight*)ctx["lights"]->getBuffer()->map())+idx), (BasicLight*)lights.data()+idx, sizeof(BasicLight));
+		memcpy(static_cast<void*>((static_cast<BasicLight*>(ctx["lights"]->getBuffer()->map())+idx)), static_cast<const BasicLight*>(lights.data()+idx), sizeof(BasicLight));
 		ctx["lights"]->getBuffer()->unmap();
 	}
 
@@ -290,13 +292,13 @@ namespace trayc
 		RTsize w, h;
 		SSbuffer->getSize(w, h);
 
-		int rdl = 20;
+		int rdl = 540;
 		int tmp = renderingDivisionLevel;
 		renderingDivisionLevel = rdl;
 		ctx["AAlevel"]->setInt(4);
 		ctx["renderingDivisionLevel"]->setInt(rdl);
 		ctx["dof_samples"]->setInt(1);
-		ctx["shadow_samples"]->setInt(128);
+		ctx["shadow_samples"]->setInt(256);
 		ctx["output_buffer"]->setBuffer(SSbuffer);
 		trace(0, w, h);
 		ctx["output_buffer"]->setBuffer(outBuffer);

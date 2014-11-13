@@ -11,10 +11,10 @@ using namespace optix;
 namespace trayc
 {
 	AccelHandler::AccelHandler(void) :
+        accel_cache_loaded(false),
 		accel_builder("Sbvh"),
 		accel_traverser("Bvh"),
 		accel_refine("0"),
-		accel_cache_loaded(false),
 		accel_caching_on(true),
 		accel_large_mesh(false)
 	{
@@ -133,7 +133,7 @@ namespace trayc
 		}
 	}
 
-	string AccelHandler::getCacheFileName()
+	string AccelHandler::getCacheFileName() const
 	{
 		string cachefile = filename;
 		size_t idx = cachefile.find_last_of('.');

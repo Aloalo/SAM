@@ -33,7 +33,7 @@ namespace trayc
 		void updateLight(int idx);
 		
 		template<class T>
-		void setVariable(const std::string &name, T var);
+		static void setVariable(const std::string &name, T var);
 		void setBufferSize(int w, int h);
 		void setCamera(const reng::Camera &cam);
 		void renderToPPM(const std::string &name);
@@ -41,8 +41,8 @@ namespace trayc
 		optix::Buffer outBuffer;
 	private:
 		template<class T>
-		optix::Buffer getBufferFromVector(const std::vector<T> &vec, RTformat type);
-		optix::Geometry getGeometry(const aiMesh *mesh, const aiMaterial *mat = NULL, const std::string &path = Utils::defTexture(""));
+		static optix::Buffer getBufferFromVector(const std::vector<T> &vec, RTformat type);
+		static optix::Geometry getGeometry(const aiMesh *mesh, const aiMaterial *mat = NULL, const std::string &path = Utils::defTexture(""));
 
 		optix::Buffer SSbuffer;
 		AccelHandler accelHandler;

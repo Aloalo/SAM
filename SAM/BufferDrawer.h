@@ -1,6 +1,6 @@
 #pragma once
 
-#include <OGLobjects.h>
+#include <Program.h>
 #include "SafeOptix.h"
 #include <Setting.h>
 
@@ -16,7 +16,7 @@ namespace trayc
 		BufferDrawer(void);
 		~BufferDrawer(void);
 
-		unsigned int createGLBuffer();
+		GLuint createGLBuffer();
 		void init(const optix::Buffer &buffer);
 		void draw(optix::Buffer &buffer);
 		void allocateBuffer(int width, int height);
@@ -29,11 +29,11 @@ namespace trayc
 		reng::Setting<int> textureFilter;
 		reng::Setting<int> postProcess;
 
-		reng::Texture tex;
-		reng::BufferObject vertices;
-		reng::BufferObject outBuffer;
-		reng::VertexArrayObject vao;
-		reng::VertexAttribArray vertexAttrib;
-		reng::Program p;
+        GLuint textureID;
+        GLuint verticesID;
+        GLuint outBufferID;
+        GLuint VAO;
+
+        reng::Program p;
 	};
 }

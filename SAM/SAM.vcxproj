@@ -103,7 +103,7 @@
       <Optimization>O3</Optimization>
       <FastMath>true</FastMath>
       <CodeGeneration>compute_10,sm_10</CodeGeneration>
-      <AdditionalOptions>--use_fast_math --optimize 2 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>--use_fast_math -Xptxas -O3 %(AdditionalOptions)</AdditionalOptions>
       <Warning>InheritFromHost</Warning>
     </CudaCompile>
     <Lib>

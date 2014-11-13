@@ -53,9 +53,9 @@ RT_PROGRAM void mesh_intersect(int primIdx)
 		
 				if(tangent_buffer.size() > 0)
 				{
-					float3 shading_tangent = normalize(tangent_buffer[idx.y] * beta +
+					const float3 shading_tangent = normalize(tangent_buffer[idx.y] * beta +
 						tangent_buffer[idx.z] * gamma + tangent_buffer[idx.x] * (1.0f - beta - gamma));
-					float3 shading_bitangent = normalize(bitangent_buffer[idx.y] * beta +
+					const float3 shading_bitangent = normalize(bitangent_buffer[idx.y] * beta +
 						bitangent_buffer[idx.z] * gamma + bitangent_buffer[idx.x] * (1.0f - beta - gamma));
 					Matrix3x3 tbni;
 					tbni.setCol(0, shading_tangent);

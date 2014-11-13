@@ -10,8 +10,8 @@ rtDeclareVariable(float3, shadow_attenuation, , );
 
 RT_PROGRAM void any_hit_glass()
 {
-	float3 world_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
-	float nDi = fabs(dot(world_normal, ray.direction));
+	const float3 world_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
+	const float nDi = fabs(dot(world_normal, ray.direction));
 
 	prd_shadow.attenuation *= 1.0f - optix::fresnel_schlick(nDi, 5.0f, 1.0f - shadow_attenuation, make_float3(1.0f)).x;
 
@@ -40,11 +40,9 @@ RT_PROGRAM void closest_hit_glass()
 	float reflection = 1.0f;
 	float3 result = make_float3(0.0f);
 
-	float3 beer_attenuation;
-	if(dot(n, ray.direction) > 0.0f)
-		beer_attenuation = exp(extinction_constant * t_hit);
-	else
-		beer_attenuation = make_float3(1.0f);
+	const float3 beer_attenuation = dot(n, ray.direction) > 0.0f ? 
+                                        exp(extinction_constant * t_hit) :
+                                        make_float3(1.0f);
 
 	bool inside = false;
 
@@ -65,7 +63,7 @@ RT_PROGRAM void closest_hit_glass()
 
 			reflection = fresnel_schlick(cos_theta, fresnel_exponent, fresnel_minimum, fresnel_maximum);
 
-			float importance = prd_radiance.importance * (1.0f - reflection) * optix::luminance(refraction_color * beer_attenuation);
+			const float importance = prd_radiance.importance * (1.0f - reflection) * optix::luminance(refraction_color * beer_attenuation);
 			if(importance > importance_cutoff)
 			{
 				optix::Ray ray(h, t, radiance_ray_type, scene_epsilon);
@@ -82,10 +80,10 @@ RT_PROGRAM void closest_hit_glass()
 
 		float3 r = reflect(i, n);
 
-		float importance = prd_radiance.importance * reflection * optix::luminance(reflection_color * beer_attenuation);
+		const float importance = prd_radiance.importance * reflection * optix::luminance(reflection_color * beer_attenuation);
 		if(importance > importance_cutoff && (!inside || (inside && use_internal_reflections)))
 		{
-			optix::Ray ray(h, r, radiance_ray_type, scene_epsilon);
+			const optix::Ray ray(h, r, radiance_ray_type, scene_epsilon);
 			PerRayData_radiance refl_prd;
 			refl_prd.depth = prd_radiance.depth + 1;
 			refl_prd.importance = importance;
@@ -115,21 +113,21 @@ rtDeclareVariable(float3, texcoord, attribute texcoord, );
 //
 RT_PROGRAM void closest_hit_mesh()
 {
-	float4 pKd = tex2D(diffuse_map, texcoord.x, texcoord.y);
+	const float4 pKd = tex2D(diffuse_map, texcoord.x, texcoord.y);
 	if(prd_radiance.depth < max_depth && pKd.w < importance_cutoff)
 	{
-		optix::Ray newray(ray.origin + t_hit * ray.direction, ray.direction, radiance_ray_type, scene_epsilon);
+		const optix::Ray newray(ray.origin + t_hit * ray.direction, ray.direction, radiance_ray_type, scene_epsilon);
 		prd_radiance.depth++;
 		rtTrace(top_object, newray, prd_radiance);
 
 		return;
 	}
 	
-	float3 world_shading_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
-	float3 world_geometric_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
-	float3 ffnormal = faceforward(world_shading_normal, -ray.direction, world_geometric_normal);
+	const float3 world_shading_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, shading_normal));
+	const float3 world_geometric_normal = normalize(rtTransformNormal(RT_OBJECT_TO_WORLD, geometric_normal));
+	const float3 ffnormal = faceforward(world_shading_normal, -ray.direction, world_geometric_normal);
 
-	float4 pKs = tex2D(specular_map, texcoord.x, texcoord.y);
+	const float4 pKs = tex2D(specular_map, texcoord.x, texcoord.y);
 	
 	//phongShade(ffnormal, make_float3(0.0f), make_float3(0.0f), make_float3(0.0f), phong_exp, reflectivity);
 	//phongShade(make_float3(abs(ffnormal.x), abs(ffnormal.y), abs(ffnormal.z)), make_float3(0.0f), make_float3(0.0f), make_float3(0.0f), phong_exp, reflectivity);
@@ -141,7 +139,7 @@ RT_PROGRAM void closest_hit_mesh()
 //
 RT_PROGRAM void any_hit_solid()
 {
-	float opacity = tex2D(diffuse_map, texcoord.x, texcoord.y).w;
+	const float opacity = tex2D(diffuse_map, texcoord.x, texcoord.y).w;
 	if(opacity < importance_cutoff)
 		rtIgnoreIntersection();
 	phongShadowed();

@@ -55,7 +55,7 @@ static __host__ __inline__ unsigned int mwc()
 		carry = lcg2(seed3);
 	}
 
-	unsigned long long sum = 2111111111ull * r[3] +
+	const unsigned long long sum = 2111111111ull * r[3] +
 		1492ull       * r[2] +
 		1776ull       * r[1] +
 		5115ull       * r[0] +

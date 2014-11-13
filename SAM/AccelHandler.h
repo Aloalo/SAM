@@ -22,7 +22,7 @@ namespace trayc
 
 		bool accel_cache_loaded;
 	private:
-		std::string getCacheFileName();
+		std::string getCacheFileName() const;
 
 		std::string filename;
 

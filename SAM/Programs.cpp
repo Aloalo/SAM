@@ -24,7 +24,7 @@ namespace trayc
 		std::string materialPath(Utils::pathToPTX("material_shaders.cu"));
 		std::string contextPath(Utils::pathToPTX("context_shaders.cu"));
 		std::string meshPath(Utils::pathToPTX("triangle_mesh.cu"));
-		std::string pathBox(Utils::pathToPTX("box.cu"));
+		//std::string pathBox(Utils::pathToPTX("box.cu"));
 
 		rayGeneration = ctx->createProgramFromPTXFile(contextPath, "dof_camera");
 		exception = ctx->createProgramFromPTXFile(contextPath, "exception");

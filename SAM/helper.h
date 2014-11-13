@@ -39,9 +39,9 @@ static __device__ __inline__ float3 exp(const float3 &x)
 
 static __device__ __inline__ float3 schlick(float nDi, const float3 &rgb)
 {
-	float r = fresnel_schlick(nDi, 5, rgb.x, 1);
-	float g = fresnel_schlick(nDi, 5, rgb.y, 1);
-	float b = fresnel_schlick(nDi, 5, rgb.z, 1);
+	const float r = fresnel_schlick(nDi, 5, rgb.x, 1);
+	const float g = fresnel_schlick(nDi, 5, rgb.y, 1);
+	const float b = fresnel_schlick(nDi, 5, rgb.z, 1);
 	return make_float3(r, g, b);
 }
 

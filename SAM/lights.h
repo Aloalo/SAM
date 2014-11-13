@@ -12,7 +12,7 @@ struct BasicLight
 	__host__ BasicLight(const float3 &pos, const float3 &color, const float3 &attenuation, const float3 &spot_direction,
 		float spot_cutoff, float spot_exponent, float radius, int casts_shadows, int is_directional)
 		: pos(pos), color(color), attenuation(attenuation), spot_direction(spot_direction), spot_cutoff(spot_cutoff),
-		spot_exponent(spot_exponent), casts_shadows(casts_shadows), is_directional(is_directional), radius(radius)
+		spot_exponent(spot_exponent), radius(radius), casts_shadows(casts_shadows), is_directional(is_directional)
 	{}
 
 	float3 pos;
