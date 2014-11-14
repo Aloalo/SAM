@@ -6,7 +6,7 @@
 using namespace std;
 using namespace optix;
 using namespace glm;
-using namespace reng;
+using namespace engine;
 
 namespace trayc
 {
@@ -34,7 +34,7 @@ namespace trayc
 
     unsigned int BufferDrawer::createGLBuffer()
     {
-        allocateBuffer(Environment::get().bufferWidth, Environment::get().bufferHeight);
+        allocateBuffer(Environment::Get().bufferWidth, Environment::Get().bufferHeight);
         return outBufferID;
     }
 
@@ -73,8 +73,8 @@ namespace trayc
         }
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 
-        p.use();
-        p.setUniform("renderedTexture", 0);
+        p.Use();
+        p.SetUniform("renderedTexture", 0);
 
         glBindVertexArray(VAO);
         {
@@ -99,9 +99,9 @@ namespace trayc
         glBindTexture(GL_TEXTURE_2D, textureID);
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, outBufferID);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, glTextureFormat, Environment::get().bufferWidth.x, Environment::get().bufferHeight.x, 0, glFormat, glDataType, nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, glTextureFormat, Environment::Get().bufferWidth.x, Environment::Get().bufferHeight.x, 0, glFormat, glDataType, nullptr);
 
-        p.use();
+        p.Use();
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 6);

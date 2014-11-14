@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Updateable.h>
 #include <glm/glm.hpp>
 #include "SafeOptix.h"
 

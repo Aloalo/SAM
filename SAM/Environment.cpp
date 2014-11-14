@@ -10,5 +10,5 @@ namespace trayc
 	{
 	}
 
-	optix::Context &ctx = Environment::get().ctx;
+	optix::Context &ctx = Environment::Get().ctx;
 }

@@ -39,8 +39,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ASSIMP_HOME)\include;$(DEVIL_HOME)\include;$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ASSIMP_HOME)\lib\assimp_release-dll_win32;$(DEVIL_HOME)\lib;$(GLEW_HOME)\lib;$(GLFW_HOME)\lib-msvc110;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ASSIMP_HOME)\include;$(DEVIL_HOME)\include;$(GLEW_HOME)\include;$(GLM_HOME);$(GLFW_HOME)\include;$(OPTIX_HOME)\include;$(RENDERING_HOME)\RenderingEngine;C:\Users\Jure\Desktop\LightShooter;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ASSIMP_HOME)\lib\assimp_release-dll_win32;$(DEVIL_HOME)\lib;$(GLEW_HOME)\lib;$(GLFW_HOME)\lib-msvc110;$(OPTIX_HOME)\lib;$(RENDERING_HOME)\Debug;C:\Users\Jure\Desktop\EngineBuild\Engine\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -71,7 +71,7 @@
       <Warning>InheritFromHost</Warning>
     </CudaCompile>
     <Lib>
-      <AdditionalDependencies>RenderingEngine.lib;glfw3.lib;opengl32.lib;glew32.lib;DevIL.lib;ILUT.lib;ILU.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engine.lib;RenderingEngine.lib;glfw3.lib;opengl32.lib;glew32.lib;DevIL.lib;ILUT.lib;ILU.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

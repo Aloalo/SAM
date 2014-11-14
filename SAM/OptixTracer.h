@@ -4,7 +4,7 @@
 #include "AccelHandler.h"
 #include <assimp/scene.h>
 #include <Camera.h>
-#include <Setting.h>
+#include <Engine/Utils/Setting.h>
 #include "lights.h"
 
 namespace trayc
@@ -50,14 +50,14 @@ namespace trayc
 		std::vector<optix::GeometryInstance> gis;
 		std::vector<BasicLight> lights;
 
-		reng::Setting<int> maxRayDepth;
-		reng::Setting<int> renderingDivisionLevel;
-		reng::Setting<int> shadowSamples;
-		reng::Setting<int> dofSamples;
-		reng::Setting<int> useSchlick;
-		reng::Setting<int> useInternalReflections;
-		reng::Setting<int> MSAA;
-		reng::Setting<int> SSbufferWidth;
-		reng::Setting<int> SSbufferHeight;
+		engine::Setting<int> maxRayDepth;
+		engine::Setting<int> renderingDivisionLevel;
+		engine::Setting<int> shadowSamples;
+		engine::Setting<int> dofSamples;
+		engine::Setting<int> useSchlick;
+		engine::Setting<int> useInternalReflections;
+		engine::Setting<int> MSAA;
+		engine::Setting<int> SSbufferWidth;
+		engine::Setting<int> SSbufferHeight;
 	};
 };

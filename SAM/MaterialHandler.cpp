@@ -32,8 +32,8 @@ namespace trayc
 		mat->Get(AI_MATKEY_COLOR_REFLECTIVE, color);
 		material["reflectivity"]->setFloat(make_float3(color.r, color.g, color.b));
 
-		material["diffuse_map"]->setTextureSampler(OptixTextureHandler::get().get(getTextureName(mat, aiTextureType_DIFFUSE, path, "diffDefault.png")));
-		material["specular_map"]->setTextureSampler(OptixTextureHandler::get().get(getTextureName(mat, aiTextureType_SPECULAR, path, "specDefault.png")));
+		material["diffuse_map"]->setTextureSampler(OptixTextureHandler::Get().get(getTextureName(mat, aiTextureType_DIFFUSE, path, "diffDefault.png")));
+		material["specular_map"]->setTextureSampler(OptixTextureHandler::Get().get(getTextureName(mat, aiTextureType_SPECULAR, path, "specDefault.png")));
 
 		return material;
 	}

@@ -63,7 +63,7 @@ namespace trayc
 
 		outBuffer = ctx->createBufferFromGLBO(RT_BUFFER_OUTPUT, GLBO);
 		outBuffer->setFormat(RT_FORMAT_UNSIGNED_BYTE4);
-		outBuffer->setSize(Environment::get().bufferWidth, Environment::get().bufferHeight);
+		outBuffer->setSize(Environment::Get().bufferWidth, Environment::Get().bufferHeight);
 		ctx["output_buffer"]->setBuffer(outBuffer);
 
 		SSbuffer = ctx->createBuffer(RT_BUFFER_OUTPUT);
@@ -83,7 +83,7 @@ namespace trayc
 		ctx["AAlevel"]->setInt(MSAA);
 
 		ctx->setMissProgram(0, Programs::envmapMiss);
-		ctx["envmap"]->setTextureSampler(OptixTextureHandler::get().get(Utils::defTexture("environment.jpg")));
+		ctx["envmap"]->setTextureSampler(OptixTextureHandler::Get().get(Utils::defTexture("environment.jpg")));
 
 		ctx->setExceptionProgram(0, Programs::exception);
 		ctx["bad_color"]->setFloat(1.0f, 0.0f, 0.0f);
@@ -150,8 +150,8 @@ namespace trayc
 		gMesh["normal_buffer"]->setBuffer(getBufferFromVector(normalData, RT_FORMAT_FLOAT3));
 		gMesh["tangent_buffer"]->setBuffer(getBufferFromVector(tangentData, RT_FORMAT_FLOAT3));
 		gMesh["bitangent_buffer"]->setBuffer(getBufferFromVector(bitangentData, RT_FORMAT_FLOAT3));
-		gMesh["normal_map"]->setTextureSampler(OptixTextureHandler::get().get(
-			MaterialHandler::get().getTextureName(mat, aiTextureType_HEIGHT, path, "bumpDefault.png")));
+		gMesh["normal_map"]->setTextureSampler(OptixTextureHandler::Get().get(
+			MaterialHandler::Get().getTextureName(mat, aiTextureType_HEIGHT, path, "bumpDefault.png")));
 
 		gMesh["texcoord_buffer"]->setBuffer(getBufferFromVector(uvData, RT_FORMAT_FLOAT2));
 		gMesh["index_buffer"]->setBuffer(getBufferFromVector(indices, RT_FORMAT_INT3));
@@ -162,7 +162,7 @@ namespace trayc
 	void OptixTracer::addMesh(const string &path, const aiMesh *mesh, const aiMaterial *mat)
 	{
 		Geometry gMesh = getGeometry(mesh, mat, path);
-		Material material = MaterialHandler::get().createMaterial(path, mat);
+		Material material = MaterialHandler::Get().createMaterial(path, mat);
 
 		GeometryInstance inst = ctx->createGeometryInstance();
 		inst->setMaterialCount(1);

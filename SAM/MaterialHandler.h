@@ -2,7 +2,7 @@
 
 #include "OptixTextureHandler.h"
 #include <assimp/material.h>
-#include <Singleton.h>
+#include <Engine/Utils/Singleton.h>
 
 namespace trayc
 {

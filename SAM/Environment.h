@@ -1,18 +1,18 @@
 #pragma once
 
-#include <Setting.h>
+#include <Engine/Utils/Setting.h>
 #include "MaterialHandler.h"
-#include <Singleton.h>
+#include <Engine/Utils/Singleton.h>
 
 namespace trayc
 {
 	class Environment : public Singleton<Environment>
 	{
 	public:
-		reng::Setting<int> screenWidth;
-		reng::Setting<int> screenHeight;
-		reng::Setting<int> bufferWidth;
-		reng::Setting<int> bufferHeight;
+		engine::Setting<int> screenWidth;
+		engine::Setting<int> screenHeight;
+		engine::Setting<int> bufferWidth;
+		engine::Setting<int> bufferHeight;
 
 		optix::Context ctx;
 

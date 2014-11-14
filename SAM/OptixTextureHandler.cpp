@@ -6,7 +6,6 @@
 
 using namespace std;
 using namespace optix;
-using namespace reng;
 
 namespace trayc
 {
@@ -72,7 +71,7 @@ namespace trayc
             {
                 error = ilGetError();
                 cerr << "Image load failed " + def + " - IL reports error: " << error << " - " << iluErrorString(error) << endl;
-                exit(-1);
+                system("pause");
             }
         }
 
@@ -88,7 +87,7 @@ namespace trayc
         {
             error = ilGetError();
             cerr << "Image conversion failed - IL reports error: " << error << " - " << iluErrorString(error) << endl;
-            exit(-1);
+            system("pause");
         }
 
         GLuint texID;

@@ -12,10 +12,10 @@ using namespace reng;
 namespace trayc
 {
 	GameEngine::GameEngine(void)
-		: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Environment::get().screenWidth.x / Environment::get().screenHeight.x, 120.0f))),
+		: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Environment::Get().screenWidth.x / Environment::Get().screenHeight.x, 120.0f))),
 		mouseLocked(true)
 	{
-		Environment::get().ctx = Context::create();
+		Environment::Get().ctx = Context::create();
 		tracer.initialize(drawer.createGLBuffer());
 		Engine::hideMouse(true);
 		//Input::addInputObserver(player);
@@ -70,8 +70,8 @@ namespace trayc
 
 	void GameEngine::windowResize(const WindowResizeEvent &e)
 	{
-		Environment::get().screenHeight = e.size.x;
-		Environment::get().screenWidth = e.size.y;
+		Environment::Get().screenHeight = e.size.x;
+		Environment::Get().screenWidth = e.size.y;
 		player->windowResize(e);
 	}
 
@@ -107,7 +107,7 @@ namespace trayc
 	{
 		try
 		{
-			tracer.trace(0, Environment::get().bufferWidth, Environment::get().bufferHeight);
+			tracer.trace(0, Environment::Get().bufferWidth, Environment::Get().bufferHeight);
 			drawer.draw(tracer.outBuffer);
 		}
 		catch(exception &ex)

@@ -114,7 +114,7 @@ void addLabyrinth(const Labyrinth &lab)
 
 int main()
 {
-	Engine e(1. / 60., Environment::get().screenWidth, Environment::get().screenHeight);
+	Engine e(1. / 60., Environment::Get().screenWidth, Environment::Get().screenHeight);
 	Engine::disableMode(GL_DEPTH_TEST);
 	Engine::disableMode(GL_CULL_FACE);
 	Input input;

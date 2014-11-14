@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Program.h>
+#include <Engine/GL/Program.h>
 #include "SafeOptix.h"
-#include <Setting.h>
+#include <Engine/Utils/Setting.h>
 
 namespace trayc
 {
@@ -26,14 +26,14 @@ namespace trayc
 		GLenum glFormat;
 		GLenum glTextureFormat;
 
-		reng::Setting<int> textureFilter;
-		reng::Setting<int> postProcess;
+		engine::Setting<int> textureFilter;
+		engine::Setting<int> postProcess;
 
         GLuint textureID;
         GLuint verticesID;
         GLuint outBufferID;
         GLuint VAO;
 
-        reng::Program p;
+        engine::Program p;
 	};
 }
