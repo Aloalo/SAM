@@ -1,18 +1,25 @@
 Opcenito:
--EPIC REFACTOR (napraviti lako rukovanje klasama)
-	-scene graph handleing (accels, groups, transforms, selectors, instanceing...)
+-Remove RenderingEngine dependency and replace with Engine
+-Cmake
+-Refactor style of coding
+-optmize GL shaders
+-optimize CUDA shaders (indices (int3, short3, byte3), data types(float, halffloat, int)) 
+-http://anttweakbar.sourceforge.net/doc/
+-remove devil and assimp dependency and load binary files
+-scene description files
 
 Grafika:
+-beter spherical light sampling
 -area lights
 -mipmaping (optix release)
 -glass/reflective mesh
 -parallax mapping
--EDAA
 
 -distributed ray tracing
 	-motion blur
 	-diffuse reflections
 	-fuzzy transparency
+    -ambient oclusion (via RT and GL)
 -global illumination
 	-(bidirectional) path tracing
 	-photon mapping

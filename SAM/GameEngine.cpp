@@ -12,7 +12,7 @@ using namespace reng;
 namespace trayc
 {
 	GameEngine::GameEngine(void)
-		: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Environment::get().screenWidth.x / Environment::get().screenHeight.x, 90.0f))),
+		: player(new Player(Camera(vec3(7.0f, 9.2f, -6.0f), (float)Environment::get().screenWidth.x / Environment::get().screenHeight.x, 120.0f))),
 		mouseLocked(true)
 	{
 		Environment::get().ctx = Context::create();
