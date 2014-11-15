@@ -3,7 +3,11 @@ Opcenito:
 -Cmake
 -Refactor style of coding
 -optmize GL shaders
--optimize CUDA shaders (indices (int3, short3, byte3), data types(float, halffloat, int)) 
+-optimize CUDA shaders
+     -indices (int3, short3, byte3)
+     -data types(float, halffloat, int)
+     -control flow
+     -ambient/diffuse texture map
 -http://anttweakbar.sourceforge.net/doc/
 -remove devil and assimp dependency and load binary files
 -scene description files
